@@ -68,6 +68,15 @@
             transition: all 0.2s ease;
         }
 
+        .logo-image {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 16px;
+            display: block;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
         .logo {
             font-size: 2.5rem;
             font-weight: 800;
@@ -132,9 +141,25 @@
             color: var(--text-secondary);
         }
 
+        .bottom-copyright {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
         @media (max-width: 480px) {
             .container {
                 padding: 30px 20px;
+            }
+            
+            .logo-image {
+                width: 70px;
+                height: 70px;
+                margin-bottom: 14px;
             }
             
             .logo {
@@ -159,6 +184,7 @@
     </div>
 
     <div class="container">
+        <img src="https://github.com/[IhrUsername]/[Repository]/raw/main/tukk.png" alt="TUK7 Logo" class="logo-image">
         <h1 class="logo">TUK7</h1>
         <p class="subtitle">Twitch Community Moderator</p>
         
@@ -210,9 +236,10 @@
             </a>
         </nav>
         
-        <footer class="footer">
-            <p>© 2025 TUK7</p>
-        </footer>
+    </div>
+    
+    <div class="bottom-copyright">
+        © 2025 tuk7. All rights reserved.
     </div>
 
     <script>
