@@ -212,34 +212,6 @@
             line-height: 1.6;
         }
 
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 8px 16px;
-            border-radius: 24px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 24px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-            box-shadow: 0 0 8px rgba(0, 245, 196, 0.4);
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
         /* Links Grid */
         .links-grid {
             display: grid;
@@ -258,7 +230,7 @@
             border-radius: 12px;
             text-decoration: none;
             color: var(--text-primary);
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
@@ -266,14 +238,16 @@
         .link-card:hover {
             border-color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(145, 70, 255, 0.12);
+            box-shadow: 0 8px 25px rgba(145, 70, 255, 0.12), 
+                        0 0 20px rgba(145, 70, 255, 0.15),
+                        0 0 40px rgba(145, 70, 255, 0.08);
         }
 
         .link-icon {
             width: 24px;
             height: 24px;
             fill: var(--text-secondary);
-            transition: fill 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .link-content {
@@ -292,14 +266,54 @@
             line-height: 1.4;
         }
 
-        /* Hover colors */
-        .twitch-link:hover .link-icon { fill: #9146FF; }
-        .twitch-link:hover { border-color: #9146FF; box-shadow: 0 8px 25px rgba(145, 70, 255, 0.25); }
-        .twitter-link:hover .link-icon { fill: #1DA1F2; }
-        .youtube-link:hover .link-icon { fill: #FF0000; }
-        .steam-link:hover .link-icon { fill: #ffffff; }
-        .mod-link:hover .link-icon { fill: var(--success); }
-        .bot-link:hover .link-icon { fill: var(--accent); }
+        /* Enhanced hover colors with glow */
+        .twitch-link:hover { 
+            border-color: #9146FF; 
+            box-shadow: 0 8px 25px rgba(145, 70, 255, 0.25),
+                        0 0 30px rgba(145, 70, 255, 0.3),
+                        0 0 50px rgba(145, 70, 255, 0.15);
+        }
+        .twitch-link:hover .link-icon { fill: #9146FF; filter: drop-shadow(0 0 8px #9146FF); }
+
+        .twitter-link:hover { 
+            border-color: #1DA1F2; 
+            box-shadow: 0 8px 25px rgba(29, 161, 242, 0.25),
+                        0 0 30px rgba(29, 161, 242, 0.3),
+                        0 0 50px rgba(29, 161, 242, 0.15);
+        }
+        .twitter-link:hover .link-icon { fill: #1DA1F2; filter: drop-shadow(0 0 8px #1DA1F2); }
+
+        .youtube-link:hover { 
+            border-color: #FF0000; 
+            box-shadow: 0 8px 25px rgba(255, 0, 0, 0.25),
+                        0 0 30px rgba(255, 0, 0, 0.3),
+                        0 0 50px rgba(255, 0, 0, 0.15);
+        }
+        .youtube-link:hover .link-icon { fill: #FF0000; filter: drop-shadow(0 0 8px #FF0000); }
+
+        .steam-link:hover { 
+            border-color: #ffffff; 
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.25),
+                        0 0 30px rgba(255, 255, 255, 0.3),
+                        0 0 50px rgba(255, 255, 255, 0.15);
+        }
+        .steam-link:hover .link-icon { fill: #ffffff; filter: drop-shadow(0 0 8px #ffffff); }
+
+        .mod-link:hover { 
+            border-color: #00f5c4; 
+            box-shadow: 0 8px 25px rgba(0, 245, 196, 0.25),
+                        0 0 30px rgba(0, 245, 196, 0.3),
+                        0 0 50px rgba(0, 245, 196, 0.15);
+        }
+        .mod-link:hover .link-icon { fill: var(--success); filter: drop-shadow(0 0 8px #00f5c4); }
+
+        .bot-link:hover { 
+            border-color: var(--accent); 
+            box-shadow: 0 8px 25px rgba(145, 70, 255, 0.25),
+                        0 0 30px rgba(145, 70, 255, 0.3),
+                        0 0 50px rgba(145, 70, 255, 0.15);
+        }
+        .bot-link:hover .link-icon { fill: var(--accent); filter: drop-shadow(0 0 8px #9146FF); }
 
         /* Footer */
         .footer {
@@ -427,10 +441,6 @@
     <main class="main">
         <div class="container">
             <section class="hero fade-in">
-                <div class="hero-badge">
-                    <div class="status-dot"></div>
-                    Active Moderator
-                </div>
                 <h1 class="hero-title">TUK7</h1>
                 <p class="hero-subtitle">Twitch Community Moderator & Content Creator</p>
             </section>
