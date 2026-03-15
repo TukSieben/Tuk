@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
+    
+    <!-- DEIN LOGO ALS FAVICON (erscheint genau oben in der Browser-Tab-Leiste) -->
+    <link rel="icon" href="logo.png" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -27,15 +31,8 @@
 </head>
 <body class="bg-[#050505] text-white font-sans">
 
-    <!-- SUPER CLEAN TASKBAR – nur dein Logo klein oben links -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-zinc-800">
-        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center">
-            <img src="logo.png" alt="TUK7 Logo" class="h-8 w-auto">
-        </div>
-    </nav>
-
-    <!-- HERO – nur TUK7 in der Mitte (maximaler Fokus) -->
-    <section class="min-h-screen flex flex-col items-center justify-center pt-16 px-6 text-center">
+    <!-- HERO – jetzt komplett ohne obere Leiste -->
+    <section class="min-h-screen flex flex-col items-center justify-center px-6 text-center">
         <div>
             <h1 class="gif-text text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.05em] leading-none">
                 TUK7
@@ -47,7 +44,7 @@
         </div>
     </section>
 
-    <!-- FOOTER – winzig klein, ganz unten, ohne Strich -->
+    <!-- FOOTER – winzig klein ganz unten -->
     <footer class="py-6 text-center text-[10px] text-zinc-500">
         © 2026 TUK | All rights reserved.
     </footer>
