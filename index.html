@@ -36,7 +36,7 @@
             background: #050505;
         }
 
-        /* === 3D MOUSE TILT === */
+        /* === 3D MOUSE TILT (jetzt SUPER subtil) === */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -46,15 +46,14 @@
             justify-content: center;
         }
         .tilt-content {
-            transition: transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1); /* etwas smoother */
             transform-style: preserve-3d;
         }
-        /* Extra Tiefe für TUK7 (sieht noch krasser 3D aus) */
         .tilt-content h1 {
-            transform: translateZ(35px);
+            transform: translateZ(28px);   /* etwas weniger Tiefe */
         }
         .tilt-content p {
-            transform: translateZ(15px);
+            transform: translateZ(12px);
         }
     </style>
 </head>
@@ -68,7 +67,7 @@
                         TUK7
                     </h1>
                    
-                    <!-- TWITCH C O MMUNITY MODERATOR (o.png bewegt sich mit) -->
+                    <!-- TWITCH C O MMUNITY MODERATOR -->
                     <p class="mt-6 text-xl font-medium text-white flex items-center justify-center gap-x-px">
                         TWITCH C
                         <img src="o.png" class="o-replace" alt="O">
@@ -93,19 +92,17 @@
             }
         }
 
-        // === 3D MOUSE TILT FÜR ALLES (TUK7 + Untertext + o.png) ===
+        // === 3D MOUSE TILT – jetzt nur ganz leicht (wie gewünscht) ===
         const tiltContent = document.getElementById('tilt-content');
 
         document.addEventListener('mousemove', (e) => {
-            // Mitte des Bildschirms als Bezugspunkt
-            const x = (window.innerWidth / 2 - e.clientX) / 22;
-            const y = (window.innerHeight / 2 - e.clientY) / 22;
+            const x = (window.innerWidth / 2 - e.clientX) / 55;   // ← hier weniger stark (vorher 22)
+            const y = (window.innerHeight / 2 - e.clientY) / 55;  // ← hier weniger stark
 
-            // Natürliche 3D-Bewegung (rotateY für links/rechts, rotateX für hoch/runter)
             tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
 
-        // Zurück zur Normalposition, wenn Maus das Fenster verlässt
+        // Zurück zur Normalposition
         document.addEventListener('mouseleave', () => {
             tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
         });
