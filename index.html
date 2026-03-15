@@ -35,28 +35,55 @@
         body {
             background: #050505;
         }
+
+        /* === 3D MOUSE TILT === */
+        .tilt-wrapper {
+            perspective: 1400px;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tilt-content {
+            transition: transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+        /* Extra Tiefe für TUK7 (sieht noch krasser 3D aus) */
+        .tilt-content h1 {
+            transform: translateZ(35px);
+        }
+        .tilt-content p {
+            transform: translateZ(15px);
+        }
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
-    <!-- HERO -->
+    <!-- HERO mit 3D Tilt -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
-        <div class="-mt-16">
-            <h1 class="gif-text text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
-                TUK7
-            </h1>
-           
-            <!-- NUR im Wort "COMMUNITY" wird das O durch o.png ersetzt -->
-            <p class="mt-6 text-xl font-medium text-white flex items-center justify-center gap-x-px">
-                TWITCH C
-                <img src="o.png" class="o-replace" alt="O">
-                MMUNITY MODERATOR
-            </p>
+        <div class="tilt-wrapper">
+            <div id="tilt-content" class="tilt-content">
+                <div class="-mt-16">
+                    <h1 class="gif-text text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
+                        TUK7
+                    </h1>
+                   
+                    <!-- TWITCH C O MMUNITY MODERATOR (o.png bewegt sich mit) -->
+                    <p class="mt-6 text-xl font-medium text-white flex items-center justify-center gap-x-px">
+                        TWITCH C
+                        <img src="o.png" class="o-replace" alt="O">
+                        MMUNITY MODERATOR
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
+
     <!-- FOOTER -->
     <footer class="absolute bottom-6 left-0 right-0 text-center text-[10px] text-zinc-500">
         © 2026 TUK | All rights reserved.
     </footer>
+
     <script>
         tailwind.config = {
             theme: {
@@ -65,6 +92,23 @@
                 }
             }
         }
+
+        // === 3D MOUSE TILT FÜR ALLES (TUK7 + Untertext + o.png) ===
+        const tiltContent = document.getElementById('tilt-content');
+
+        document.addEventListener('mousemove', (e) => {
+            // Mitte des Bildschirms als Bezugspunkt
+            const x = (window.innerWidth / 2 - e.clientX) / 22;
+            const y = (window.innerHeight / 2 - e.clientY) / 22;
+
+            // Natürliche 3D-Bewegung (rotateY für links/rechts, rotateX für hoch/runter)
+            tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        });
+
+        // Zurück zur Normalposition, wenn Maus das Fenster verlässt
+        document.addEventListener('mouseleave', () => {
+            tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
     </script>
 </body>
 </html>
