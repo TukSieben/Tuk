@@ -1,134 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="tuk – Twitch Community Moderator" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>tuk</title>
+  <link rel="icon" href="logo.png" type="image/png"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link rel="icon" type="image/png" href="logo.png" />
+    :root {
+      --bg:      #111;
+      --bg2:     #171717;
+      --bg3:     #1e1e1e;
+      --line:    rgba(255,255,255,0.07);
+      --accent:  #9147ff;
+      --accent2: #bf94ff;
+      --text:    #e8e8e8;
+      --muted:   #555;
+      --muted2:  #333;
+    }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    html, body { height: 100%; overflow: hidden; }
 
-  <link rel="stylesheet" href="style.css" />
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      height: 46px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 10px;
+      flex-shrink: 0;
+      background: var(--bg);
+      z-index: 50;
+    }
+
+    .tb-logo {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #2a1a4a;
+    }
+
+    .tb-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+    }
+
+    .tb-sep { color: var(--muted2); font-size: 13px; margin: 0 2px; }
+    .tb-path { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+
+
+
+    /* ── SHELL ── */
+    .shell {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ── SIDEBAR ── */
+    aside {
+      width: 200px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 20px 0;
+    }
+
+    .s-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      padding: 0 18px 6px;
+      margin-top: 16px;
+    }
+
+    .s-label:first-child { margin-top: 0; }
+
+    .s-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 18px;
+      font-size: 11.5px;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: color 0.12s, background 0.12s, border-color 0.12s;
+    }
+
+    .s-item:hover { color: var(--text); background: rgba(255,255,255,0.025); }
+
+    .s-item.active {
+      color: var(--accent2);
+      border-left-color: var(--accent);
+      background: rgba(145,71,255,0.06);
+    }
+
+    .s-item svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ── CONTENT ── */
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* ════════════════════════════════
+       ABOUT PANEL
+    ════════════════════════════════ */
+    #panel-about {
+      height: 100%;
+      display: none;
+      grid-template-rows: 1fr auto;
+    }
+
+    #panel-about.active { display: grid; }
+
+    /* big hero area */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 48px 40px;
+      min-height: 100%;
+    }
+
+    /* faint grid lines background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* corner glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(145,71,255,0.13) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-role { display: none; }
+
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 10vw, 120px);
+      letter-spacing: 0.04em;
+      line-height: 0.9;
+      color: var(--text);
+    }
+
+    .hero-name span {
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      margin-top: 22px;
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 340px;
+    }
+
+    /* ════════════════════════════════
+       LINKS PANEL
+    ════════════════════════════════ */
+    #panel-links {
+      padding: 40px 48px;
+    }
+
+    .links-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .links-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .platform-block {
+      margin-bottom: 36px;
+    }
+
+    .platform-block + .platform-block {
+      border-top: 1px solid var(--line);
+      padding-top: 36px;
+    }
+
+    .p-row {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      text-decoration: none;
+      color: var(--text);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+      transition: padding-left 0.2s;
+      group: true;
+    }
+
+    .p-row:last-child { border-bottom: none; }
+    .p-row:hover { padding-left: 8px; }
+
+    .p-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .p-icon svg { width: 16px; height: 16px; }
+
+    .ic-twitch { background: rgba(145,71,255,0.15); color: #bf94ff; }
+    .ic-yt     { background: rgba(255,50,50,0.12);  color: #ff7070; }
+    .ic-x      { background: rgba(255,255,255,0.06);color: #ccc; }
+    .ic-db     { background: rgba(255,255,255,0.05);color: #aaa; }
+
+    .p-info { flex: 1; }
+
+    .p-name {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      display: block;
+      letter-spacing: 0.01em;
+    }
+
+    .p-handle {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .p-arrow {
+      font-size: 16px;
+      color: var(--muted2);
+      transition: color 0.15s, transform 0.15s;
+    }
+
+    .p-row:hover .p-arrow {
+      color: var(--accent2);
+      transform: translate(3px, -3px);
+    }
+
+    /* ── STATUSBAR ── */
+    .statusbar {
+      height: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 18px;
+      flex-shrink: 0;
+      font-size: 10px;
+      color: var(--muted2);
+    }
+
+    .statusbar span { color: var(--muted); }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.15; }
+    }
+
+    /* mobile */
+    @media (max-width: 600px) {
+      html, body { overflow: auto; }
+      .shell { flex-direction: column; overflow: visible; }
+      aside { width: 100%; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--line); padding: 8px; }
+      .s-label { display: none; }
+      .s-item { border-left: none; border-bottom: 2px solid transparent; padding: 8px 12px; font-size: 11px; }
+      .s-item.active { border-bottom-color: var(--accent); background: none; }
+      .content { overflow: visible; }
+      #panel-about { min-height: 60vh; }
+      .hero { padding: 24px 24px 32px; }
+      #panel-links { padding: 28px 24px; }
+      .links-title { font-size: 32px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ═══ NAVBAR ═══ -->
-  <nav class="navbar">
-    <a class="nav-brand" href="/">
-      <img class="nav-logo" src="logo.png" alt="tuk logo" width="36" height="36" />
-      <span class="nav-title">tuk</span>
-    </a>
-  </nav>
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <img class="tb-logo" src="logo.png" alt="tuk" onerror="this.style.background='#9147ff';this.removeAttribute('src')"/>
+    <span class="tb-name">tuk</span>
+    <span class="tb-sep">/</span>
+    <span class="tb-path">index</span>
+  </div>
 
-  <!-- ═══ MAIN ═══ -->
-  <main class="page">
+  <div class="shell">
 
-    <!-- PROFILE -->
-    <section class="profile">
-      <div class="avatar-wrap">
-        <img
-          class="avatar"
-          src="https://api.dicebear.com/9.x/shapes/svg?seed=tuk7&backgroundColor=18181b"
-          alt="tuk"
-          width="80"
-          height="80"
-        />
-        <span class="status-dot"></span>
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="s-label">pages</div>
+
+      <div class="s-item active" onclick="show('about', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+        about
       </div>
-      <h1 class="profile-name">tuk</h1>
-      <p class="profile-role">Twitch Community Moderator</p>
-    </section>
 
-    <!-- SOCIALS -->
-    <section class="section">
-      <p class="section-label">socials</p>
-      <div class="card-list">
-
-        <a class="card-link" href="https://www.twitch.tv/tuk7" target="_blank" rel="noopener">
-          <div class="card-left">
-            <div class="card-icon twitch-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
-              </svg>
-            </div>
-            <div class="card-info">
-              <span class="card-name">Twitch</span>
-              <span class="card-handle">tuk7</span>
-            </div>
-          </div>
-          <svg class="card-arrow" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
-          </svg>
-        </a>
-
-        <a class="card-link" href="https://www.youtube.com/@tukfps" target="_blank" rel="noopener">
-          <div class="card-left">
-            <div class="card-icon yt-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-            </div>
-            <div class="card-info">
-              <span class="card-name">YouTube</span>
-              <span class="card-handle">@tukfps</span>
-            </div>
-          </div>
-          <svg class="card-arrow" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
-          </svg>
-        </a>
-
-        <a class="card-link" href="https://x.com/tukfps" target="_blank" rel="noopener">
-          <div class="card-left">
-            <div class="card-icon x-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63z"/>
-              </svg>
-            </div>
-            <div class="card-info">
-              <span class="card-name">Twitter / X</span>
-              <span class="card-handle">@tukfps</span>
-            </div>
-          </div>
-          <svg class="card-arrow" viewBox="0 0 16 16" fill="currentColor">
-            <path d="M6.22 3.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 0 1 0-1.06z"/>
-          </svg>
-        </a>
-
+      <div class="s-item" onclick="show('links', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+        </svg>
+        links
       </div>
-    </section>
 
-    <!-- PROJECTS -->
-    <section class="section">
-      <p class="section-label">projects</p>
-      <div class="card-list">
+      <div class="s-label">external</div>
 
-        <a class="card-link" href="https://7database.com/" target="_blank" rel="noopener">
-          <div class="card-left">
-            <div class="card-icon db-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.477 2 2 4.477 2 7s4.477 5 10 5 10-2.477 10-5-4.477-5-10-5zM2 9v3c0 2.523 4.477 5 10 5s10-2.477 10-5V9c0 2.523-4.477 5-10 5S2 11.523 2 9zm0 5v3c0 2.523 4.477 5 10 5s10-2.477 10-5v-3c0 2.523-4.477 5-10 5S2 16.523 2 14z"/>
-              </svg>
-            </div>
-            <div class="card-info">
-              <span class="card-name">7database</span>
-              <span class="card-handle">7database.com</span>
-            </div>
+      <a class="s-item" href="https://7database.com/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+        </svg>
+        7database ↗
+      </a>
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- ABOUT -->
+      <div id="panel-about" class="panel active">
+        <div class="hero">
+          <div class="hero-content">
+            <div class="hero-role">Twitch Community Moderator</div>
+            <div class="hero-name">T<span>U</span>K</div>
+
           </div>
-          <span class="live-badge">live</span>
-        </a>
-
+        </div>
       </div>
-    </section>
 
-    <footer class="footer">© 2026 tuk</footer>
+      <!-- LINKS -->
+      <div id="panel-links" class="panel">
+        <div class="links-title">Links</div>
 
-  </main>
+        <div class="platform-block">
+          <a class="p-row" href="https://www.twitch.tv/tuk7" target="_blank" rel="noopener">
+            <div class="p-icon ic-twitch">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+            </div>
+            <div class="p-info">
+              <strong class="p-name">Twitch</strong>
+              <span class="p-handle">twitch.tv/tuk7</span>
+            </div>
+            <span class="p-arrow">↗</span>
+          </a>
+
+          <a class="p-row" href="https://www.youtube.com/@tukfps" target="_blank" rel="noopener">
+            <div class="p-icon ic-yt">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </div>
+            <div class="p-info">
+              <strong class="p-name">YouTube</strong>
+              <span class="p-handle">@tukfps</span>
+            </div>
+            <span class="p-arrow">↗</span>
+          </a>
+
+          <a class="p-row" href="https://x.com/tukfps" target="_blank" rel="noopener">
+            <div class="p-icon ic-x">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </div>
+            <div class="p-info">
+              <strong class="p-name">Twitter / X</strong>
+              <span class="p-handle">@tukfps</span>
+            </div>
+            <span class="p-arrow">↗</span>
+          </a>
+        </div>
+
+        <div class="platform-block">
+          <a class="p-row" href="https://7database.com/" target="_blank" rel="noopener">
+            <div class="p-icon ic-db">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
+            </div>
+            <div class="p-info">
+              <strong class="p-name">7database</strong>
+              <span class="p-handle">7database.com</span>
+            </div>
+            <span class="p-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STATUSBAR -->
+  <div class="statusbar">
+    <div style="margin-left:auto">© 2026 tuk</div>
+  </div>
 
   <script src="script.js"></script>
+
 </body>
 </html>
