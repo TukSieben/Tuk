@@ -36,7 +36,7 @@
             background: #050505;
         }
 
-        /* === 3D MOUSE TILT (jetzt SUPER subtil) === */
+        /* === 3D MOUSE TILT (bleibt genau gleich) === */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -46,19 +46,80 @@
             justify-content: center;
         }
         .tilt-content {
-            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1); /* etwas smoother */
+            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
             transform-style: preserve-3d;
         }
         .tilt-content h1 {
-            transform: translateZ(28px);   /* etwas weniger Tiefe */
+            transform: translateZ(28px);
         }
         .tilt-content p {
             transform: translateZ(12px);
         }
+
+        /* === SUBTILES SOCIALS DROPDOWN (genau wie gewünscht) === */
+        .social-group {
+            position: fixed;
+            top: 32px;
+            right: 32px;
+            z-index: 50;
+        }
+        .social-dot {
+            font-size: 32px;
+            line-height: 1;
+            color: #3f3f46;
+            transition: color 0.2s ease;
+        }
+        .social-group:hover .social-dot {
+            color: #71717a;
+        }
+        .social-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 12px;
+            width: 220px;
+            background: #0a0a0a;
+            border: 1px solid #27272a;
+            border-radius: 16px;
+            padding: 16px 0;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(12px);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-group:hover .social-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
-    <!-- HERO mit 3D Tilt -->
+    <!-- SOCIALS DROPDOWN – extrem dezent -->
+    <div class="social-group group">
+        <div class="social-dot">⋯</div>
+        
+        <div class="social-dropdown">
+            <div class="flex flex-col text-sm font-medium">
+                <a href="https://twitch.tv/deinname" target="_blank" class="px-6 py-3.5 hover:bg-zinc-900 transition-colors flex items-center gap-3 text-zinc-300 hover:text-white">
+                    📺 <span>Twitch</span>
+                </a>
+                <a href="https://discord.gg/deinlink" target="_blank" class="px-6 py-3.5 hover:bg-zinc-900 transition-colors flex items-center gap-3 text-zinc-300 hover:text-white">
+                    💬 <span>Discord</span>
+                </a>
+                <a href="https://x.com/deinname" target="_blank" class="px-6 py-3.5 hover:bg-zinc-900 transition-colors flex items-center gap-3 text-zinc-300 hover:text-white">
+                    𝕏 <span>X / Twitter</span>
+                </a>
+                <a href="https://instagram.com/deinname" target="_blank" class="px-6 py-3.5 hover:bg-zinc-900 transition-colors flex items-center gap-3 text-zinc-300 hover:text-white">
+                    📷 <span>Instagram</span>
+                </a>
+                <!-- Füge hier einfach mehr Zeilen hinzu, falls du z.B. YouTube, TikTok etc. willst -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HERO -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
@@ -92,17 +153,13 @@
             }
         }
 
-        // === 3D MOUSE TILT – jetzt nur ganz leicht (wie gewünscht) ===
+        // === 3D MOUSE TILT – bleibt genau gleich ===
         const tiltContent = document.getElementById('tilt-content');
-
         document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 55;   // ← hier weniger stark (vorher 22)
-            const y = (window.innerHeight / 2 - e.clientY) / 55;  // ← hier weniger stark
-
+            const x = (window.innerWidth / 2 - e.clientX) / 55;
+            const y = (window.innerHeight / 2 - e.clientY) / 55;
             tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
         });
-
-        // Zurück zur Normalposition
         document.addEventListener('mouseleave', () => {
             tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
         });
