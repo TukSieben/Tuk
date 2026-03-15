@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
-    <!-- Tailwind CDN für geiles modernes Design -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -19,131 +18,103 @@
             background-clip: text;
             -webkit-background-clip: text;
             display: inline-block;
-            -webkit-background-clip: text;
-        }
-
-        /* Extra Glow & Twitch-Vibe */
-        .hero-text {
-            text-shadow: 
-                0 0 30px rgba(139, 92, 246, 0.8),
-                0 0 60px rgba(139, 92, 246, 0.4);
-            animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.15); }
         }
 
         body {
             background: linear-gradient(180deg, #0a0a0a 0%, #1a0033 100%);
         }
-
-        .nav-glow {
-            box-shadow: 0 4px 30px rgba(139, 92, 246, 0.3);
-        }
     </style>
 </head>
-<body class="bg-black text-white font-sans overflow-x-hidden">
+<body class="bg-black text-white font-sans">
 
-    <!-- TOP TASKBAR / NAVBAR mit deinem Logo -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-violet-500/30 nav-glow">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- DEIN LOGO -->
+    <!-- TOP NAV with your logo -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-violet-500/20">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- YOUR LOGO -->
             <div class="flex items-center gap-3">
-                <img src="logo.png" alt="TUK7 Logo" class="h-12 w-auto drop-shadow-2xl">
-                <span class="text-2xl font-black tracking-tighter text-violet-400">TUK7</span>
+                <img src="logo.png" alt="TUK7 Logo" class="h-9 w-auto">
+                <span class="text-2xl font-black tracking-tighter text-violet-300">TUK7</span>
             </div>
 
-            <!-- Optional: kleine Nav-Links (kannst du erweitern) -->
+            <!-- Simple links -->
             <div class="hidden md:flex items-center gap-8 text-sm font-medium">
                 <a href="#socials" class="hover:text-violet-400 transition-colors">Socials</a>
                 <a href="https://twitch.tv/tuk7" target="_blank" class="hover:text-violet-400 transition-colors">Twitch</a>
-                <a href="#" class="hover:text-violet-400 transition-colors">Discord</a>
-            </div>
-
-            <!-- Twitch Live Badge (optional) -->
-            <div class="flex items-center gap-2 bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-full animate-pulse">
-                <div class="w-2 h-2 bg-white rounded-full"></div>
-                LIVE MOD
+                <a href="https://discord.gg/yourinvite" target="_blank" class="hover:text-violet-400 transition-colors">Discord</a>
             </div>
         </div>
     </nav>
 
-    <!-- HERO SECTION mit mega TUK7 + 7TV Paint -->
-    <section class="min-h-screen flex flex-col items-center justify-center pt-20 px-6 relative">
-        <div class="text-center">
-            <!-- Der geile 7TV Paint Text -->
-            <h1 class="gif-text hero-text text-[6rem] md:text-[9rem] lg:text-[12rem] font-black tracking-[-0.07em] leading-none">
+    <!-- HERO - smaller & cleaner -->
+    <section class="min-h-screen flex flex-col items-center justify-center pt-16 px-6 text-center">
+        <div>
+            <!-- Smaller TUK7 with your 7TV paint -->
+            <h1 class="gif-text text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.05em] leading-none">
                 TUK7
             </h1>
 
-            <!-- Subline -->
-            <p class="mt-6 text-2xl md:text-3xl font-semibold text-violet-300 tracking-wide">
+            <!-- Small subline -->
+            <p class="mt-6 text-xl md:text-2xl font-medium text-violet-300">
                 Twitch Community Moderator
             </p>
-            <p class="mt-2 text-lg text-zinc-400 max-w-md mx-auto">
-                Mod für die besten Streams • Immer dabei • 7TV Paint Vibes
+            <p class="mt-3 text-base text-zinc-400 max-w-md mx-auto">
+                Mod for the best streams • Always around • 7TV Paint vibes
             </p>
         </div>
 
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500">
-            <span class="text-xs tracking-widest">SCROLL FOR SOCIALS</span>
-            <div class="w-px h-12 bg-gradient-to-b from-transparent via-violet-400 to-transparent"></div>
+        <!-- Small scroll hint -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-500 text-xs">
+            <span>SCROLL FOR SOCIALS</span>
+            <div class="w-px h-8 bg-zinc-700"></div>
         </div>
     </section>
 
-    <!-- SOCIALS SECTION -->
-    <section id="socials" class="py-24 bg-zinc-950/70 border-t border-violet-500/20">
+    <!-- SOCIALS -->
+    <section id="socials" class="py-20 bg-zinc-950/70 border-t border-violet-500/20">
         <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-12 text-violet-400">Meine Socials</h2>
+            <h2 class="text-3xl font-bold text-center mb-10 text-violet-300">My Socials</h2>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Twitch -->
                 <a href="https://twitch.tv/tuk7" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-violet-950 border border-violet-500/30 hover:border-violet-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
-                    <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-4xl">📺</div>
+                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-violet-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
+                    <div class="w-14 h-14 bg-purple-600 rounded-2xl flex items-center justify-center text-4xl">📺</div>
                     <div>
                         <div class="text-2xl font-bold">Twitch</div>
                         <div class="text-violet-400">tuk7 • Live &amp; Modding</div>
                     </div>
                 </a>
 
-                <!-- Discord (ersetze den Link mit deinem Invite) -->
-                <a href="https://discord.gg/dein-discord-invite" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-indigo-950 border border-indigo-500/30 hover:border-indigo-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
-                    <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-4xl">💬</div>
+                <!-- Discord -->
+                <a href="https://discord.gg/yourinvite" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-indigo-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
+                    <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-4xl">💬</div>
                     <div>
                         <div class="text-2xl font-bold">Discord</div>
-                        <div class="text-indigo-400">Community &amp; Mod-Chat</div>
+                        <div class="text-indigo-400">Community &amp; Mod Chat</div>
                     </div>
                 </a>
 
-                <!-- X / Twitter (ersetze mit deinem) -->
-                <a href="https://x.com/deinusername" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-sky-950 border border-sky-500/30 hover:border-sky-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
-                    <div class="w-16 h-16 bg-sky-600 rounded-2xl flex items-center justify-center text-4xl">𝕏</div>
+                <!-- X / Twitter -->
+                <a href="https://x.com/yourusername" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-sky-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
+                    <div class="w-14 h-14 bg-sky-600 rounded-2xl flex items-center justify-center text-4xl">𝕏</div>
                     <div>
                         <div class="text-2xl font-bold">X / Twitter</div>
-                        <div class="text-sky-400">@deinusername</div>
+                        <div class="text-sky-400">@yourusername</div>
                     </div>
                 </a>
 
-                <!-- 7TV oder Instagram (Beispiel) -->
-                <a href="https://7tv.app/users/dein7tvname" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-pink-950 border border-pink-500/30 hover:border-pink-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
-                    <div class="w-16 h-16 bg-pink-600 rounded-2xl flex items-center justify-center text-4xl">🎨</div>
+                <!-- 7TV -->
+                <a href="https://7tv.app/users/your7tvname" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-pink-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
+                    <div class="w-14 h-14 bg-pink-600 rounded-2xl flex items-center justify-center text-4xl">🎨</div>
                     <div>
                         <div class="text-2xl font-bold">7TV Paint</div>
-                        <div class="text-pink-400">Mein Paint-Account</div>
+                        <div class="text-pink-400">My Paint Account</div>
                     </div>
                 </a>
             </div>
-
-            <p class="text-center text-zinc-500 mt-16 text-sm">
-                Mehr Links? Sag einfach Bescheid – ich baue dir alles ein!
-            </p>
         </div>
     </section>
 
@@ -153,14 +124,11 @@
     </footer>
 
     <script>
-        // Tailwind config für extra Style
         tailwind.config = {
             content: [],
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif']
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
                 }
             }
         }
