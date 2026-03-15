@@ -1,58 +1,48 @@
 /* ═══════════════════════════════════════════
-   SOCIALS SITE — script.js
-   Subtle interactivity only — no frameworks
+   tuk — script.js
+   Subtle effects only. No libraries.
 ═══════════════════════════════════════════ */
 
 /**
- * Card spotlight effect:
- * Tracks the mouse position inside each card
- * and adds a subtle radial highlight at the cursor.
+ * Spotlight: tracks mouse across interactive cards
+ * and paints a faint accent-colored highlight.
  */
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1);
-    const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1);
+const spotlightTargets = document.querySelectorAll('.link-card, .project-card');
 
-    card.style.setProperty('--mx', `${x}%`);
-    card.style.setProperty('--my', `${y}%`);
-    card.style.backgroundImage =
-      `radial-gradient(circle at ${x}% ${y}%, rgba(124,106,247,0.06) 0%, transparent 65%)`;
+spotlightTargets.forEach(el => {
+  el.addEventListener('mousemove', e => {
+    const r   = el.getBoundingClientRect();
+    const x   = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
+    const y   = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
+    el.style.backgroundImage =
+      `radial-gradient(circle at ${x}% ${y}%, rgba(0,229,255,0.055) 0%, transparent 65%)`;
   });
 
-  card.addEventListener('mouseleave', () => {
-    card.style.backgroundImage = '';
+  el.addEventListener('mouseleave', () => {
+    el.style.backgroundImage = '';
   });
 });
 
 /**
- * Typed cursor blink on the tagline.
- * Adds a blinking "|" caret after the tagline text.
+ * Blinking cursor after the hero subtitle.
  */
-const tagline = document.querySelector('.tagline');
-if (tagline) {
-  const caret = document.createElement('span');
-  caret.textContent = '|';
-  caret.style.cssText = `
-    display: inline-block;
-    margin-left: 2px;
-    color: var(--accent);
-    animation: blink 1s step-end infinite;
-    font-size: 0.9em;
+const sub = document.querySelector('.hero-sub');
+if (sub) {
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .cursor {
+      display: inline-block;
+      margin-left: 2px;
+      color: var(--accent);
+      font-size: 0.9em;
+      animation: blink 1.1s step-end infinite;
+    }
   `;
+  document.head.appendChild(style);
 
-  // Inject @keyframes blink once
-  if (!document.getElementById('blink-style')) {
-    const style = document.createElement('style');
-    style.id = 'blink-style';
-    style.textContent = `
-      @keyframes blink {
-        0%, 100% { opacity: 1; }
-        50%       { opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  tagline.appendChild(caret);
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  cursor.textContent = '_';
+  sub.appendChild(cursor);
 }
