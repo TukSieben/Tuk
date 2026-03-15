@@ -27,105 +27,41 @@
 </head>
 <body class="bg-black text-white font-sans">
 
-    <!-- TOP NAV with your logo -->
+    <!-- TOP NAV – nur Logo + Twitch-Link (alles andere weg) -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-violet-500/20">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <!-- YOUR LOGO -->
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <img src="logo.png" alt="TUK7 Logo" class="h-9 w-auto">
                 <span class="text-2xl font-black tracking-tighter text-violet-300">TUK7</span>
             </div>
-
-            <!-- Simple links -->
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a href="#socials" class="hover:text-violet-400 transition-colors">Socials</a>
-                <a href="https://twitch.tv/tuk7" target="_blank" class="hover:text-violet-400 transition-colors">Twitch</a>
-                <a href="https://discord.gg/yourinvite" target="_blank" class="hover:text-violet-400 transition-colors">Discord</a>
-            </div>
+            
+            <a href="https://twitch.tv/tuk7" target="_blank" 
+               class="text-sm font-medium hover:text-violet-400 transition-colors">
+                Twitch
+            </a>
         </div>
     </nav>
 
-    <!-- HERO - smaller & cleaner -->
+    <!-- HERO – nur das große TUK7 (alles andere entfernt) -->
     <section class="min-h-screen flex flex-col items-center justify-center pt-16 px-6 text-center">
         <div>
-            <!-- Smaller TUK7 with your 7TV paint -->
             <h1 class="gif-text text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.05em] leading-none">
                 TUK7
             </h1>
 
-            <!-- Small subline -->
-            <p class="mt-6 text-xl md:text-2xl font-medium text-violet-300">
+            <p class="mt-6 text-xl font-medium text-violet-300">
                 Twitch Community Moderator
             </p>
-            <p class="mt-3 text-base text-zinc-400 max-w-md mx-auto">
-                Mod for the best streams • Always around • 7TV Paint vibes
-            </p>
-        </div>
-
-        <!-- Small scroll hint -->
-        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-zinc-500 text-xs">
-            <span>SCROLL FOR SOCIALS</span>
-            <div class="w-px h-8 bg-zinc-700"></div>
         </div>
     </section>
 
-    <!-- SOCIALS -->
-    <section id="socials" class="py-20 bg-zinc-950/70 border-t border-violet-500/20">
-        <div class="max-w-4xl mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-10 text-violet-300">My Socials</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Twitch -->
-                <a href="https://twitch.tv/tuk7" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-violet-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
-                    <div class="w-14 h-14 bg-purple-600 rounded-2xl flex items-center justify-center text-4xl">📺</div>
-                    <div>
-                        <div class="text-2xl font-bold">Twitch</div>
-                        <div class="text-violet-400">tuk7 • Live &amp; Modding</div>
-                    </div>
-                </a>
-
-                <!-- Discord -->
-                <a href="https://discord.gg/yourinvite" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-indigo-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
-                    <div class="w-14 h-14 bg-indigo-600 rounded-2xl flex items-center justify-center text-4xl">💬</div>
-                    <div>
-                        <div class="text-2xl font-bold">Discord</div>
-                        <div class="text-indigo-400">Community &amp; Mod Chat</div>
-                    </div>
-                </a>
-
-                <!-- X / Twitter -->
-                <a href="https://x.com/yourusername" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-sky-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
-                    <div class="w-14 h-14 bg-sky-600 rounded-2xl flex items-center justify-center text-4xl">𝕏</div>
-                    <div>
-                        <div class="text-2xl font-bold">X / Twitter</div>
-                        <div class="text-sky-400">@yourusername</div>
-                    </div>
-                </a>
-
-                <!-- 7TV -->
-                <a href="https://7tv.app/users/your7tvname" target="_blank" 
-                   class="group bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 hover:border-pink-400 rounded-3xl p-8 flex items-center gap-6 transition-all">
-                    <div class="w-14 h-14 bg-pink-600 rounded-2xl flex items-center justify-center text-4xl">🎨</div>
-                    <div>
-                        <div class="text-2xl font-bold">7TV Paint</div>
-                        <div class="text-pink-400">My Paint Account</div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-8 text-center text-zinc-500 text-xs border-t border-zinc-800">
-        Made with ❤️ &amp; • TUK7 © 2026
+    <!-- NEUER FOOTER – genau wie gewünscht, mittig unten -->
+    <footer class="py-12 text-center border-t border-zinc-800">
+        <p class="text-zinc-400 text-base">© 2026 TUK | All rights reserved.</p>
     </footer>
 
     <script>
         tailwind.config = {
-            content: [],
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] }
