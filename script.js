@@ -1,48 +1,37 @@
 /* ═══════════════════════════════════════════
    tuk — script.js
-   Subtle effects only. No libraries.
+   Lightweight interactions only.
 ═══════════════════════════════════════════ */
 
-/**
- * Spotlight: tracks mouse across interactive cards
- * and paints a faint accent-colored highlight.
- */
-const spotlightTargets = document.querySelectorAll('.link-card, .project-card');
+/* Ripple effect on card click */
+document.querySelectorAll('.card-link').forEach(card => {
+  card.addEventListener('click', function (e) {
+    const circle = document.createElement('span');
+    const diameter = Math.max(card.clientWidth, card.clientHeight);
+    const radius = diameter / 2;
+    const rect = card.getBoundingClientRect();
 
-spotlightTargets.forEach(el => {
-  el.addEventListener('mousemove', e => {
-    const r   = el.getBoundingClientRect();
-    const x   = ((e.clientX - r.left) / r.width  * 100).toFixed(1);
-    const y   = ((e.clientY - r.top)  / r.height * 100).toFixed(1);
-    el.style.backgroundImage =
-      `radial-gradient(circle at ${x}% ${y}%, rgba(0,229,255,0.055) 0%, transparent 65%)`;
-  });
+    circle.style.cssText = `
+      position: absolute;
+      width: ${diameter}px;
+      height: ${diameter}px;
+      left: ${e.clientX - rect.left - radius}px;
+      top: ${e.clientY - rect.top - radius}px;
+      background: rgba(145, 71, 255, 0.12);
+      border-radius: 50%;
+      transform: scale(0);
+      animation: ripple 450ms ease-out forwards;
+      pointer-events: none;
+    `;
 
-  el.addEventListener('mouseleave', () => {
-    el.style.backgroundImage = '';
+    card.style.position = 'relative';
+    card.style.overflow = 'hidden';
+    card.appendChild(circle);
+    setTimeout(() => circle.remove(), 500);
   });
 });
 
-/**
- * Blinking cursor after the hero subtitle.
- */
-const sub = document.querySelector('.hero-sub');
-if (sub) {
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    .cursor {
-      display: inline-block;
-      margin-left: 2px;
-      color: var(--accent);
-      font-size: 0.9em;
-      animation: blink 1.1s step-end infinite;
-    }
-  `;
-  document.head.appendChild(style);
-
-  const cursor = document.createElement('span');
-  cursor.className = 'cursor';
-  cursor.textContent = '_';
-  sub.appendChild(cursor);
-}
+/* Inject ripple keyframe once */
+const s = document.createElement('style');
+s.textContent = `@keyframes ripple { to { transform: scale(2.5); opacity: 0; } }`;
+document.head.appendChild(s);
