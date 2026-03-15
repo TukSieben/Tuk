@@ -21,28 +21,20 @@
         }
 
         body {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a0033 100%);
+            background: #050505;
         }
     </style>
 </head>
-<body class="bg-black text-white font-sans">
+<body class="bg-[#050505] text-white font-sans">
 
-    <!-- TOP NAV – nur Logo + Twitch-Link (alles andere weg) -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-violet-500/20">
-        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <img src="logo.png" alt="TUK7 Logo" class="h-9 w-auto">
-                <span class="text-2xl font-black tracking-tighter text-violet-300">TUK7</span>
-            </div>
-            
-            <a href="https://twitch.tv/tuk7" target="_blank" 
-               class="text-sm font-medium hover:text-violet-400 transition-colors">
-                Twitch
-            </a>
+    <!-- SUPER CLEAN TASKBAR – nur dein Logo klein oben links -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-zinc-800">
+        <div class="max-w-5xl mx-auto px-6 py-5 flex items-center">
+            <img src="logo.png" alt="TUK7 Logo" class="h-8 w-auto">
         </div>
     </nav>
 
-    <!-- HERO – nur das große TUK7 (alles andere entfernt) -->
+    <!-- HERO – nur TUK7 in der Mitte (maximaler Fokus) -->
     <section class="min-h-screen flex flex-col items-center justify-center pt-16 px-6 text-center">
         <div>
             <h1 class="gif-text text-6xl md:text-7xl lg:text-8xl font-black tracking-[-0.05em] leading-none">
@@ -55,9 +47,9 @@
         </div>
     </section>
 
-    <!-- NEUER FOOTER – genau wie gewünscht, mittig unten -->
-    <footer class="py-12 text-center border-t border-zinc-800">
-        <p class="text-zinc-400 text-base">© 2026 TUK | All rights reserved.</p>
+    <!-- FOOTER – winzig klein, ganz unten, ohne Strich -->
+    <footer class="py-6 text-center text-[10px] text-zinc-500">
+        © 2026 TUK | All rights reserved.
     </footer>
 
     <script>
