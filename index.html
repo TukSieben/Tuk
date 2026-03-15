@@ -1,455 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>tuk</title>
-  <link rel="icon" href="logo.png" type="image/png"/>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet"/>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TUK7 • Twitch Mod</title>
+    <!-- Tailwind CDN für geiles modernes Design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
-    :root {
-      --bg:      #111;
-      --bg2:     #171717;
-      --bg3:     #1e1e1e;
-      --line:    rgba(255,255,255,0.07);
-      --accent:  #9147ff;
-      --accent2: #bf94ff;
-      --text:    #e8e8e8;
-      --muted:   #555;
-      --muted2:  #333;
-    }
+        .gif-text {
+            background-image: url("https://cdn.7tv.app/paint/01J79KJRJR000F9JSA7DJTQMTZ/layer/01JAMR3FAWDKWNTKWGZGCDNSS4/3x.webp");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            display: inline-block;
+            -webkit-background-clip: text;
+        }
 
-    html, body { height: 100%; overflow: hidden; }
+        /* Extra Glow & Twitch-Vibe */
+        .hero-text {
+            text-shadow: 
+                0 0 30px rgba(139, 92, 246, 0.8),
+                0 0 60px rgba(139, 92, 246, 0.4);
+            animation: pulse 4s ease-in-out infinite;
+        }
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      flex-direction: column;
-    }
+        @keyframes pulse {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.15); }
+        }
 
-    /* ── TOPBAR ── */
-    .topbar {
-      height: 46px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      padding: 0 20px;
-      gap: 10px;
-      flex-shrink: 0;
-      background: var(--bg);
-      z-index: 50;
-    }
+        body {
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a0033 100%);
+        }
 
-    .tb-logo {
-      width: 24px; height: 24px;
-      border-radius: 50%;
-      object-fit: cover;
-      background: #2a1a4a;
-    }
-
-    .tb-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 18px;
-      letter-spacing: 0.08em;
-      color: var(--text);
-    }
-
-    .tb-sep { color: var(--muted2); font-size: 13px; margin: 0 2px; }
-    .tb-path { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
-
-
-
-    /* ── SHELL ── */
-    .shell {
-      display: flex;
-      flex: 1;
-      overflow: hidden;
-    }
-
-    /* ── SIDEBAR ── */
-    aside {
-      width: 200px;
-      flex-shrink: 0;
-      border-right: 1px solid var(--line);
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-      padding: 20px 0;
-    }
-
-    .s-label {
-      font-size: 9px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--muted2);
-      padding: 0 18px 6px;
-      margin-top: 16px;
-    }
-
-    .s-label:first-child { margin-top: 0; }
-
-    .s-item {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      padding: 8px 18px;
-      font-size: 11.5px;
-      color: var(--muted);
-      text-decoration: none;
-      cursor: pointer;
-      border-left: 2px solid transparent;
-      transition: color 0.12s, background 0.12s, border-color 0.12s;
-    }
-
-    .s-item:hover { color: var(--text); background: rgba(255,255,255,0.025); }
-
-    .s-item.active {
-      color: var(--accent2);
-      border-left-color: var(--accent);
-      background: rgba(145,71,255,0.06);
-    }
-
-    .s-item svg { width: 12px; height: 12px; flex-shrink: 0; }
-
-    /* ── CONTENT ── */
-    .content {
-      flex: 1;
-      overflow-y: auto;
-      position: relative;
-    }
-
-    .panel { display: none; }
-    .panel.active { display: block; }
-
-    /* ════════════════════════════════
-       ABOUT PANEL
-    ════════════════════════════════ */
-    #panel-about {
-      height: 100%;
-      display: none;
-      grid-template-rows: 1fr auto;
-    }
-
-    #panel-about.active { display: grid; }
-
-    /* big hero area */
-    .hero {
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: flex-end;
-      padding: 0 48px 40px;
-      min-height: 100%;
-    }
-
-    /* faint grid lines background */
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(var(--line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--line) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-    }
-
-    /* corner glow */
-    .hero::after {
-      content: '';
-      position: absolute;
-      top: -80px; right: -80px;
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(145,71,255,0.13) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-role { display: none; }
-
-    .hero-name {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(72px, 10vw, 120px);
-      letter-spacing: 0.04em;
-      line-height: 0.9;
-      color: var(--text);
-    }
-
-    .hero-name span {
-      color: var(--accent);
-    }
-
-    .hero-desc {
-      margin-top: 22px;
-      font-size: 11px;
-      color: var(--muted);
-      line-height: 1.8;
-      max-width: 340px;
-    }
-
-    /* ════════════════════════════════
-       LINKS PANEL
-    ════════════════════════════════ */
-    #panel-links {
-      padding: 40px 48px;
-    }
-
-    .links-title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 42px;
-      letter-spacing: 0.06em;
-      color: var(--text);
-      margin-bottom: 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .links-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-    }
-
-    .platform-block {
-      margin-bottom: 36px;
-    }
-
-    .platform-block + .platform-block {
-      border-top: 1px solid var(--line);
-      padding-top: 36px;
-    }
-
-    .p-row {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      text-decoration: none;
-      color: var(--text);
-      padding: 14px 0;
-      border-bottom: 1px solid var(--line);
-      transition: padding-left 0.2s;
-      group: true;
-    }
-
-    .p-row:last-child { border-bottom: none; }
-    .p-row:hover { padding-left: 8px; }
-
-    .p-icon {
-      width: 38px; height: 38px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .p-icon svg { width: 16px; height: 16px; }
-
-    .ic-twitch { background: rgba(145,71,255,0.15); color: #bf94ff; }
-    .ic-yt     { background: rgba(255,50,50,0.12);  color: #ff7070; }
-    .ic-x      { background: rgba(255,255,255,0.06);color: #ccc; }
-    .ic-db     { background: rgba(255,255,255,0.05);color: #aaa; }
-
-    .p-info { flex: 1; }
-
-    .p-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-      display: block;
-      letter-spacing: 0.01em;
-    }
-
-    .p-handle {
-      font-size: 10.5px;
-      color: var(--muted);
-      margin-top: 2px;
-      display: block;
-    }
-
-    .p-arrow {
-      font-size: 16px;
-      color: var(--muted2);
-      transition: color 0.15s, transform 0.15s;
-    }
-
-    .p-row:hover .p-arrow {
-      color: var(--accent2);
-      transform: translate(3px, -3px);
-    }
-
-    /* ── STATUSBAR ── */
-    .statusbar {
-      height: 24px;
-      border-top: 1px solid var(--line);
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      gap: 18px;
-      flex-shrink: 0;
-      font-size: 10px;
-      color: var(--muted2);
-    }
-
-    .statusbar span { color: var(--muted); }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.15; }
-    }
-
-    /* mobile */
-    @media (max-width: 600px) {
-      html, body { overflow: auto; }
-      .shell { flex-direction: column; overflow: visible; }
-      aside { width: 100%; flex-direction: row; flex-wrap: wrap; border-right: none; border-bottom: 1px solid var(--line); padding: 8px; }
-      .s-label { display: none; }
-      .s-item { border-left: none; border-bottom: 2px solid transparent; padding: 8px 12px; font-size: 11px; }
-      .s-item.active { border-bottom-color: var(--accent); background: none; }
-      .content { overflow: visible; }
-      #panel-about { min-height: 60vh; }
-      .hero { padding: 24px 24px 32px; }
-      #panel-links { padding: 28px 24px; }
-      .links-title { font-size: 32px; }
-    }
-  </style>
+        .nav-glow {
+            box-shadow: 0 4px 30px rgba(139, 92, 246, 0.3);
+        }
+    </style>
 </head>
-<body>
+<body class="bg-black text-white font-sans overflow-x-hidden">
 
-  <!-- TOPBAR -->
-  <div class="topbar">
-    <img class="tb-logo" src="logo.png" alt="tuk" onerror="this.style.background='#9147ff';this.removeAttribute('src')"/>
-    <span class="tb-name">tuk</span>
-    <span class="tb-sep">/</span>
-    <span class="tb-path">index</span>
-  </div>
+    <!-- TOP TASKBAR / NAVBAR mit deinem Logo -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-violet-500/30 nav-glow">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <!-- DEIN LOGO -->
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="TUK7 Logo" class="h-12 w-auto drop-shadow-2xl">
+                <span class="text-2xl font-black tracking-tighter text-violet-400">TUK7</span>
+            </div>
 
-  <div class="shell">
+            <!-- Optional: kleine Nav-Links (kannst du erweitern) -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                <a href="#socials" class="hover:text-violet-400 transition-colors">Socials</a>
+                <a href="https://twitch.tv/tuk7" target="_blank" class="hover:text-violet-400 transition-colors">Twitch</a>
+                <a href="#" class="hover:text-violet-400 transition-colors">Discord</a>
+            </div>
 
-    <!-- SIDEBAR -->
-    <aside>
-      <div class="s-label">pages</div>
-
-      <div class="s-item active" onclick="show('about', this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
-        </svg>
-        about
-      </div>
-
-      <div class="s-item" onclick="show('links', this)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-        </svg>
-        links
-      </div>
-
-      <div class="s-label">external</div>
-
-      <a class="s-item" href="https://7database.com/" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
-        </svg>
-        7database ↗
-      </a>
-    </aside>
-
-    <!-- CONTENT -->
-    <div class="content">
-
-      <!-- ABOUT -->
-      <div id="panel-about" class="panel active">
-        <div class="hero">
-          <div class="hero-content">
-            <div class="hero-role">Twitch Community Moderator</div>
-            <div class="hero-name">T<span>U</span>K</div>
-
-          </div>
+            <!-- Twitch Live Badge (optional) -->
+            <div class="flex items-center gap-2 bg-red-600 text-white text-xs font-bold px-4 py-1 rounded-full animate-pulse">
+                <div class="w-2 h-2 bg-white rounded-full"></div>
+                LIVE MOD
+            </div>
         </div>
-      </div>
+    </nav>
 
-      <!-- LINKS -->
-      <div id="panel-links" class="panel">
-        <div class="links-title">Links</div>
+    <!-- HERO SECTION mit mega TUK7 + 7TV Paint -->
+    <section class="min-h-screen flex flex-col items-center justify-center pt-20 px-6 relative">
+        <div class="text-center">
+            <!-- Der geile 7TV Paint Text -->
+            <h1 class="gif-text hero-text text-[6rem] md:text-[9rem] lg:text-[12rem] font-black tracking-[-0.07em] leading-none">
+                TUK7
+            </h1>
 
-        <div class="platform-block">
-          <a class="p-row" href="https://www.twitch.tv/tuk7" target="_blank" rel="noopener">
-            <div class="p-icon ic-twitch">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-            </div>
-            <div class="p-info">
-              <strong class="p-name">Twitch</strong>
-              <span class="p-handle">twitch.tv/tuk7</span>
-            </div>
-            <span class="p-arrow">↗</span>
-          </a>
-
-          <a class="p-row" href="https://www.youtube.com/@tukfps" target="_blank" rel="noopener">
-            <div class="p-icon ic-yt">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-            </div>
-            <div class="p-info">
-              <strong class="p-name">YouTube</strong>
-              <span class="p-handle">@tukfps</span>
-            </div>
-            <span class="p-arrow">↗</span>
-          </a>
-
-          <a class="p-row" href="https://x.com/tukfps" target="_blank" rel="noopener">
-            <div class="p-icon ic-x">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </div>
-            <div class="p-info">
-              <strong class="p-name">Twitter / X</strong>
-              <span class="p-handle">@tukfps</span>
-            </div>
-            <span class="p-arrow">↗</span>
-          </a>
+            <!-- Subline -->
+            <p class="mt-6 text-2xl md:text-3xl font-semibold text-violet-300 tracking-wide">
+                Twitch Community Moderator
+            </p>
+            <p class="mt-2 text-lg text-zinc-400 max-w-md mx-auto">
+                Mod für die besten Streams • Immer dabei • 7TV Paint Vibes
+            </p>
         </div>
 
-        <div class="platform-block">
-          <a class="p-row" href="https://7database.com/" target="_blank" rel="noopener">
-            <div class="p-icon ic-db">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/></svg>
-            </div>
-            <div class="p-info">
-              <strong class="p-name">7database</strong>
-              <span class="p-handle">7database.com</span>
-            </div>
-            <span class="p-arrow">↗</span>
-          </a>
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-500">
+            <span class="text-xs tracking-widest">SCROLL FOR SOCIALS</span>
+            <div class="w-px h-12 bg-gradient-to-b from-transparent via-violet-400 to-transparent"></div>
         </div>
-      </div>
+    </section>
 
-    </div>
-  </div>
+    <!-- SOCIALS SECTION -->
+    <section id="socials" class="py-24 bg-zinc-950/70 border-t border-violet-500/20">
+        <div class="max-w-4xl mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-12 text-violet-400">Meine Socials</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Twitch -->
+                <a href="https://twitch.tv/tuk7" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-violet-950 border border-violet-500/30 hover:border-violet-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
+                    <div class="w-16 h-16 bg-purple-600 rounded-2xl flex items-center justify-center text-4xl">📺</div>
+                    <div>
+                        <div class="text-2xl font-bold">Twitch</div>
+                        <div class="text-violet-400">tuk7 • Live &amp; Modding</div>
+                    </div>
+                </a>
 
-  <!-- STATUSBAR -->
-  <div class="statusbar">
-    <div style="margin-left:auto">© 2026 tuk</div>
-  </div>
+                <!-- Discord (ersetze den Link mit deinem Invite) -->
+                <a href="https://discord.gg/dein-discord-invite" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-indigo-950 border border-indigo-500/30 hover:border-indigo-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
+                    <div class="w-16 h-16 bg-indigo-600 rounded-2xl flex items-center justify-center text-4xl">💬</div>
+                    <div>
+                        <div class="text-2xl font-bold">Discord</div>
+                        <div class="text-indigo-400">Community &amp; Mod-Chat</div>
+                    </div>
+                </a>
 
-  <script>
-    function show(id, el) {
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      document.querySelectorAll('.s-item').forEach(s => s.classList.remove('active'));
-      var panel = document.getElementById('panel-' + id);
-      panel.classList.add('active');
-      el.classList.add('active');
-    }
-  </script>
-  <script src="script.js"></script>
+                <!-- X / Twitter (ersetze mit deinem) -->
+                <a href="https://x.com/deinusername" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-sky-950 border border-sky-500/30 hover:border-sky-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
+                    <div class="w-16 h-16 bg-sky-600 rounded-2xl flex items-center justify-center text-4xl">𝕏</div>
+                    <div>
+                        <div class="text-2xl font-bold">X / Twitter</div>
+                        <div class="text-sky-400">@deinusername</div>
+                    </div>
+                </a>
 
+                <!-- 7TV oder Instagram (Beispiel) -->
+                <a href="https://7tv.app/users/dein7tvname" target="_blank" 
+                   class="group bg-zinc-900 hover:bg-pink-950 border border-pink-500/30 hover:border-pink-400 rounded-3xl p-8 flex items-center gap-6 transition-all duration-300">
+                    <div class="w-16 h-16 bg-pink-600 rounded-2xl flex items-center justify-center text-4xl">🎨</div>
+                    <div>
+                        <div class="text-2xl font-bold">7TV Paint</div>
+                        <div class="text-pink-400">Mein Paint-Account</div>
+                    </div>
+                </a>
+            </div>
+
+            <p class="text-center text-zinc-500 mt-16 text-sm">
+                Mehr Links? Sag einfach Bescheid – ich baue dir alles ein!
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center text-zinc-500 text-xs border-t border-zinc-800">
+        Made with ❤️ &amp; 7TV Paint • TUK7 © 2026
+    </footer>
+
+    <script>
+        // Tailwind config für extra Style
+        tailwind.config = {
+            content: [],
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>
