@@ -56,21 +56,22 @@
             transform: translateZ(12px);
         }
 
-        /* === SUBTILES SOCIALS DROPDOWN (genau wie gewünscht) === */
+        /* === SOCIALS DROPDOWN – jetzt Klick + größer + ohne Schatten === */
         .social-group {
             position: fixed;
             top: 32px;
             right: 32px;
             z-index: 50;
+            cursor: pointer;
         }
         .social-dot {
-            font-size: 32px;
+            font-size: 48px;                    /* ← jetzt deutlich größer */
             line-height: 1;
             color: #3f3f46;
             transition: color 0.2s ease;
         }
         .social-group:hover .social-dot {
-            color: #71717a;
+            color: #71717a;                     /* leichte Farbänderung beim Hover (nur für den Punkt) */
         }
         .social-dropdown {
             position: absolute;
@@ -82,13 +83,13 @@
             border: 1px solid #27272a;
             border-radius: 16px;
             padding: 16px 0;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+            /* KEIN Schatten mehr */
             opacity: 0;
             visibility: hidden;
             transform: translateY(12px);
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .social-group:hover .social-dropdown {
+        .social-group.active .social-dropdown {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -96,8 +97,8 @@
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
-    <!-- SOCIALS DROPDOWN – extrem dezent -->
-    <div class="social-group group">
+    <!-- SOCIALS DROPDOWN – jetzt per Klick -->
+    <div class="social-group" id="social-group">
         <div class="social-dot">⋯</div>
         
         <div class="social-dropdown">
@@ -114,7 +115,6 @@
                 <a href="https://instagram.com/deinname" target="_blank" class="px-6 py-3.5 hover:bg-zinc-900 transition-colors flex items-center gap-3 text-zinc-300 hover:text-white">
                     📷 <span>Instagram</span>
                 </a>
-                <!-- Füge hier einfach mehr Zeilen hinzu, falls du z.B. YouTube, TikTok etc. willst -->
             </div>
         </div>
     </div>
@@ -128,7 +128,6 @@
                         TUK7
                     </h1>
                    
-                    <!-- TWITCH C O MMUNITY MODERATOR -->
                     <p class="mt-6 text-xl font-medium text-white flex items-center justify-center gap-x-px">
                         TWITCH C
                         <img src="o.png" class="o-replace" alt="O">
@@ -153,7 +152,7 @@
             }
         }
 
-        // === 3D MOUSE TILT – bleibt genau gleich ===
+        // === 3D MOUSE TILT (unverändert) ===
         const tiltContent = document.getElementById('tilt-content');
         document.addEventListener('mousemove', (e) => {
             const x = (window.innerWidth / 2 - e.clientX) / 55;
@@ -162,6 +161,19 @@
         });
         document.addEventListener('mouseleave', () => {
             tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+        });
+
+        // === SOCIAL DROPDOWN – jetzt Klick-Toggle ===
+        const socialGroup = document.getElementById('social-group');
+
+        socialGroup.addEventListener('click', function(e) {
+            e.stopPropagation();                 // verhindert sofortiges Schließen
+            socialGroup.classList.toggle('active');
+        });
+
+        // Schließen wenn man woanders hinklickt
+        document.addEventListener('click', function() {
+            socialGroup.classList.remove('active');
         });
     </script>
 </body>
