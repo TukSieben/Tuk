@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="yourname – developer / creator" />
+  <title>yourname</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background effects -->
+  <div class="bg-noise" aria-hidden="true"></div>
+  <div class="bg-glow"  aria-hidden="true"></div>
+
+  <main class="container">
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="profile">
+      <div class="avatar-ring">
+        <!-- Replace src with your own image -->
+        <img
+          class="avatar"
+          src="https://api.dicebear.com/9.x/bottts-neutral/svg?seed=yourname&backgroundColor=0a0a0a"
+          alt="Avatar"
+          width="90"
+          height="90"
+        />
+      </div>
+
+      <h1 class="name">yourname</h1>
+      <p class="tagline">developer &amp; creator</p>
+
+      <a class="btn-donate" href="#" target="_blank" rel="noopener">
+        ✦ support me
+      </a>
+    </header>
+
+    <!-- ═══ ABOUT ═══ -->
+    <section class="card" id="about">
+      <h2 class="section-title">about</h2>
+      <p class="about-text">
+        hey! i'm a developer who loves building cool stuff on the web.
+        i spend my time writing code, experimenting with new tech,
+        and occasionally touching grass.
+      </p>
+    </section>
+
+    <!-- ═══ SOCIALS ═══ -->
+    <section class="card" id="socials">
+      <h2 class="section-title">socials</h2>
+      <ul class="links-list">
+        <li>
+          <a class="link-item" href="https://github.com/yourusername" target="_blank" rel="noopener">
+            <span class="link-icon">⬡</span>
+            <span class="link-label">github</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="link-item" href="https://twitter.com/yourusername" target="_blank" rel="noopener">
+            <span class="link-icon">⬡</span>
+            <span class="link-label">twitter / x</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="link-item" href="https://discord.com/users/yourid" target="_blank" rel="noopener">
+            <span class="link-icon">⬡</span>
+            <span class="link-label">discord</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="link-item" href="https://twitch.tv/yourusername" target="_blank" rel="noopener">
+            <span class="link-icon">⬡</span>
+            <span class="link-label">twitch</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </li>
+        <li>
+          <a class="link-item" href="https://youtube.com/@yourusername" target="_blank" rel="noopener">
+            <span class="link-icon">⬡</span>
+            <span class="link-label">youtube</span>
+            <span class="link-arrow">↗</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ═══ PROJECTS ═══ -->
+    <section class="card" id="projects">
+      <h2 class="section-title">projects</h2>
+      <ul class="project-list">
+
+        <li class="project-item">
+          <div class="project-top">
+            <a class="project-name" href="#" target="_blank" rel="noopener">ProjectOne</a>
+            <span class="project-status status-live">live</span>
+          </div>
+          <p class="project-desc">a short description of what this project does and why it's cool.</p>
+          <div class="project-tags">
+            <span class="tag">javascript</span>
+            <span class="tag">node.js</span>
+            <span class="tag">html</span>
+          </div>
+        </li>
+
+        <li class="project-item">
+          <div class="project-top">
+            <a class="project-name" href="#" target="_blank" rel="noopener">ProjectTwo</a>
+            <span class="project-status status-wip">wip</span>
+          </div>
+          <p class="project-desc">another project — maybe still in progress or just mysterious.</p>
+          <div class="project-tags">
+            <span class="tag">python</span>
+            <span class="tag">api</span>
+          </div>
+        </li>
+
+        <li class="project-item">
+          <div class="project-top">
+            <span class="project-name no-link">SecretProject</span>
+            <span class="project-status status-hidden">soon™</span>
+          </div>
+          <p class="project-desc">shhhh...</p>
+          <div class="project-tags">
+            <span class="tag">???</span>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="footer">
+      <span>© 2026 · yourname</span>
+      <span class="footer-dot">·</span>
+      <span>built with ♥ &amp; caffeine</span>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
