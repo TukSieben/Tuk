@@ -440,6 +440,15 @@
     <div style="margin-left:auto">© 2026 tuk</div>
   </div>
 
+  <script>
+    function show(id, el) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.s-item').forEach(s => s.classList.remove('active'));
+      var panel = document.getElementById('panel-' + id);
+      panel.classList.add('active');
+      el.classList.add('active');
+    }
+  </script>
   <script src="script.js"></script>
 
 </body>
