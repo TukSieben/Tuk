@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
   
-    <!-- DEIN LOGO ALS FAVICON -->
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -33,7 +32,6 @@
         body {
             background: #050505;
         }
-        /* === 3D MOUSE TILT (nur Desktop) === */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -46,7 +44,6 @@
             transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
             transform-style: preserve-3d;
         }
-        /* === SOCIAL ICONS – perfekt auf Mobile + Desktop === */
         .social-icons {
             position: fixed;
             top: 24px;
@@ -56,15 +53,8 @@
             gap: 16px;
         }
         @media (min-width: 768px) {
-            .social-icons {
-                top: 32px;
-                right: 32px;
-                gap: 18px;
-            }
-            .social-icons img {
-                width: 26px;
-                height: 26px;
-            }
+            .social-icons { top: 32px; right: 32px; gap: 18px; }
+            .social-icons img { width: 26px; height: 26px; }
         }
         .social-icons img {
             width: 22px;
@@ -77,7 +67,7 @@
             transform: scale(1.15);
         }
 
-        /* === NEUER MOD BUTTON (mod.png) === */
+        /* MOD BUTTON */
         .mod-button {
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -94,15 +84,9 @@
 
     <!-- SOCIAL ICONS -->
     <div class="social-icons">
-        <a href="https://twitch.tv/tuk7" target="_blank">
-            <img src="twitch.png" alt="Twitch">
-        </a>
-        <a href="https://x.com/tukfps" target="_blank">
-            <img src="twitter.png" alt="Twitter">
-        </a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank">
-            <img src="discord.png" alt="Discord">
-        </a>
+        <a href="https://twitch.tv/tuk7" target="_blank"><img src="twitch.png" alt="Twitch"></a>
+        <a href="https://x.com/tukfps" target="_blank"><img src="twitter.png" alt="Twitter"></a>
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
     </div>
 
     <!-- HERO -->
@@ -118,20 +102,16 @@
                         TWITCH 
                         <span class="flex items-center whitespace-nowrap">
                             C
-                            <img src="o.png" 
-                                 class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" 
-                                 alt="O">
+                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
                             MMUNITY
                         </span>
                         MODERATOR
                     </p>
 
-                    <!-- NEUER MOD BUTTON – großes klickbares Bild -->
+                    <!-- MOD BUTTON -->
                     <div class="mt-10">
-                        <a href="mods.html" class="mod-button inline-block">
-                            <img src="mod.png" 
-                                 alt="My Moderator Roles" 
-                                 class="w-52 sm:w-64 md:w-72 mx-auto">
+                        <a href="mods" class="mod-button inline-block">
+                            <img src="mod.png" alt="My Moderator Roles" class="w-52 sm:w-64 md:w-72 mx-auto">
                         </a>
                     </div>
                 </div>
@@ -145,35 +125,23 @@
     </footer>
 
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] }
-                }
-            }
-        }
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // === 3D MOUSE TILT – nur Desktop ===
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
                 const x = (window.innerWidth / 2 - e.clientX) / 55;
                 const y = (window.innerHeight / 2 - e.clientY) / 55;
                 tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
             });
-            document.addEventListener('mouseleave', () => {
-                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
+            document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // === ORBS (unverändert) ===
+        // ORBS (unverändert)
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
-        let orbs = [];
-        let width, height;
-        let isMobileDevice = isMobile;
+        let orbs = [], width, height, isMobileDevice = isMobile;
 
         class Orb {
             constructor() { this.reset(); }
@@ -189,10 +157,8 @@
                 this.phase = Math.random() * Math.PI * 2;
             }
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.x += Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
-                this.y += Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
+                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
+                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
                 if (this.x < -60) this.x = width + 60;
                 if (this.x > width + 60) this.x = -60;
                 if (this.y < -60) this.y = height + 60;
@@ -214,35 +180,22 @@
         }
 
         function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
             isMobileDevice = window.innerWidth < 768;
         }
-
         function initOrbs() {
             orbs = [];
             const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
-            for (let i = 0; i < count; i++) {
-                orbs.push(new Orb());
-            }
+            for (let i = 0; i < count; i++) orbs.push(new Orb());
         }
-
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            for (let orb of orbs) {
-                orb.update();
-                orb.draw();
-            }
+            for (let orb of orbs) { orb.update(); orb.draw(); }
             requestAnimationFrame(animate);
         }
 
-        window.addEventListener('resize', () => {
-            resize();
-            initOrbs();
-        });
-
+        window.addEventListener('resize', () => { resize(); initOrbs(); });
         resize();
         initOrbs();
         animate();
