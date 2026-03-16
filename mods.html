@@ -67,20 +67,31 @@
         }
         .back-home:hover { color: white; }
 
-        /* NEUE CLEAN LISTE */
-        .channel-list a {
-            display: block;
-            padding: 20px 0;
-            border-bottom: 1px solid #27272a;
-            transition: all 0.2s ease;
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
         }
-        .channel-list a:hover {
-            background-color: #18181b;
-            padding-left: 12px;
+        @media (min-width: 1024px) {
+            .channel-grid { grid-template-columns: repeat(4, 1fr); }
         }
-        .channel-list h3 {
-            font-size: 1.35rem;
-            font-weight: 600;
+        .channel-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .channel-card:hover {
+            transform: translateY(-6px);
+            border-color: #a5b4fc;
+        }
+        .profile-img {
+            width: 96px;
+            height: 96px;
+            object-fit: cover;
+            border-radius: 9999px;
+            border: 4px solid #27272a;
         }
     </style>
 </head>
@@ -102,14 +113,22 @@
     </div>
 
     <!-- CHANNELS SECTION -->
-    <section class="pt-24 pb-24 px-6 max-w-4xl mx-auto">
+    <section class="pt-24 pb-24 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Channels I Moderate</h2>
-            <p class="text-zinc-400 mt-3 text-lg">Currently <span id="channel-count" class="text-violet-400 font-semibold">0</span> Channels</p>
+            <p class="text-zinc-400 mt-2 text-lg">6 Partner Channels</p>
+            
+            <!-- GESAMT-FOLLOWER -->
+            <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
+                <span class="text-sm text-zinc-400">I moderate for</span>
+                <span id="total-followers" class="text-4xl font-bold text-violet-400">3,002,844</span>
+                <span class="text-sm text-zinc-400">followers</span>
+            </div>
         </div>
 
-        <!-- CLEAN LISTE (keine Cards mehr) -->
-        <div id="channels-grid" class="channel-list space-y-1"></div>
+        <div id="channels-grid" class="channel-grid">
+            <!-- Wird automatisch gefüllt -->
+        </div>
     </section>
 
     <!-- FOOTER -->
@@ -120,7 +139,7 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // ORBS (vollständig)
+        // ORBS (unverändert)
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
@@ -161,11 +180,7 @@
             }
         }
 
-        function resize() {
-            width = window.innerWidth; height = window.innerHeight;
-            canvas.width = width; canvas.height = height;
-            isMobileDevice = window.innerWidth < 768;
-        }
+        function resize() { width = window.innerWidth; height = window.innerHeight; canvas.width = width; canvas.height = height; isMobileDevice = window.innerWidth < 768; }
         function initOrbs() {
             orbs = [];
             const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
@@ -177,31 +192,32 @@
             requestAnimationFrame(animate);
         }
 
-        // DEINE CHANNELS (hier einfach eintragen)
+        // DEINE 6 STREAMER
         const myChannels = [
-            { name: "CHANNEL NAME 1", link: "https://twitch.tv/channel1", desc: "Short description or category", since: "since 2024" },
-            { name: "CHANNEL NAME 2", link: "https://twitch.tv/channel2", desc: "Another short description", since: "since 2023" }
-            // Füge hier weitere hinzu (kopiere den Block)
+            { name: "Amar",        link: "https://twitch.tv/amar",        followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
+            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358",  since: "Feb 3, 2026",  image: "../st2.png" },
+            { name: "marco_scm",   link: "https://twitch.tv/marco_scm",   followers: "410,554",  since: "Nov 13, 2025", image: "../st3.png" },
+            { name: "Julistria",   link: "https://twitch.tv/julistria",   followers: "28,618",   since: "Dec 29, 2024", image: "../st4.png" },
+            { name: "Lele",        link: "https://twitch.tv/lele",        followers: "24,174",   since: "Feb 28, 2025", image: "../st5.png" },
+            { name: "Regy",        link: "https://twitch.tv/regy",        followers: "14,355",   since: "Feb 18, 2025", image: "../st6.png" }
         ];
 
         function renderChannels() {
-            const container = document.getElementById('channels-grid');
-            container.innerHTML = '';
+            const grid = document.getElementById('channels-grid');
+            grid.innerHTML = '';
             myChannels.forEach(ch => {
-                const item = document.createElement('a');
-                item.href = ch.link;
-                item.target = '_blank';
-                item.className = 'block group';
-                item.innerHTML = `
-                    <div class="flex justify-between items-baseline">
-                        <h3 class="text-2xl font-semibold text-white group-hover:text-violet-400 transition-colors">${ch.name}</h3>
-                        <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full">${ch.since}</span>
-                    </div>
-                    <p class="text-zinc-400 mt-1">${ch.desc}</p>
+                const card = document.createElement('a');
+                card.href = ch.link;
+                card.target = '_blank';
+                card.className = 'channel-card flex flex-col items-center text-center p-6';
+                card.innerHTML = `
+                    <img src="${ch.image}" class="profile-img mb-6">
+                    <h3 class="text-2xl font-semibold">${ch.name}</h3>
+                    <p class="text-emerald-400 font-medium mt-1">${ch.followers} followers</p>
+                    <p class="text-xs text-zinc-400 mt-4">Mod since ${ch.since}</p>
                 `;
-                container.appendChild(item);
+                grid.appendChild(card);
             });
-            document.getElementById('channel-count').textContent = myChannels.length;
         }
 
         // Init
