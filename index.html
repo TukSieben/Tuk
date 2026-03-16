@@ -79,11 +79,11 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE AM NETZ – SYNCHRON KLETTERND (deine Wünsche) === */
+        /* === SPINNE AM NETZ – JETZT KOMPLETT VERSCHWINDET NACH OBEN === */
         #spider-container {
             position: fixed;
             top: 5px;
-            left: 168px; /* noch weiter nach rechts */
+            left: 168px;
             z-index: 40;
             pointer-events: none;
         }
@@ -100,14 +100,9 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 26px;
-            bottom: -3px;           /* hängt immer am unteren Ende des Fadens */
+            bottom: -3px;
             pointer-events: auto;
-            animation: crawl 0.75s linear infinite; /* klettert immer ein bisschen */
-        }
-        @keyframes crawl {
-            0%   { transform: translateX(-50%) rotate(-6deg); }
-            50%  { transform: translateX(-50%) rotate(7deg); }
-            100% { transform: translateX(-50%) rotate(-6deg); }
+            transition: transform 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
     </style>
 </head>
@@ -128,7 +123,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ (synchron kletternd) -->
+    <!-- SPINNE AM NETZ -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -244,20 +239,20 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN SYNCHRON KLETTERN ===
+        // === SPINNE + FADEN – KOMPLETT AUS DEM BILDSCHIRM RAUSKRABBELN ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
         let timeoutId = null;
 
         function resetToTop() {
-            thread.style.height = '34px';
-            // Spinne klettert automatisch mit hoch (weil sie am unteren Ende hängt)
+            thread.style.height = '0px';                    // Faden zieht sich komplett ein
+            spider.style.transform = 'translateX(-50%) translateY(-160px)'; // Spinne klettert weit nach oben raus (nicht mehr sichtbar!)
         }
 
         function descend() {
             thread.style.height = '148px';
-            // Spinne krabbelt automatisch mit runter
+            spider.style.transform = 'translateX(-50%)';
         }
 
         function escape() {
@@ -268,10 +263,9 @@
             }, 5000);
         }
 
-        // Hover auf Spinne → beide klettern zusammen nach oben raus
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: kurz warten, dann zusammen runterkommen
+        // Beim Laden: kurz warten, dann runterkommen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
