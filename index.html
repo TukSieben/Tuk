@@ -76,6 +76,16 @@
             filter: brightness(1);
             transform: scale(1.15);
         }
+
+        /* === OME44 MODAL STYLE === */
+        #ome44-modal img {
+            box-shadow: 0 0 80px rgba(236, 72, 153, 0.6);
+            animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        @keyframes popIn {
+            0% { transform: scale(0.6) rotate(-8deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
@@ -105,12 +115,15 @@
                         TUK7
                     </h1>
                   
-                    <!-- SUBTITLE – jetzt wirklich ein minibisschen größer (wie gewünscht) -->
+                    <!-- SUBTITLE mit klickbarem O -->
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH 
                         <span class="flex items-center whitespace-nowrap">
                             C
-                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
+                            <img id="ome44-trigger" 
+                                 src="o.png" 
+                                 class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200" 
+                                 alt="O">
                             MMUNITY
                         </span>
                         MODERATOR
@@ -124,6 +137,21 @@
     <footer class="absolute bottom-6 left-0 right-0 text-center text-[10px] text-zinc-500">
         © 2026 TUK | All rights reserved.
     </footer>
+
+    <!-- === OME44 MODUS POPUP (GIF) === -->
+    <div id="ome44-modal" class="hidden fixed inset-0 bg-black/95 flex items-center justify-center z-[999]">
+        <div class="relative max-w-[92vw] max-h-[92vh]">
+            <img src="ome44.gif" 
+                 alt="OME44 MODE" 
+                 class="max-w-full max-h-full rounded-2xl">
+            
+            <!-- Close Button -->
+            <button onclick="document.getElementById('ome44-modal').classList.add('hidden')" 
+                    class="absolute -top-5 -right-5 bg-zinc-900 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl shadow-xl transition-all">
+                ✕
+            </button>
+        </div>
+    </div>
 
     <script>
         tailwind.config = {
@@ -238,6 +266,32 @@
             requestAnimationFrame(animate);
         }
 
+        // === OME44 EASTER EGG (Klick auf O) ===
+        const omeTrigger = document.getElementById('ome44-trigger');
+        const omeModal = document.getElementById('ome44-modal');
+
+        omeTrigger.addEventListener('click', (e) => {
+            e.stopImmediatePropagation();
+            omeModal.classList.remove('hidden');
+            omeModal.classList.add('flex');
+        });
+
+        // Close Modal
+        omeModal.addEventListener('click', (e) => {
+            if (e.target === omeModal) {
+                omeModal.classList.add('hidden');
+                omeModal.classList.remove('flex');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !omeModal.classList.contains('hidden')) {
+                omeModal.classList.add('hidden');
+                omeModal.classList.remove('flex');
+            }
+        });
+
+        // Init everything
         window.addEventListener('resize', () => {
             resize();
             initOrbs();
