@@ -74,6 +74,13 @@
             transform: scale(1.15);
         }
 
+        /* === FIX: OME44 TRIGGER BUTTON – jetzt RIESIGE Klickfläche + C wieder drin === */
+        #ome44-trigger {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+            z-index: 50;
+        }
+
         /* === OME44 MODAL === */
         #ome44-modal {
             display: none;
@@ -118,17 +125,20 @@
                         TUK7
                     </h1>
                   
-                    <!-- SUBTITLE mit klickbarem O (jetzt als Button mit extra großer Klickfläche) -->
+                    <!-- SUBTITLE – C wieder drin + O jetzt als Button mit RIESIGER Klickfläche -->
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH 
-                        <button id="ome44-trigger" 
-                                type="button"
-                                class="inline-flex items-center justify-center bg-transparent border-0 p-3 mx-0.5 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200 pointer-events-auto relative z-30 focus:outline-none">
-                            <img src="o.png" 
-                                 class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em]" 
-                                 alt="O">
-                        </button>
-                        MMUNITY
+                        <span class="flex items-center whitespace-nowrap">
+                            C
+                            <button id="ome44-trigger" 
+                                    type="button"
+                                    class="inline-flex items-center justify-center bg-transparent border-0 p-5 mx-1 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200">
+                                <img src="o.png" 
+                                     class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em]" 
+                                     alt="O">
+                            </button>
+                            MMUNITY
+                        </span>
                         MODERATOR
                     </p>
                 </div>
@@ -180,14 +190,14 @@
             });
         }
 
-        // === ORBS (unverändert – läuft perfekt) ===
+        // === ORBS (unverändert) ===
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [];
         let width, height;
         let isMobileDevice = isMobile;
 
-        class Orb { /* ... (genau gleich wie vorher) ... */ 
+        class Orb {
             constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
@@ -240,7 +250,7 @@
             requestAnimationFrame(animate);
         }
 
-        // === OME44 EASTER EGG – JETZT 100% Klickbar ===
+        // === OME44 EASTER EGG – jetzt 100% klickbar (C wieder da!) ===
         const omeTrigger = document.getElementById('ome44-trigger');
         const omeModal = document.getElementById('ome44-modal');
 
@@ -251,14 +261,9 @@
             omeModal.classList.remove('active');
         }
 
-        // Klick + Touch für Handy
         omeTrigger.addEventListener('click', openOme44);
-        omeTrigger.addEventListener('touchend', (e) => {
-            e.preventDefault();
-            openOme44();
-        });
+        omeTrigger.addEventListener('touchend', (e) => { e.preventDefault(); openOme44(); });
 
-        // Modal schließen (außerhalb + ESC)
         omeModal.addEventListener('click', (e) => {
             if (e.target === omeModal) closeOme44();
         });
