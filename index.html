@@ -79,7 +79,7 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE AM NETZ – JETZT KOMPLETT VERSCHWINDET NACH OBEN === */
+        /* === SPINNE + FADEN – PERFEKT SYNCHRON + STARTET OBEN AUSSERHALB === */
         #spider-container {
             position: fixed;
             top: 5px;
@@ -92,13 +92,13 @@
             background: rgba(163,163,163,0.3);
             margin: 0 auto;
             position: relative;
-            height: 34px;
+            height: 0px;                    /* STARTET KOMPLETT UNSICHTBAR */
             transition: height 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .spider {
             position: absolute;
             left: 50%;
-            transform: translateX(-50%);
+            transform: translateX(-50%) translateY(-220px); /* STARTET WEIT OBEN AUSSERHALB */
             font-size: 26px;
             bottom: -3px;
             pointer-events: auto;
@@ -123,7 +123,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ -->
+    <!-- SPINNE AM NETZ (jetzt perfekt synchron + startet oben außerhalb) -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -239,15 +239,15 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN – KOMPLETT AUS DEM BILDSCHIRM RAUSKRABBELN ===
+        // === SPINNE + FADEN SYNCHRON + STARTET AUSSERHALB ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
         let timeoutId = null;
 
         function resetToTop() {
-            thread.style.height = '0px';                    // Faden zieht sich komplett ein
-            spider.style.transform = 'translateX(-50%) translateY(-160px)'; // Spinne klettert weit nach oben raus (nicht mehr sichtbar!)
+            thread.style.height = '0px';
+            spider.style.transform = 'translateX(-50%) translateY(-220px)';
         }
 
         function descend() {
@@ -263,13 +263,14 @@
             }, 5000);
         }
 
+        // Hover → beide klettern synchron nach oben raus
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: kurz warten, dann runterkommen
+        // Beim Laden: erst komplett unsichtbar, dann synchron runterkommen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
-            }, 1200);
+            }, 900);
         });
     </script>
 </body>
