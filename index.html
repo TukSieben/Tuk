@@ -66,12 +66,18 @@
             filter: brightness(1);
             transform: scale(1.15);
         }
-        .mod-button {
+
+        /* === KLEINER MOD BUTTON – oben links in der Ecke (wie gewünscht) === */
+        .mod-button-small {
+            position: fixed;
+            top: 28px;
+            left: 28px;
+            z-index: 50;
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .mod-button:hover {
-            transform: scale(1.12) rotate(2deg);
-            filter: brightness(1.15) drop-shadow(0 0 25px rgb(167 139 250));
+        .mod-button-small:hover {
+            transform: scale(1.25);
+            filter: brightness(1.2) drop-shadow(0 0 15px rgb(167 139 250));
         }
     </style>
 </head>
@@ -87,7 +93,12 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
     </div>
 
-    <!-- HERO -->
+    <!-- KLEINER MOD BUTTON – oben links (mod.png) -->
+    <a href="mods" class="mod-button-small">
+        <img src="mod.png" alt="My Moderator Roles" class="w-14 h-auto">
+    </a>
+
+    <!-- HERO (ohne großen Button) -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
@@ -105,13 +116,6 @@
                         </span>
                         MODERATOR
                     </p>
-
-                    <!-- MOD BUTTON -->
-                    <div class="mt-10">
-                        <a href="mods" class="mod-button inline-block">
-                            <img src="mod.png" alt="My Moderator Roles" class="w-52 sm:w-64 md:w-72 mx-auto">
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -125,7 +129,7 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // === CLEAN URL REDIRECT: /index.html → / ===
+        // CLEAN URL REDIRECT: /index.html → /
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
         }
@@ -142,7 +146,7 @@
             document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // ORBS (unverändert)
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
