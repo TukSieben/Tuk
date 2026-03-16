@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
   
-    <!-- DEIN LOGO ALS FAVICON -->
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -33,7 +32,6 @@
         body {
             background: #050505;
         }
-        /* === 3D MOUSE TILT (nur Desktop) === */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -46,7 +44,6 @@
             transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
             transform-style: preserve-3d;
         }
-        /* === SOCIAL ICONS – perfekt auf Mobile + Desktop === */
         .social-icons {
             position: fixed;
             top: 24px;
@@ -77,7 +74,13 @@
             transform: scale(1.15);
         }
 
-        /* === OME44 MODAL STYLE === */
+        /* === OME44 MODAL === */
+        #ome44-modal {
+            display: none;
+        }
+        #ome44-modal.active {
+            display: flex !important;
+        }
         #ome44-modal img {
             box-shadow: 0 0 80px rgba(236, 72, 153, 0.6);
             animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -115,17 +118,17 @@
                         TUK7
                     </h1>
                   
-                    <!-- SUBTITLE mit klickbarem O -->
+                    <!-- SUBTITLE mit klickbarem O (jetzt als Button mit extra großer Klickfläche) -->
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH 
-                        <span class="flex items-center whitespace-nowrap">
-                            C
-                            <img id="ome44-trigger" 
-                                 src="o.png" 
-                                 class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200" 
+                        <button id="ome44-trigger" 
+                                type="button"
+                                class="inline-flex items-center justify-center bg-transparent border-0 p-3 mx-0.5 cursor-pointer hover:scale-125 active:scale-95 transition-all duration-200 pointer-events-auto relative z-30 focus:outline-none">
+                            <img src="o.png" 
+                                 class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em]" 
                                  alt="O">
-                            MMUNITY
-                        </span>
+                        </button>
+                        MMUNITY
                         MODERATOR
                     </p>
                 </div>
@@ -138,15 +141,15 @@
         © 2026 TUK | All rights reserved.
     </footer>
 
-    <!-- === OME44 MODUS POPUP (GIF) === -->
-    <div id="ome44-modal" class="hidden fixed inset-0 bg-black/95 flex items-center justify-center z-[999]">
+    <!-- === OME44 MODUS POPUP === -->
+    <div id="ome44-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center z-[999]">
         <div class="relative max-w-[92vw] max-h-[92vh]">
             <img src="ome44.gif" 
                  alt="OME44 MODE" 
                  class="max-w-full max-h-full rounded-2xl">
             
             <!-- Close Button -->
-            <button onclick="document.getElementById('ome44-modal').classList.add('hidden')" 
+            <button onclick="closeOme44()" 
                     class="absolute -top-5 -right-5 bg-zinc-900 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl shadow-xl transition-all">
                 ✕
             </button>
@@ -177,19 +180,15 @@
             });
         }
 
-        // === MOBILE-OPTIMIERTE ORBS (unverändert) ===
+        // === ORBS (unverändert – läuft perfekt) ===
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
-
         let orbs = [];
         let width, height;
         let isMobileDevice = isMobile;
 
-        class Orb {
-            constructor() {
-                this.reset();
-            }
-            
+        class Orb { /* ... (genau gleich wie vorher) ... */ 
+            constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
@@ -201,36 +200,20 @@
                 this.opacity = Math.random() * 0.28 + 0.13;
                 this.phase = Math.random() * Math.PI * 2;
             }
-            
             update() {
-                this.x += this.vx;
-                this.y += this.vy;
+                this.x += this.vx; this.y += this.vy;
                 this.x += Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
                 this.y += Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
-                
                 if (this.x < -60) this.x = width + 60;
                 if (this.x > width + 60) this.x = -60;
                 if (this.y < -60) this.y = height + 60;
                 if (this.y > height + 60) this.y = -60;
             }
-            
             draw() {
                 ctx.save();
                 const layers = isMobileDevice 
-                    ? [
-                        { size: this.radius * 3.8, alpha: this.opacity * 0.07 },
-                        { size: this.radius * 2.6, alpha: this.opacity * 0.12 },
-                        { size: this.radius * 1.6, alpha: this.opacity * 0.20 },
-                        { size: this.radius * 0.55, alpha: this.opacity * 0.68 }
-                      ]
-                    : [
-                        { size: this.radius * 4.2, alpha: this.opacity * 0.06 },
-                        { size: this.radius * 3.1, alpha: this.opacity * 0.09 },
-                        { size: this.radius * 2.2, alpha: this.opacity * 0.15 },
-                        { size: this.radius * 1.4, alpha: this.opacity * 0.22 },
-                        { size: this.radius * 0.55, alpha: this.opacity * 0.65 }
-                      ];
-                
+                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
+                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
                 for (let layer of layers) {
                     ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
                     ctx.beginPath();
@@ -242,61 +225,52 @@
         }
 
         function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
+            width = window.innerWidth; height = window.innerHeight;
+            canvas.width = width; canvas.height = height;
             isMobileDevice = window.innerWidth < 768;
         }
-
         function initOrbs() {
             orbs = [];
             const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
-            for (let i = 0; i < count; i++) {
-                orbs.push(new Orb());
-            }
+            for (let i = 0; i < count; i++) orbs.push(new Orb());
         }
-
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            for (let orb of orbs) {
-                orb.update();
-                orb.draw();
-            }
+            for (let orb of orbs) { orb.update(); orb.draw(); }
             requestAnimationFrame(animate);
         }
 
-        // === OME44 EASTER EGG (Klick auf O) ===
+        // === OME44 EASTER EGG – JETZT 100% Klickbar ===
         const omeTrigger = document.getElementById('ome44-trigger');
         const omeModal = document.getElementById('ome44-modal');
 
-        omeTrigger.addEventListener('click', (e) => {
-            e.stopImmediatePropagation();
-            omeModal.classList.remove('hidden');
-            omeModal.classList.add('flex');
+        function openOme44() {
+            omeModal.classList.add('active');
+        }
+        function closeOme44() {
+            omeModal.classList.remove('active');
+        }
+
+        // Klick + Touch für Handy
+        omeTrigger.addEventListener('click', openOme44);
+        omeTrigger.addEventListener('touchend', (e) => {
+            e.preventDefault();
+            openOme44();
         });
 
-        // Close Modal
+        // Modal schließen (außerhalb + ESC)
         omeModal.addEventListener('click', (e) => {
-            if (e.target === omeModal) {
-                omeModal.classList.add('hidden');
-                omeModal.classList.remove('flex');
-            }
+            if (e.target === omeModal) closeOme44();
         });
-
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && !omeModal.classList.contains('hidden')) {
-                omeModal.classList.add('hidden');
-                omeModal.classList.remove('flex');
-            }
+            if (e.key === 'Escape' && omeModal.classList.contains('active')) closeOme44();
         });
 
-        // Init everything
+        // Init
         window.addEventListener('resize', () => {
             resize();
             initOrbs();
         });
-
         resize();
         initOrbs();
         animate();
