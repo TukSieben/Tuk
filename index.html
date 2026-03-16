@@ -67,7 +67,7 @@
             transform: scale(1.15);
         }
 
-        /* === MOD BUTTON === */
+        /* === NOCH KLEINERER MOD BUTTON – oben links (ohne Glow) === */
         .mod-button-small {
             position: fixed;
             top: 24px;
@@ -76,69 +76,7 @@
             transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .mod-button-small:hover {
-            transform: scale(1.18);
-        }
-
-        /* === SPINNE + FADEN (immer am Ende) === */
-        #spider-container {
-            position: fixed;
-            top: -160px;
-            left: 168px;
-            z-index: 40;
-            pointer-events: none;
-            transition: top 2.8s cubic-bezier(0.42, 0, 0.58, 1);
-        }
-        .thread {
-            width: 1.5px;
-            background: rgba(163,163,163,0.3);
-            margin: 0 auto;
-            position: relative;
-            height: 0px;
-            transition: height 2.8s cubic-bezier(0.42, 0, 0.58, 1);
-        }
-        .spider {
-            position: absolute;
-            left: 50%;
-            top: 100%;
-            transform: translateX(-50%) translateY(-13px);
-            font-size: 26px;
-            pointer-events: auto;
-            animation: crawl 0.85s linear infinite;
-            transition: transform 0.6s ease;
-        }
-        @keyframes crawl {
-            0%   { transform: translateX(-50%) translateY(-13px) rotate(-6deg); }
-            50%  { transform: translateX(-50%) translateY(-13px) rotate(7deg); }
-            100% { transform: translateX(-50%) translateY(-13px) rotate(-6deg); }
-        }
-
-        /* === SPINNENNETZ – baut sich jede Minute weiter auf === */
-        #spider-web {
-            position: fixed;
-            inset: 0;
-            z-index: 5;
-            pointer-events: none;
-            opacity: 0;
-            transform: scale(0.6);
-            transition: opacity 4s ease, transform 4s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .web-svg {
-            width: 220%;
-            height: 220%;
-            filter: brightness(0.55) contrast(1.1);
-        }
-        .web-svg.broken {
-            animation: web-shatter 0.8s ease forwards;
-        }
-        @keyframes web-shatter {
-            0%   { opacity: 0.15; transform: scale(1.1) rotate(2deg); }
-            20%  { transform: scale(0.95) rotate(-4deg); }
-            40%  { transform: scale(1.05) rotate(3deg); }
-            60%  { transform: scale(0.9) rotate(-5deg); }
-            100% { opacity: 0; transform: scale(0.4) rotate(8deg); }
+            transform: scale(1.18); /* nur leichte Vergrößerung, kein Glow */
         }
     </style>
 </head>
@@ -154,44 +92,10 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
     </div>
 
-    <!-- MOD BUTTON -->
+    <!-- SUPER KLEINER MOD BUTTON – oben links (mod.png) -->
     <a href="mods" class="mod-button-small">
-        <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+        <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto"> <!-- noch kleiner: w-9 = 36px -->
     </a>
-
-    <!-- SPINNE AM NETZ -->
-    <div id="spider-container">
-        <div class="thread">
-            <div class="spider">🕷️</div>
-        </div>
-    </div>
-
-    <!-- SPINNENNETZ (wird jede Minute größer + dichter) -->
-    <div id="spider-web">
-        <svg class="web-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-            <!-- Konzentrische Kreise -->
-            <circle cx="200" cy="200" r="40" fill="none" stroke="#a3a3a3" stroke-width="1.5" opacity="0.35"/>
-            <circle cx="200" cy="200" r="85" fill="none" stroke="#a3a3a3" stroke-width="1.5" opacity="0.35"/>
-            <circle cx="200" cy="200" r="130" fill="none" stroke="#a3a3a3" stroke-width="1.5" opacity="0.35"/>
-            <circle cx="200" cy="200" r="175" fill="none" stroke="#a3a3a3" stroke-width="1.5" opacity="0.35"/>
-            <circle cx="200" cy="200" r="195" fill="none" stroke="#a3a3a3" stroke-width="1.5" opacity="0.35"/>
-            <!-- Radiale Linien (12 Stück) -->
-            <g>
-                <line x1="200" y1="200" x2="200" y2="5" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="395" y2="200" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="200" y2="395" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="5" y2="200" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="340" y2="60" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="340" y2="340" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="60" y2="340" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="60" y2="60" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="290" y2="110" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="290" y2="290" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="110" y2="290" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-                <line x1="200" y1="200" x2="110" y2="110" stroke="#a3a3a3" stroke-width="1.2" opacity="0.4"/>
-            </g>
-        </svg>
-    </div>
 
     <!-- HERO -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
@@ -201,6 +105,7 @@
                     <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
                         TUK7
                     </h1>
+                  
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH 
                         <span class="flex items-center whitespace-nowrap">
@@ -223,10 +128,12 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
+        // CLEAN URL REDIRECT
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
         }
 
+        // 3D TILT
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
         if (!isMobile) {
@@ -238,7 +145,7 @@
             document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // ORBS (unverändert)
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
@@ -299,80 +206,6 @@
         resize();
         initOrbs();
         animate();
-
-        // === SPINNE + FADEN ===
-        const spiderContainer = document.getElementById('spider-container');
-        const thread = spiderContainer.querySelector('.thread');
-        const spider = spiderContainer.querySelector('.spider');
-        const web = document.getElementById('spider-web');
-        const webSvg = web.querySelector('.web-svg');
-        let timeoutId = null;
-        let webLevel = 0;
-        let spiderScale = 1;
-
-        function resetToTop() {
-            thread.style.height = '0px';
-            spiderContainer.style.top = '-160px';
-        }
-
-        function descend() {
-            spiderContainer.style.top = '5px';
-            thread.style.height = '148px';
-        }
-
-        function buildWeb() {
-            webLevel++;
-            spiderScale = Math.min(1.35, 1 + webLevel * 0.035);
-
-            // Spinne wird größer
-            spider.style.transform = `translateX(-50%) translateY(-13px) scale(${spiderScale})`;
-
-            // Netz wird dichter + größer
-            const opacity = Math.min(0.18, webLevel * 0.025);
-            const scale = Math.min(1.35, 0.6 + webLevel * 0.08);
-            web.style.opacity = opacity;
-            web.style.transform = `scale(${scale})`;
-        }
-
-        function escape() {
-            if (timeoutId) clearTimeout(timeoutId);
-
-            // Spinne + Netz kaputt machen
-            webSvg.classList.add('broken');
-            spider.style.transform = `translateX(-50%) translateY(-13px) scale(0.7)`;
-
-            // Nach Zerstörung alles zurücksetzen
-            setTimeout(() => {
-                web.style.opacity = '0';
-                web.style.transform = 'scale(0.6)';
-                spider.style.transform = `translateX(-50%) translateY(-13px) scale(1)`;
-                webSvg.classList.remove('broken');
-                webLevel = 0;
-                spiderScale = 1;
-
-                // Nach 5 Sekunden neu starten
-                timeoutId = setTimeout(() => {
-                    descend();
-                    buildWeb(); // erstes Netz
-                }, 5000);
-            }, 900);
-        }
-
-        // Hover auf Spinne → alles kaputt
-        spider.addEventListener('mouseenter', escape);
-
-        // Alle 60 Sekunden baut die Spinne weiter
-        setInterval(() => {
-            if (webLevel < 12) buildWeb(); // max 12 Level
-        }, 60000);
-
-        // Beim Laden: erst Spinne runter, dann Netzbau starten
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                descend();
-                buildWeb(); // erstes Netz nach 1 Sekunde
-            }, 900);
-        });
     </script>
 </body>
 </html>
