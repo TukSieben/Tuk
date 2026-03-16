@@ -67,17 +67,16 @@
             transform: scale(1.15);
         }
 
-        /* === KLEINER MOD BUTTON – oben links in der Ecke (wie gewünscht) === */
+        /* === NOCH KLEINERER MOD BUTTON – oben links (ohne Glow) === */
         .mod-button-small {
             position: fixed;
-            top: 28px;
-            left: 28px;
+            top: 24px;
+            left: 24px;
             z-index: 50;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .mod-button-small:hover {
-            transform: scale(1.25);
-            filter: brightness(1.2) drop-shadow(0 0 15px rgb(167 139 250));
+            transform: scale(1.18); /* nur leichte Vergrößerung, kein Glow */
         }
     </style>
 </head>
@@ -93,12 +92,12 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
     </div>
 
-    <!-- KLEINER MOD BUTTON – oben links (mod.png) -->
+    <!-- SUPER KLEINER MOD BUTTON – oben links (mod.png) -->
     <a href="mods" class="mod-button-small">
-        <img src="mod.png" alt="My Moderator Roles" class="w-14 h-auto">
+        <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto"> <!-- noch kleiner: w-9 = 36px -->
     </a>
 
-    <!-- HERO (ohne großen Button) -->
+    <!-- HERO -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
@@ -129,12 +128,12 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // CLEAN URL REDIRECT: /index.html → /
+        // CLEAN URL REDIRECT
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
         }
 
-        // 3D TILT (nur Desktop)
+        // 3D TILT
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
         if (!isMobile) {
