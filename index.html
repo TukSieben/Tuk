@@ -79,7 +79,7 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE + FADEN – PERFEKT SYNCHRON + STARTET OBEN AUSSERHALB === */
+        /* === SPINNE + FADEN – JETZT GLEICHE GESCHWINDIGKEIT BEIDE RICHTUNGEN === */
         #spider-container {
             position: fixed;
             top: 5px;
@@ -92,17 +92,17 @@
             background: rgba(163,163,163,0.3);
             margin: 0 auto;
             position: relative;
-            height: 0px;                    /* STARTET KOMPLETT UNSICHTBAR */
-            transition: height 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            height: 0px;
+            transition: height 2.8s cubic-bezier(0.42, 0, 0.58, 1); /* gleiche Geschwindigkeit hoch + runter */
         }
         .spider {
             position: absolute;
             left: 50%;
-            transform: translateX(-50%) translateY(-220px); /* STARTET WEIT OBEN AUSSERHALB */
+            transform: translateX(-50%) translateY(-148px); /* exakt 148px oben starten → gleiche Distanz wie Faden! */
             font-size: 26px;
             bottom: -3px;
             pointer-events: auto;
-            transition: transform 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: transform 2.8s cubic-bezier(0.42, 0, 0.58, 1); /* exakt gleiche Dauer + Easing */
         }
     </style>
 </head>
@@ -123,7 +123,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ (jetzt perfekt synchron + startet oben außerhalb) -->
+    <!-- SPINNE AM NETZ -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -239,7 +239,7 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN SYNCHRON + STARTET AUSSERHALB ===
+        // === SPINNE + FADEN – PERFEKT SYNCHRON (gleiche Geschwindigkeit hoch + runter) ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
@@ -247,7 +247,7 @@
 
         function resetToTop() {
             thread.style.height = '0px';
-            spider.style.transform = 'translateX(-50%) translateY(-220px)';
+            spider.style.transform = 'translateX(-50%) translateY(-148px)';
         }
 
         function descend() {
@@ -263,10 +263,9 @@
             }, 5000);
         }
 
-        // Hover → beide klettern synchron nach oben raus
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: erst komplett unsichtbar, dann synchron runterkommen
+        // Beim Laden: erst komplett oben außerhalb, dann synchron runter
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
