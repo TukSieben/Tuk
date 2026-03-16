@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
-   
+  
     <!-- DEIN LOGO ALS FAVICON -->
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-       
+      
         .gif-text {
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
@@ -23,9 +23,7 @@
             display: inline-block;
         }
         .o-replace {
-            height: 1.15em;
             width: auto;
-            margin-bottom: 2px;
             vertical-align: middle;
         }
         html, body {
@@ -35,8 +33,7 @@
         body {
             background: #050505;
         }
-
-        /* === 3D MOUSE TILT (unverändert) === */
+        /* === 3D MOUSE TILT (nur Desktop) === */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -49,28 +46,29 @@
             transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
             transform-style: preserve-3d;
         }
-        .tilt-content h1 {
-            transform: translateZ(28px);
-        }
-        .tilt-content p {
-            transform: translateZ(12px);
-        }
-
-        /* === SOCIAL ICONS – klein, clean & immer sichtbar oben rechts (wie auf hxdes.de) === */
+        /* === SOCIAL ICONS – perfekt auf Mobile + Desktop === */
         .social-icons {
             position: fixed;
-            top: 32px;
-            right: 32px;
+            top: 24px;
+            right: 24px;
             z-index: 50;
             display: flex;
-            gap: 18px;
+            gap: 16px;
         }
-        .social-icons a {
-            transition: all 0.2s ease;
+        @media (min-width: 768px) {
+            .social-icons {
+                top: 32px;
+                right: 32px;
+                gap: 18px;
+            }
+            .social-icons img {
+                width: 26px;
+                height: 26px;
+            }
         }
         .social-icons img {
-            width: 26px;   /* sehr klein & clean */
-            height: 26px;
+            width: 22px;
+            height: 22px;
             filter: brightness(0.85);
             transition: all 0.2s ease;
         }
@@ -81,17 +79,18 @@
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
-    <!-- SOCIAL ICONS – direkt sichtbar, klein & clean oben rechts -->
+
+    <!-- ORBS CANVAS -->
+    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
+
+    <!-- SOCIAL ICONS -->
     <div class="social-icons">
-        <!-- Twitch -->
         <a href="https://twitch.tv/tuk7" target="_blank">
             <img src="twitch.png" alt="Twitch">
         </a>
-        <!-- Twitter / X -->
         <a href="https://x.com/tukfps" target="_blank">
             <img src="twitter.png" alt="Twitter">
         </a>
-        <!-- Discord -->
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank">
             <img src="discord.png" alt="Discord">
         </a>
@@ -101,15 +100,20 @@
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
-                <div class="-mt-16">
-                    <h1 class="gif-text text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
+                <div class="-mt-8 sm:-mt-12 md:-mt-16">
+                    <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
                         TUK7
                     </h1>
-                   
-                    <p class="mt-6 text-xl font-medium text-white flex items-center justify-center gap-x-px">
-                        TWITCH C
-                        <img src="o.png" class="o-replace" alt="O">
-                        MMUNITY MODERATOR
+                  
+                    <!-- NEUER SUBTITLE – jetzt richtig gut auf Handy! -->
+                    <p class="mt-5 sm:mt-6 text-base sm:text-lg md:text-xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
+                        TWITCH 
+                        <span class="flex items-center whitespace-nowrap">
+                            C
+                            <img src="o.png" class="o-replace h-5 sm:h-6 md:h-[1.15em] mx-0.5" alt="O">
+                            MMUNITY
+                        </span>
+                        MODERATOR
                     </p>
                 </div>
             </div>
@@ -130,16 +134,118 @@
             }
         }
 
-        // === 3D MOUSE TILT (unverändert) ===
+        // === 3D MOUSE TILT – nur Desktop ===
         const tiltContent = document.getElementById('tilt-content');
-        document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 55;
-            const y = (window.innerHeight / 2 - e.clientY) / 55;
-            tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+        if (!isMobile) {
+            document.addEventListener('mousemove', (e) => {
+                const x = (window.innerWidth / 2 - e.clientX) / 55;
+                const y = (window.innerHeight / 2 - e.clientY) / 55;
+                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+            });
+            document.addEventListener('mouseleave', () => {
+                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        }
+
+        // === MOBILE-OPTIMIERTE ORBS (unverändert – läuft schon perfekt) ===
+        const canvas = document.getElementById('orb-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let orbs = [];
+        let width, height;
+        let isMobileDevice = isMobile;
+
+        class Orb {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
+                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
+                this.vx = (Math.random() - 0.5) * this.speed;
+                this.vy = (Math.random() - 0.5) * this.speed;
+                this.hue = 265 + Math.random() * 45;
+                this.opacity = Math.random() * 0.28 + 0.13;
+                this.phase = Math.random() * Math.PI * 2;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.x += Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
+                this.y += Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
+                
+                if (this.x < -60) this.x = width + 60;
+                if (this.x > width + 60) this.x = -60;
+                if (this.y < -60) this.y = height + 60;
+                if (this.y > height + 60) this.y = -60;
+            }
+            
+            draw() {
+                ctx.save();
+                const layers = isMobileDevice 
+                    ? [
+                        { size: this.radius * 3.8, alpha: this.opacity * 0.07 },
+                        { size: this.radius * 2.6, alpha: this.opacity * 0.12 },
+                        { size: this.radius * 1.6, alpha: this.opacity * 0.20 },
+                        { size: this.radius * 0.55, alpha: this.opacity * 0.68 }
+                      ]
+                    : [
+                        { size: this.radius * 4.2, alpha: this.opacity * 0.06 },
+                        { size: this.radius * 3.1, alpha: this.opacity * 0.09 },
+                        { size: this.radius * 2.2, alpha: this.opacity * 0.15 },
+                        { size: this.radius * 1.4, alpha: this.opacity * 0.22 },
+                        { size: this.radius * 0.55, alpha: this.opacity * 0.65 }
+                      ];
+                
+                for (let layer of layers) {
+                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
+        }
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            isMobileDevice = window.innerWidth < 768;
+        }
+
+        function initOrbs() {
+            orbs = [];
+            const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
+            for (let i = 0; i < count; i++) {
+                orbs.push(new Orb());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            for (let orb of orbs) {
+                orb.update();
+                orb.draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => {
+            resize();
+            initOrbs();
         });
-        document.addEventListener('mouseleave', () => {
-            tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
-        });
+
+        resize();
+        initOrbs();
+        animate();
     </script>
 </body>
 </html>
