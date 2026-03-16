@@ -67,13 +67,14 @@
         }
         .back-home:hover { color: white; }
 
+        /* 3 SPALTEN – perfekt mittig */
         .channel-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 24px;
         }
         @media (min-width: 1024px) {
-            .channel-grid { grid-template-columns: repeat(4, 1fr); }
+            .channel-grid { grid-template-columns: repeat(3, 1fr); } /* genau 3 nebeneinander */
         }
         .channel-card {
             background: #18181b;
@@ -116,7 +117,8 @@
     <section class="pt-24 pb-24 px-6 max-w-7xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Channels I Moderate</h2>
-            <p class="text-zinc-400 mt-2 text-lg">6 Partner Channels</p>
+            <p class="text-zinc-400 mt-2 text-lg">My Partner Channels</p>
+            <p class="text-zinc-400 text-sm">I currently moderate for <span class="text-violet-400 font-semibold">92 streamers</span> in total</p>
             
             <!-- GESAMT-FOLLOWER -->
             <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
