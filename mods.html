@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Moderator Roles</title>
-  
+ 
     <link rel="icon" href="../logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-      
+     
         .gif-text {
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
@@ -66,12 +66,21 @@
             transition: all 0.2s ease;
         }
         .back-home:hover { color: white; }
-        .channel-card {
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+        /* NEUE CLEAN LISTE */
+        .channel-list a {
+            display: block;
+            padding: 20px 0;
+            border-bottom: 1px solid #27272a;
+            transition: all 0.2s ease;
         }
-        .channel-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            box-shadow: 0 0 40px rgba(167, 139, 250, 0.4);
+        .channel-list a:hover {
+            background-color: #18181b;
+            padding-left: 12px;
+        }
+        .channel-list h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -87,27 +96,20 @@
 
     <!-- SOCIAL ICONS -->
     <div class="social-icons">
-        <a href="https://twitch.tv/tuk7" target="_blank">
-            <img src="../twitch.png" alt="Twitch">
-        </a>
-        <a href="https://x.com/tukfps" target="_blank">
-            <img src="../twitter.png" alt="Twitter">
-        </a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank">
-            <img src="../discord.png" alt="Discord">
-        </a>
+        <a href="https://twitch.tv/tuk7" target="_blank"><img src="../twitch.png" alt="Twitch"></a>
+        <a href="https://x.com/tukfps" target="_blank"><img src="../twitter.png" alt="Twitter"></a>
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="../discord.png" alt="Discord"></a>
     </div>
 
-    <!-- CHANNELS SECTION – jetzt direkt oben (Hero komplett entfernt) -->
-    <section class="pt-24 pb-24 px-6 max-w-6xl mx-auto">
+    <!-- CHANNELS SECTION -->
+    <section class="pt-24 pb-24 px-6 max-w-4xl mx-auto">
         <div class="text-center mb-12">
             <h2 class="text-4xl md:text-5xl font-bold tracking-tight">Channels I Moderate</h2>
             <p class="text-zinc-400 mt-3 text-lg">Currently <span id="channel-count" class="text-violet-400 font-semibold">0</span> Channels</p>
         </div>
 
-        <div id="channels-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Cards werden hier eingefügt -->
-        </div>
+        <!-- CLEAN LISTE (keine Cards mehr) -->
+        <div id="channels-grid" class="channel-list space-y-1"></div>
     </section>
 
     <!-- FOOTER -->
@@ -118,16 +120,45 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // ORBS (identisch wie immer)
+        // ORBS (vollständig)
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
 
-        class Orb { /* ... (genau der gleiche Orb-Code wie vorher) ... */ 
+        class Orb {
             constructor() { this.reset(); }
-            reset() { /* ... */ }
-            update() { /* ... */ }
-            draw() { /* ... */ }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
+                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
+                this.vx = (Math.random() - 0.5) * this.speed;
+                this.vy = (Math.random() - 0.5) * this.speed;
+                this.hue = 265 + Math.random() * 45;
+                this.opacity = Math.random() * 0.28 + 0.13;
+                this.phase = Math.random() * Math.PI * 2;
+            }
+            update() {
+                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
+                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
+                if (this.x < -60) this.x = width + 60;
+                if (this.x > width + 60) this.x = -60;
+                if (this.y < -60) this.y = height + 60;
+                if (this.y > height + 60) this.y = -60;
+            }
+            draw() {
+                ctx.save();
+                const layers = isMobileDevice 
+                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
+                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
+                for (let layer of layers) {
+                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.restore();
+            }
         }
 
         function resize() {
@@ -146,33 +177,29 @@
             requestAnimationFrame(animate);
         }
 
-        // DEINE CHANNELS (hier eintragen)
+        // DEINE CHANNELS (hier einfach eintragen)
         const myChannels = [
-            { name: "CHANNEL NAME 1", link: "https://twitch.tv/channel1", desc: "Short description", since: "since 2024" },
-            // ... mehr Channels hier
+            { name: "CHANNEL NAME 1", link: "https://twitch.tv/channel1", desc: "Short description or category", since: "since 2024" },
+            { name: "CHANNEL NAME 2", link: "https://twitch.tv/channel2", desc: "Another short description", since: "since 2023" }
+            // Füge hier weitere hinzu (kopiere den Block)
         ];
 
         function renderChannels() {
-            const grid = document.getElementById('channels-grid');
-            grid.innerHTML = '';
+            const container = document.getElementById('channels-grid');
+            container.innerHTML = '';
             myChannels.forEach(ch => {
-                const card = document.createElement('a');
-                card.href = ch.link; card.target = '_blank';
-                card.className = 'channel-card group bg-zinc-900/70 border border-zinc-800 rounded-3xl overflow-hidden flex flex-col';
-                card.innerHTML = `
-                    <div class="h-48 bg-gradient-to-br from-violet-900/30 to-fuchsia-900/30 flex items-center justify-center">
-                        <div class="w-24 h-24 bg-zinc-800 rounded-2xl flex items-center justify-center text-5xl font-black text-white/30">LOGO</div>
+                const item = document.createElement('a');
+                item.href = ch.link;
+                item.target = '_blank';
+                item.className = 'block group';
+                item.innerHTML = `
+                    <div class="flex justify-between items-baseline">
+                        <h3 class="text-2xl font-semibold text-white group-hover:text-violet-400 transition-colors">${ch.name}</h3>
+                        <span class="text-xs px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-full">${ch.since}</span>
                     </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-2xl font-semibold group-hover:text-violet-400">${ch.name}</h3>
-                            <span class="px-4 py-1 text-xs font-medium bg-emerald-500/10 text-emerald-400 rounded-full">MODERATOR</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm mt-2">${ch.desc}</p>
-                        <div class="mt-auto pt-6 text-[10px] text-zinc-500">${ch.since}</div>
-                    </div>
+                    <p class="text-zinc-400 mt-1">${ch.desc}</p>
                 `;
-                grid.appendChild(card);
+                container.appendChild(item);
             });
             document.getElementById('channel-count').textContent = myChannels.length;
         }
