@@ -79,7 +79,7 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE + FADEN – SPINNE JETZT BISSCHEN HÖHER === */
+        /* === SPINNE + FADEN – SPINNE JETZT NOCH EIN KLEINES BISSCHEN HÖHER === */
         #spider-container {
             position: fixed;
             top: -160px;
@@ -100,15 +100,15 @@
             position: absolute;
             left: 50%;
             top: 100%;
-            transform: translateX(-50%) translateY(-8px);   /* ← BISSCHEN HÖHER (war +4px, jetzt -8px) */
+            transform: translateX(-50%) translateY(-13px);   /* ← jetzt noch ein kleines bisschen höher */
             font-size: 26px;
             pointer-events: auto;
             animation: crawl 0.85s linear infinite;
         }
         @keyframes crawl {
-            0%   { transform: translateX(-50%) translateY(-8px) rotate(-6deg); }
-            50%  { transform: translateX(-50%) translateY(-8px) rotate(7deg); }
-            100% { transform: translateX(-50%) translateY(-8px) rotate(-6deg); }
+            0%   { transform: translateX(-50%) translateY(-13px) rotate(-6deg); }
+            50%  { transform: translateX(-50%) translateY(-13px) rotate(7deg); }
+            100% { transform: translateX(-50%) translateY(-13px) rotate(-6deg); }
         }
     </style>
 </head>
@@ -181,7 +181,7 @@
             document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // ORBS (unverändert)
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
@@ -243,7 +243,7 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN – IMMER FEST AM ENDE + BISSCHEN HÖHER ===
+        // === SPINNE + FADEN ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
