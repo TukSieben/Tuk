@@ -79,13 +79,14 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE + FADEN – JETZT GLEICHE GESCHWINDIGKEIT BEIDE RICHTUNGEN === */
+        /* === SPINNE + FADEN – JETZT IMMER FEST AM ENDE === */
         #spider-container {
             position: fixed;
-            top: 5px;
+            top: -160px;                    /* startet komplett oben außerhalb */
             left: 168px;
             z-index: 40;
             pointer-events: none;
+            transition: top 2.8s cubic-bezier(0.42, 0, 0.58, 1);
         }
         .thread {
             width: 1.5px;
@@ -93,16 +94,21 @@
             margin: 0 auto;
             position: relative;
             height: 0px;
-            transition: height 2.8s cubic-bezier(0.42, 0, 0.58, 1); /* gleiche Geschwindigkeit hoch + runter */
+            transition: height 2.8s cubic-bezier(0.42, 0, 0.58, 1);
         }
         .spider {
             position: absolute;
             left: 50%;
-            transform: translateX(-50%) translateY(-148px); /* exakt 148px oben starten → gleiche Distanz wie Faden! */
+            top: 100%;                      /* HÄNGT IMMER FEST AM UNTEREN ENDE DES FADENS */
+            transform: translateX(-50%) translateY(4px);
             font-size: 26px;
-            bottom: -3px;
             pointer-events: auto;
-            transition: transform 2.8s cubic-bezier(0.42, 0, 0.58, 1); /* exakt gleiche Dauer + Easing */
+            animation: crawl 0.85s linear infinite;
+        }
+        @keyframes crawl {
+            0%   { transform: translateX(-50%) translateY(4px) rotate(-6deg); }
+            50%  { transform: translateX(-50%) translateY(4px) rotate(7deg); }
+            100% { transform: translateX(-50%) translateY(4px) rotate(-6deg); }
         }
     </style>
 </head>
@@ -123,7 +129,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ -->
+    <!-- SPINNE AM NETZ (jetzt immer am Ende des Fadens) -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -239,7 +245,7 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN – PERFEKT SYNCHRON (gleiche Geschwindigkeit hoch + runter) ===
+        // === SPINNE + FADEN – IMMER FEST AM ENDE + GLEICHE GESCHWINDIGKEIT ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
@@ -247,12 +253,12 @@
 
         function resetToTop() {
             thread.style.height = '0px';
-            spider.style.transform = 'translateX(-50%) translateY(-148px)';
+            spiderContainer.style.top = '-160px';
         }
 
         function descend() {
+            spiderContainer.style.top = '5px';
             thread.style.height = '148px';
-            spider.style.transform = 'translateX(-50%)';
         }
 
         function escape() {
@@ -265,7 +271,7 @@
 
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: erst komplett oben außerhalb, dann synchron runter
+        // Beim Laden: erst komplett oben außerhalb, dann runterkommen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
