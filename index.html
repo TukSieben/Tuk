@@ -79,10 +79,10 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE + FADEN – JETZT IMMER FEST AM ENDE === */
+        /* === SPINNE + FADEN – SPINNE JETZT BISSCHEN HÖHER === */
         #spider-container {
             position: fixed;
-            top: -160px;                    /* startet komplett oben außerhalb */
+            top: -160px;
             left: 168px;
             z-index: 40;
             pointer-events: none;
@@ -99,16 +99,16 @@
         .spider {
             position: absolute;
             left: 50%;
-            top: 100%;                      /* HÄNGT IMMER FEST AM UNTEREN ENDE DES FADENS */
-            transform: translateX(-50%) translateY(4px);
+            top: 100%;
+            transform: translateX(-50%) translateY(-8px);   /* ← BISSCHEN HÖHER (war +4px, jetzt -8px) */
             font-size: 26px;
             pointer-events: auto;
             animation: crawl 0.85s linear infinite;
         }
         @keyframes crawl {
-            0%   { transform: translateX(-50%) translateY(4px) rotate(-6deg); }
-            50%  { transform: translateX(-50%) translateY(4px) rotate(7deg); }
-            100% { transform: translateX(-50%) translateY(4px) rotate(-6deg); }
+            0%   { transform: translateX(-50%) translateY(-8px) rotate(-6deg); }
+            50%  { transform: translateX(-50%) translateY(-8px) rotate(7deg); }
+            100% { transform: translateX(-50%) translateY(-8px) rotate(-6deg); }
         }
     </style>
 </head>
@@ -129,7 +129,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ (jetzt immer am Ende des Fadens) -->
+    <!-- SPINNE AM NETZ -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -166,12 +166,10 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // CLEAN URL REDIRECT
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
         }
 
-        // 3D TILT
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
         if (!isMobile) {
@@ -183,7 +181,7 @@
             document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // ORBS
+        // ORBS (unverändert)
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
@@ -245,7 +243,7 @@
         initOrbs();
         animate();
 
-        // === SPINNE + FADEN – IMMER FEST AM ENDE + GLEICHE GESCHWINDIGKEIT ===
+        // === SPINNE + FADEN – IMMER FEST AM ENDE + BISSCHEN HÖHER ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
@@ -271,7 +269,6 @@
 
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: erst komplett oben außerhalb, dann runterkommen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
