@@ -79,35 +79,30 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE AM NETZ – FINAL VERSION (deine Wünsche) === */
+        /* === SPINNE AM NETZ – FINAL INTERAKTIV (deine neuen Wünsche) === */
+        #spider-container {
+            position: fixed;
+            top: 5px;
+            left: 125px; /* noch weiter nach rechts */
+            z-index: 40;
+            pointer-events: none;
+        }
         .thread {
             width: 1.5px;
             background: rgba(163,163,163,0.3);
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto;
             position: relative;
-            animation: lower 11.8s ease-in-out infinite;
+            height: 34px;
+            transition: height 2.8s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
         .spider {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
             font-size: 26px;
-            bottom: -3px;           /* hängt perfekt am Ende */
-            animation: spider-rotate 11.8s ease-in-out infinite;
-        }
-        @keyframes lower {
-            0%    { height: 34px; }
-            30%   { height: 148px; }   /* langsam runter */
-            48%   { height: 148px; }   /* 2 Sek. Pause unten */
-            78%   { height: 34px; }    /* langsam wieder hoch */
-            100%  { height: 34px; }
-        }
-        @keyframes spider-rotate {
-            0%, 100% { transform: translateX(-50%) rotate(-6deg); }
-            32%      { transform: translateX(-50%) rotate(9deg); }
-            48%      { transform: translateX(-50%) rotate(-4deg); }
-            78%      { transform: translateX(-50%) rotate(5deg); }
+            bottom: -3px;
+            transition: transform 2.8s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease;
+            pointer-events: auto; /* nur die Spinne ist hoverbar */
         }
     </style>
 </head>
@@ -128,9 +123,9 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ (weiter rechts + alle Änderungen) -->
-    <div class="fixed top-5 left-[94px] z-40 pointer-events-none" id="spider-container">
-        <div class="thread h-[34px] relative"> <!-- Höhe wird per Animation gesteuert -->
+    <!-- SPINNE AM NETZ (interaktiv + weiter rechts) -->
+    <div id="spider-container">
+        <div class="thread">
             <div class="spider">🕷️</div>
         </div>
     </div>
@@ -182,7 +177,7 @@
             document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
         }
 
-        // ORBS (unverändert)
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
@@ -243,6 +238,43 @@
         resize();
         initOrbs();
         animate();
+
+        // === INTERAKTIVE SPINNE (genau wie gewünscht) ===
+        const spiderContainer = document.getElementById('spider-container');
+        const thread = spiderContainer.querySelector('.thread');
+        const spider = spiderContainer.querySelector('.spider');
+        let timeoutId = null;
+
+        function resetToTop() {
+            thread.style.height = '34px';
+            spider.style.transform = 'translateX(-50%) translateY(-35px)';
+            spider.style.opacity = '0';
+        }
+
+        function descend() {
+            thread.style.height = '148px';
+            spider.style.transform = 'translateX(-50%)';
+            spider.style.opacity = '1';
+        }
+
+        function escape() {
+            if (timeoutId) clearTimeout(timeoutId);
+            resetToTop();
+            // nach 5 Sekunden wieder runterkommen
+            timeoutId = setTimeout(() => {
+                descend();
+            }, 5000);
+        }
+
+        // Hover → Spinne haut sofort ab
+        spider.addEventListener('mouseenter', escape);
+
+        // Beim Laden: erst runterkommen
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                descend();
+            }, 1200);
+        });
     </script>
 </body>
 </html>
