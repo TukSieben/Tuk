@@ -79,11 +79,11 @@
             transform: scale(1.18);
         }
 
-        /* === SPINNE AM NETZ – FINAL INTERAKTIV (deine neuen Wünsche) === */
+        /* === SPINNE AM NETZ – SYNCHRON KLETTERND (deine Wünsche) === */
         #spider-container {
             position: fixed;
             top: 5px;
-            left: 125px; /* noch weiter nach rechts */
+            left: 168px; /* noch weiter nach rechts */
             z-index: 40;
             pointer-events: none;
         }
@@ -100,9 +100,14 @@
             left: 50%;
             transform: translateX(-50%);
             font-size: 26px;
-            bottom: -3px;
-            transition: transform 2.8s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.6s ease;
-            pointer-events: auto; /* nur die Spinne ist hoverbar */
+            bottom: -3px;           /* hängt immer am unteren Ende des Fadens */
+            pointer-events: auto;
+            animation: crawl 0.75s linear infinite; /* klettert immer ein bisschen */
+        }
+        @keyframes crawl {
+            0%   { transform: translateX(-50%) rotate(-6deg); }
+            50%  { transform: translateX(-50%) rotate(7deg); }
+            100% { transform: translateX(-50%) rotate(-6deg); }
         }
     </style>
 </head>
@@ -123,7 +128,7 @@
         <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
     </a>
 
-    <!-- SPINNE AM NETZ (interaktiv + weiter rechts) -->
+    <!-- SPINNE AM NETZ (synchron kletternd) -->
     <div id="spider-container">
         <div class="thread">
             <div class="spider">🕷️</div>
@@ -239,7 +244,7 @@
         initOrbs();
         animate();
 
-        // === INTERAKTIVE SPINNE (genau wie gewünscht) ===
+        // === SPINNE + FADEN SYNCHRON KLETTERN ===
         const spiderContainer = document.getElementById('spider-container');
         const thread = spiderContainer.querySelector('.thread');
         const spider = spiderContainer.querySelector('.spider');
@@ -247,29 +252,26 @@
 
         function resetToTop() {
             thread.style.height = '34px';
-            spider.style.transform = 'translateX(-50%) translateY(-35px)';
-            spider.style.opacity = '0';
+            // Spinne klettert automatisch mit hoch (weil sie am unteren Ende hängt)
         }
 
         function descend() {
             thread.style.height = '148px';
-            spider.style.transform = 'translateX(-50%)';
-            spider.style.opacity = '1';
+            // Spinne krabbelt automatisch mit runter
         }
 
         function escape() {
             if (timeoutId) clearTimeout(timeoutId);
             resetToTop();
-            // nach 5 Sekunden wieder runterkommen
             timeoutId = setTimeout(() => {
                 descend();
             }, 5000);
         }
 
-        // Hover → Spinne haut sofort ab
+        // Hover auf Spinne → beide klettern zusammen nach oben raus
         spider.addEventListener('mouseenter', escape);
 
-        // Beim Laden: erst runterkommen
+        // Beim Laden: kurz warten, dann zusammen runterkommen
         window.addEventListener('load', () => {
             setTimeout(() => {
                 descend();
