@@ -66,8 +66,6 @@
             filter: brightness(1);
             transform: scale(1.15);
         }
-
-        /* MOD BUTTON */
         .mod-button {
             transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
@@ -127,6 +125,12 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
+        // === CLEAN URL REDIRECT: /index.html → / ===
+        if (window.location.pathname.endsWith('/index.html')) {
+            window.location.replace(window.location.origin + '/');
+        }
+
+        // 3D TILT (nur Desktop)
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
         if (!isMobile) {
