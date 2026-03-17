@@ -18,10 +18,9 @@
     <div id="status">Overlay wird geladen…</div>
     <div id="chat"></div>
 
-    <!-- KORREKTER tmi.js CDN (der einzige, der im Browser funktioniert) -->
     <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/index.min.js"></script>
     <script>
-        (function() {
+        window.addEventListener('load', () => {
             console.log("✅ Script gestartet");
 
             const params = new URLSearchParams(window.location.search);
@@ -52,10 +51,9 @@
                     const global = await globalRes.json();
                     global.emotes.forEach(e => emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`));
 
-                    status.style.display = 'none'; // Status ausblenden wenn fertig
+                    status.style.display = 'none';
                 } catch(e) {
-                    status.textContent = "Emotes konnten nicht geladen werden – Chat läuft trotzdem";
-                    console.error(e);
+                    status.textContent = "Emotes-Fehler – Chat läuft trotzdem";
                 }
             }
 
@@ -95,17 +93,12 @@
 
                 chat.appendChild(msgDiv);
 
-                setTimeout(() => {
-                    msgDiv.style.opacity = '0';
-                    setTimeout(() => msgDiv.remove(), 500);
-                }, fadeTime);
-
+                setTimeout(() => { msgDiv.style.opacity = '0'; setTimeout(() => msgDiv.remove(), 500); }, fadeTime);
                 if (chat.children.length > 30) chat.removeChild(chat.lastChild);
             }
 
-            // === EINZIGER tmi Client ===
             const client = new tmi.Client({ channels: [channel] });
-            client.connect().then(() => console.log("✅ Mit Twitch Chat verbunden")).catch(console.error);
+            client.connect().then(() => console.log("✅ Mit Twitch verbunden")).catch(console.error);
 
             client.on('message', (ch, tags, message, self) => {
                 if (self) return;
@@ -113,7 +106,7 @@
             });
 
             loadEmotes();
-        })();
+        });
     </script>
 </body>
 </html>
