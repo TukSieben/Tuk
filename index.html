@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
-  
+ 
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-      
+     
         .gif-text {
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
@@ -67,21 +67,31 @@
             transform: scale(1.15);
         }
 
-        /* === NOCH KLEINERER MOD BUTTON – oben links (ohne Glow) === */
-        .mod-button-small {
+        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
+        .top-left-group {
             position: fixed;
             top: 24px;
             left: 24px;
             z-index: 50;
+            display: flex;
+            gap: 14px;
+        }
+        @media (min-width: 768px) {
+            .top-left-group { 
+                top: 32px; 
+                left: 32px; 
+                gap: 16px; 
+            }
+        }
+        .mod-button-small {
             transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
         }
         .mod-button-small:hover {
-            transform: scale(1.18); /* nur leichte Vergrößerung, kein Glow */
+            transform: scale(1.18);
         }
     </style>
 </head>
 <body class="bg-[#050505] text-white font-sans">
-
     <!-- ORBS CANVAS -->
     <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
 
@@ -92,10 +102,18 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
     </div>
 
-    <!-- SUPER KLEINER MOD BUTTON – oben links (mod.png) -->
-    <a href="mods" class="mod-button-small">
-        <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto"> <!-- noch kleiner: w-9 = 36px -->
-    </a>
+    <!-- TOP LEFT BUTTONS GROUP -->
+    <div class="top-left-group">
+        <!-- Mod Button -->
+        <a href="mods" class="mod-button-small">
+            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+        </a>
+        
+        <!-- NEUER BUTTON zu img.tuk7.xyz -->
+        <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
+            <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
+        </a>
+    </div>
 
     <!-- HERO -->
     <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
@@ -105,9 +123,9 @@
                     <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
                         TUK7
                     </h1>
-                  
+                 
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
-                        TWITCH 
+                        TWITCH
                         <span class="flex items-center whitespace-nowrap">
                             C
                             <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
@@ -127,7 +145,7 @@
 
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
-
+        
         // CLEAN URL REDIRECT
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
@@ -149,7 +167,6 @@
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
-
         class Orb {
             constructor() { this.reset(); }
             reset() {
@@ -173,7 +190,7 @@
             }
             draw() {
                 ctx.save();
-                const layers = isMobileDevice 
+                const layers = isMobileDevice
                     ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
                     : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
                 for (let layer of layers) {
@@ -185,7 +202,6 @@
                 ctx.restore();
             }
         }
-
         function resize() {
             width = window.innerWidth; height = window.innerHeight;
             canvas.width = width; canvas.height = height;
@@ -201,7 +217,6 @@
             for (let orb of orbs) { orb.update(); orb.draw(); }
             requestAnimationFrame(animate);
         }
-
         window.addEventListener('resize', () => { resize(); initOrbs(); });
         resize();
         initOrbs();
