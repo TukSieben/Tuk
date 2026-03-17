@@ -4,10 +4,40 @@
     <meta charset="UTF-8">
     <title>TUK7 Chat</title>
     <style>
-        body { margin:0; background:#1a1a1a; color:#fff; font-family:Arial,sans-serif; overflow:hidden; }
-        #status { padding:20px; font-size:24px; text-align:center; color:#0f0; }
-        #chat { position:absolute; bottom:0; left:0; width:100%; max-height:100%; padding:10px; box-sizing:border-box; display:flex; flex-direction:column-reverse; gap:6px; }
-        .message { display:flex; align-items:center; gap:8px; opacity:1; transition:opacity 0.4s; font-size:18px; text-shadow:0 2px 4px rgba(0,0,0,0.6); }
+        body { 
+            margin:0; 
+            background:transparent; /* perfekt für OBS */
+            color:#fff; 
+            font-family:Arial,sans-serif; 
+            overflow:hidden; 
+        }
+        #status { 
+            padding:20px; 
+            font-size:20px; 
+            text-align:center; 
+            color:#0f0; 
+            position:absolute; 
+            top:10px; 
+            width:100%; 
+            pointer-events:none; 
+        }
+        #chat { 
+            position:absolute; 
+            bottom:0; left:0; 
+            width:100%; 
+            max-height:100%; 
+            padding:10px; 
+            box-sizing:border-box; 
+            display:flex; 
+            flex-direction:column-reverse; 
+            gap:6px; 
+        }
+        .message { 
+            display:flex; align-items:center; gap:8px; 
+            opacity:1; transition:opacity 0.4s; 
+            font-size:18px; 
+            text-shadow:0 2px 4px rgba(0,0,0,0.6); 
+        }
         .badge { height:20px; vertical-align:middle; }
         .username { font-weight:bold; margin-right:4px; }
         .emote { height:32px; vertical-align:middle; image-rendering:pixelated; }
@@ -21,7 +51,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/index.min.js"></script>
     <script>
         window.addEventListener('load', function() {
-            console.log("✅ Script gestartet");
+            console.log("✅ Script voll gestartet");
 
             const params = new URLSearchParams(window.location.search);
             const channel = (params.get('channel') || 'tuk7').toLowerCase();
@@ -34,8 +64,10 @@
             const status = document.getElementById('status');
             const emoteMap = new Map();
 
+            // Status wird nach 3 Sekunden automatisch versteckt (auch wenn Emotes langsam sind)
+            setTimeout(() => { status.style.display = 'none'; }, 3000);
+
             async function loadEmotes() {
-                status.textContent = "Emotes werden geladen…";
                 try {
                     const idRes = await fetch(`https://api.ivr.fi/v2/twitch/user?login=${channel}`);
                     const idData = await idRes.json();
@@ -51,9 +83,9 @@
                     const global = await globalRes.json();
                     global.emotes.forEach(e => emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`));
 
-                    status.style.display = 'none';
+                    console.log("✅ 7TV Emotes geladen");
                 } catch(e) {
-                    status.textContent = "Emotes-Fehler – Chat läuft trotzdem";
+                    console.log("Emotes-Fehler – Chat läuft trotzdem");
                 }
             }
 
@@ -93,12 +125,19 @@
 
                 chat.appendChild(msgDiv);
 
-                setTimeout(() => { msgDiv.style.opacity = '0'; setTimeout(() => msgDiv.remove(), 500); }, fadeTime);
+                setTimeout(() => {
+                    msgDiv.style.opacity = '0';
+                    setTimeout(() => msgDiv.remove(), 500);
+                }, fadeTime);
+
                 if (chat.children.length > 30) chat.removeChild(chat.lastChild);
             }
 
             const client = new tmi.Client({ channels: [channel] });
-            client.connect().then(() => console.log("✅ Mit Twitch verbunden")).catch(console.error);
+            client.connect().then(() => {
+                console.log("✅ Mit Twitch Chat verbunden");
+                status.textContent = "Bereit! Warte auf Chat-Nachrichten…";
+            }).catch(console.error);
 
             client.on('message', (ch, tags, message, self) => {
                 if (self) return;
