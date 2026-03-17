@@ -2,11 +2,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Chat7</title>
+    <title>TUK7 Chat7</title>
     <style>
-        body { margin:0; background:transparent; font-family: Arial, sans-serif; overflow:hidden; }
+        body { margin:0; background:#1a1a1a; color:#fff; font-family:Arial,sans-serif; overflow:hidden; }
+        #status { padding:20px; font-size:24px; text-align:center; color:#0f0; }
         #chat { position:absolute; bottom:0; left:0; width:100%; max-height:100%; padding:10px; box-sizing:border-box; display:flex; flex-direction:column-reverse; gap:6px; }
-        .message { display:flex; align-items:center; gap:8px; opacity:1; transition:opacity 0.4s; font-size:18px; color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.6); }
+        .message { display:flex; align-items:center; gap:8px; opacity:1; transition:opacity 0.4s; font-size:18px; text-shadow:0 2px 4px rgba(0,0,0,0.6); }
         .badge { height:20px; vertical-align:middle; }
         .username { font-weight:bold; margin-right:4px; }
         .emote { height:32px; vertical-align:middle; image-rendering:pixelated; }
@@ -14,40 +15,56 @@
     </style>
 </head>
 <body>
+    <div id="status">Overlay wird geladen… (falls du das siehst, läuft der HTML-Teil)</div>
     <div id="chat"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/index.min.js"></script>
     <script>
+        console.log("✅ Script gestartet");
+
         const params = new URLSearchParams(window.location.search);
         const channel = (params.get('channel') || 'tuk7').toLowerCase();
+        console.log("Channel:", channel);
+
         const fontSize = params.get('fontsize') || '18';
         const emoteSize = params.get('emotesize') || '32';
         const fadeTime = parseInt(params.get('fade') || '15') * 1000;
 
         const chat = document.getElementById('chat');
+        const status = document.getElementById('status');
         const emoteMap = new Map();
 
         async function loadEmotes() {
-            const idRes = await fetch(`https://api.ivr.fi/v2/twitch/user?login=${channel}`);
-            const idData = await idRes.json();
-            const twitchId = idData?.data?.[0]?.id;
-            if (!twitchId) return;
+            status.textContent = "Emotes werden geladen…";
+            try {
+                const idRes = await fetch(`https://api.ivr.fi/v2/twitch/user?login=${channel}`);
+                const idData = await idRes.json();
+                const twitchId = idData?.data?.[0]?.id;
 
-            const userRes = await fetch(`https://7tv.io/v3/users/twitch/${twitchId}`);
-            const user = await userRes.json();
-            if (user?.emote_sets) {
-                user.emote_sets.forEach(set => {
-                    set.emotes.forEach(e => {
-                        emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`);
+                // Channel Emotes
+                const userRes = await fetch(`https://7tv.io/v3/users/twitch/${twitchId}`);
+                const user = await userRes.json();
+                if (user?.emote_sets) {
+                    user.emote_sets.forEach(set => {
+                        set.emotes.forEach(e => {
+                            emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`);
+                        });
                     });
-                });
-            }
+                }
 
-            const globalRes = await fetch('https://7tv.io/v3/emote-sets/global');
-            const global = await globalRes.json();
-            global.emotes.forEach(e => {
-                emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`);
-            });
+                // Global Emotes
+                const globalRes = await fetch('https://7tv.io/v3/emote-sets/global');
+                const global = await globalRes.json();
+                global.emotes.forEach(e => {
+                    emoteMap.set(e.name.toLowerCase(), `https://cdn.7tv.app/emote/${e.id}/4x.webp`);
+                });
+
+                status.textContent = "Bereit! Warte auf Chat-Nachrichten…";
+                console.log("✅ Emotes geladen");
+            } catch (e) {
+                console.error("Emote-Fehler:", e);
+                status.textContent = "Fehler beim Laden der Emotes";
+            }
         }
 
         function addMessage(tags, message) {
@@ -96,10 +113,13 @@
             if (chat.children.length > 30) chat.removeChild(chat.lastChild);
         }
 
+        // === EINZIGER client (kein Duplicate mehr) ===
         const client = new tmi.Client({ channels: [channel] });
-        client.connect();
+        client.connect().then(() => console.log("✅ Mit Twitch verbunden")).catch(e => console.error("Connect-Fehler:", e));
+
         client.on('message', (ch, tags, message, self) => {
             if (self) return;
+            console.log("Neue Nachricht:", tags['display-name']);
             addMessage(tags, message);
         });
 
