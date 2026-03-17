@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>TUK7 Chat7</title>
+    <title>TUK7 Chat</title>
     <style>
         body { margin:0; background:#1a1a1a; color:#fff; font-family:Arial,sans-serif; overflow:hidden; }
         #status { padding:20px; font-size:24px; text-align:center; color:#0f0; }
@@ -20,7 +20,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/tmi.js@1.8.5/index.min.js"></script>
     <script>
-        window.addEventListener('load', () => {
+        window.addEventListener('load', function() {
             console.log("✅ Script gestartet");
 
             const params = new URLSearchParams(window.location.search);
