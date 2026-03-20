@@ -1,14 +1,11 @@
-<DOCUMENT filename="index (4).html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
-
-    <!-- === NUR DAS ORIGINALE FAVICON (wie am Anfang) === -->
+ 
     <link rel="icon" href="logo.png" type="image/png">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -70,6 +67,7 @@
             transform: scale(1.15);
         }
 
+        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
         .top-left-group {
             position: fixed;
             top: 24px;
@@ -79,7 +77,11 @@
             gap: 14px;
         }
         @media (min-width: 768px) {
-            .top-left-group { top: 32px; left: 32px; gap: 16px; }
+            .top-left-group { 
+                top: 32px; 
+                left: 32px; 
+                gap: 16px; 
+            }
         }
         .mod-button-small {
             transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
@@ -102,11 +104,14 @@
 
     <!-- TOP LEFT BUTTONS GROUP -->
     <div class="top-left-group">
-        <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
-            <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
-        </a>
+        <!-- Mod Button -->
         <a href="mods" class="mod-button-small">
             <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+        </a>
+        
+        <!-- NEUER BUTTON zu img.tuk7.xyz -->
+        <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
+            <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
         </a>
     </div>
 
@@ -118,6 +123,7 @@
                     <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
                         TUK7
                     </h1>
+                 
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH
                         <span class="flex items-center whitespace-nowrap">
@@ -216,6 +222,5 @@
         initOrbs();
         animate();
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9df5e5c5adb3f807',t:'MTc3NDAyMjA4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-</DOCUMENT>
