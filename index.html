@@ -68,7 +68,6 @@
             transform: scale(1.15);
         }
 
-        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
         .top-left-group {
             position: fixed;
             top: 24px;
@@ -105,12 +104,12 @@
 
     <!-- TOP LEFT BUTTONS GROUP -->
     <div class="top-left-group">
-        <!-- NEUER BUTTON zu img.tuk7.xyz (jetzt links) -->
+        <!-- img.tuk7.xyz (links) -->
         <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
             <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
         </a>
         
-        <!-- Mod Button (jetzt rechts) -->
+        <!-- Mod Button (rechts) -->
         <a href="mods" class="mod-button-small">
             <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
         </a>
@@ -222,6 +221,14 @@
         resize();
         initOrbs();
         animate();
+
+        // === NEUER TAB-WECHSEL-EFFEKT ===
+        const originalTitle = document.title;
+        document.addEventListener("visibilitychange", () => {
+            document.title = document.hidden 
+                ? "Come back :(" 
+                : originalTitle;
+        });
     </script>
 </body>
 </html>
