@@ -5,8 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TUK7 • Twitch Mod</title>
- 
-    <link rel="icon" href="logo.png" type="image/png">
+
+    <!-- === FAVICON MIT CACHE-BUSTER === -->
+    <link rel="icon" href="logo.png?v=2026" type="image/png" sizes="32x32">
+    <link rel="icon" href="logo.png?v=2026" type="image/png" sizes="16x16">
+    <link rel="shortcut icon" href="logo.png?v=2026">
+    <link rel="apple-touch-icon" href="logo.png?v=2026">
+    <link rel="icon" href="logo.png?v=2026" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
@@ -68,7 +74,6 @@
             transform: scale(1.15);
         }
 
-        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
         .top-left-group {
             position: fixed;
             top: 24px;
@@ -78,11 +83,7 @@
             gap: 14px;
         }
         @media (min-width: 768px) {
-            .top-left-group { 
-                top: 32px; 
-                left: 32px; 
-                gap: 16px; 
-            }
+            .top-left-group { top: 32px; left: 32px; gap: 16px; }
         }
         .mod-button-small {
             transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
@@ -105,12 +106,9 @@
 
     <!-- TOP LEFT BUTTONS GROUP -->
     <div class="top-left-group">
-        <!-- NEUER BUTTON zu img.tuk7.xyz (jetzt links) -->
         <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
             <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
         </a>
-        
-        <!-- Mod Button (jetzt rechts) -->
         <a href="mods" class="mod-button-small">
             <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
         </a>
@@ -124,7 +122,6 @@
                     <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
                         TUK7
                     </h1>
-                 
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
                         TWITCH
                         <span class="flex items-center whitespace-nowrap">
