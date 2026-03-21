@@ -1,192 +1,451 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>TUK7 • Twitch Mod</title>
+
  
+
     <link rel="icon" href="logo.png" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
      
-        body {
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            overflow: hidden;
-        }
 
-        /* Sanftes Umgebungslicht im Hintergrund */
-        .ambient-light {
-            position: fixed;
-            width: 80vw;
-            height: 80vw;
-            background: radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
-            top: -20vw;
-            left: -10vw;
-            z-index: -1;
-            filter: blur(100px);
-            animation: drift 20s ease-in-out infinite alternate;
-        }
+        .gif-text {
 
-        .ambient-light-2 {
-            position: fixed;
-            width: 60vw;
-            height: 60vw;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 60%);
-            bottom: -10vw;
-            right: -5vw;
-            z-index: -1;
-            filter: blur(80px);
-            animation: drift 25s ease-in-out infinite alternate-reverse;
-        }
-
-        @keyframes drift {
-            from { transform: translate(0, 0); }
-            to { transform: translate(10%, 5%); }
-        }
-
-        /* Professionelle Typografie */
-        .hero-title {
-            font-weight: 800;
-            letter-spacing: -0.04em;
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
+
             background-size: cover;
-            background-clip: text;
-            -webkit-background-clip: text;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
             color: transparent;
-            filter: saturate(0.8); /* Weniger knallig, seriöser */
-        }
 
-        /* 3D-Container (sehr subtil) */
-        .tilt-wrapper {
-            perspective: 1200px;
-        }
+            -webkit-text-fill-color: transparent;
 
-        .content-card {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 40px;
-            padding: 4rem 6rem;
-            transition: transform 0.2s ease-out;
-        }
+            background-clip: text;
 
-        /* Clean Buttons */
-        .nav-link {
-            transition: all 0.3s ease;
-            opacity: 0.5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+            -webkit-background-clip: text;
 
-        .nav-link:hover {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
-
-        .nav-link img {
-            width: 20px;
-            height: 20px;
-            filter: grayscale(1) invert(1);
-        }
-
-        /* O-Replace Animation */
-        .o-replace {
             display: inline-block;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .o-replace:hover {
-            transform: scale(1.1);
+
         }
 
-        .fade-in {
-            animation: fadeIn 1.2s ease-out forwards;
+        .o-replace {
+
+            width: auto;
+
+            vertical-align: middle;
+
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        html, body {
+
+            height: 100%;
+
+            overflow: hidden;
+
         }
+
+        body {
+
+            background: #050505;
+
+        }
+
+        .tilt-wrapper {
+
+            perspective: 1400px;
+
+            width: 100%;
+
+            height: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+        .tilt-content {
+
+            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+            transform-style: preserve-3d;
+
+        }
+
+        .social-icons {
+
+            position: fixed;
+
+            top: 24px;
+
+            right: 24px;
+
+            z-index: 50;
+
+            display: flex;
+
+            gap: 16px;
+
+        }
+
+        @media (min-width: 768px) {
+
+            .social-icons { top: 32px; right: 32px; gap: 18px; }
+
+            .social-icons img { width: 26px; height: 26px; }
+
+        }
+
+        .social-icons img {
+
+            width: 22px;
+
+            height: 22px;
+
+            filter: brightness(0.85);
+
+            transition: all 0.2s ease;
+
+        }
+
+        .social-icons a:hover img {
+
+            filter: brightness(1);
+
+            transform: scale(1.15);
+
+        }
+
+
+
+        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
+
+        .top-left-group {
+
+            position: fixed;
+
+            top: 24px;
+
+            left: 24px;
+
+            z-index: 50;
+
+            display: flex;
+
+            gap: 14px;
+
+        }
+
+        @media (min-width: 768px) {
+
+            .top-left-group { 
+
+                top: 32px; 
+
+                left: 32px; 
+
+                gap: 16px; 
+
+            }
+
+        }
+
+        .mod-button-small {
+
+            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+
+        }
+
+        .mod-button-small:hover {
+
+            transform: scale(1.18);
+
+        }
+
     </style>
+
 </head>
-<body>
-    <div class="ambient-light"></div>
-    <div class="ambient-light-2"></div>
 
-    <div class="fixed top-8 left-8 flex gap-4 z-50 fade-in" style="animation-delay: 0.2s;">
-        <a href="mods" class="nav-link">
-            <img src="mod.png" alt="Mods">
-        </a>
-        <a href="https://img.tuk7.xyz/" target="_blank" class="nav-link">
-            <img src="image.png" alt="Gallery">
-        </a>
+<body class="bg-[#050505] text-white font-sans">
+
+    <!-- ORBS CANVAS -->
+
+    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
+
+
+
+    <!-- SOCIAL ICONS -->
+
+    <div class="social-icons">
+
+        <a href="https://twitch.tv/tuk7" target="_blank"><img src="twitch.png" alt="Twitch"></a>
+
+        <a href="https://x.com/tukfps" target="_blank"><img src="twitter.png" alt="Twitter"></a>
+
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
+
     </div>
 
-    <div class="fixed top-8 right-8 flex gap-4 z-50 fade-in" style="animation-delay: 0.3s;">
-        <a href="https://twitch.tv/tuk7" target="_blank" class="nav-link"><img src="twitch.png" alt="Twitch"></a>
-        <a href="https://x.com/tukfps" target="_blank" class="nav-link"><img src="twitter.png" alt="Twitter"></a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" class="nav-link"><img src="discord.png" alt="Discord"></a>
+
+
+    <!-- TOP LEFT BUTTONS GROUP -->
+
+    <div class="top-left-group">
+
+        <!-- Mod Button -->
+
+        <a href="mods" class="mod-button-small">
+
+            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+
+        </a>
+
+        
+
+        <!-- NEUER BUTTON zu img.tuk7.xyz -->
+
+        <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
+
+            <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
+
+        </a>
+
     </div>
 
-    <main class="h-screen flex items-center justify-center p-6 tilt-wrapper">
-        <div id="card" class="content-card text-center fade-in">
-            <h1 class="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-6">
-                TUK7
-            </h1>
-            
-            <div class="flex items-center justify-center gap-3 text-zinc-400 text-sm md:text-base font-medium tracking-[0.2em] uppercase">
-                <span>Twitch</span>
-                <span class="w-1 h-1 bg-zinc-700 rounded-full"></span>
-                <span class="flex items-center text-white">
-                    C
-                    <img src="o.png" class="o-replace h-4 md:h-5 mx-1" alt="O">
-                    mmunity
-                </span>
-                <span class="w-1 h-1 bg-zinc-700 rounded-full"></span>
-                <span>Moderator</span>
+
+
+    <!-- HERO -->
+
+    <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
+
+        <div class="tilt-wrapper">
+
+            <div id="tilt-content" class="tilt-content">
+
+                <div class="-mt-8 sm:-mt-12 md:-mt-16">
+
+                    <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
+
+                        TUK7
+
+                    </h1>
+
+                 
+
+                    <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
+
+                        TWITCH
+
+                        <span class="flex items-center whitespace-nowrap">
+
+                            C
+
+                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
+
+                            MMUNITY
+
+                        </span>
+
+                        MODERATOR
+
+                    </p>
+
+                </div>
+
             </div>
-        </div>
-    </main>
 
-    <footer class="fixed bottom-8 w-full text-center text-[10px] tracking-[0.3em] text-zinc-600 uppercase fade-in" style="animation-delay: 0.5s;">
-        © 2026 TUK • Minimalist Interface
+        </div>
+
+    </section>
+
+
+
+    <!-- FOOTER -->
+
+    <footer class="absolute bottom-6 left-0 right-0 text-center text-[10px] text-zinc-500">
+
+        © 2026 TUK | All rights reserved.
+
     </footer>
 
+
+
     <script>
+
+        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
+
+        
+
         // CLEAN URL REDIRECT
+
         if (window.location.pathname.endsWith('/index.html')) {
+
             window.location.replace(window.location.origin + '/');
+
         }
 
-        // ULTRA-SOFT TILT EFFECT
-        const card = document.getElementById('card');
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+
+        // 3D TILT
+
+        const tiltContent = document.getElementById('tilt-content');
+
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
         if (!isMobile) {
+
             document.addEventListener('mousemove', (e) => {
-                const rotateX = (window.innerHeight / 2 - e.clientY) / 70;
-                const rotateY = (e.clientX - window.innerWidth / 2) / 70;
-                
-                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+
+                const x = (window.innerWidth / 2 - e.clientX) / 55;
+
+                const y = (window.innerHeight / 2 - e.clientY) / 55;
+
+                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+
             });
 
-            document.addEventListener('mouseleave', () => {
-                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
-            });
+            document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
+
         }
+
+
+
+        // ORBS
+
+        const canvas = document.getElementById('orb-canvas');
+
+        const ctx = canvas.getContext('2d');
+
+        let orbs = [], width, height, isMobileDevice = isMobile;
+
+        class Orb {
+
+            constructor() { this.reset(); }
+
+            reset() {
+
+                this.x = Math.random() * width;
+
+                this.y = Math.random() * height;
+
+                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
+
+                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
+
+                this.vx = (Math.random() - 0.5) * this.speed;
+
+                this.vy = (Math.random() - 0.5) * this.speed;
+
+                this.hue = 265 + Math.random() * 45;
+
+                this.opacity = Math.random() * 0.28 + 0.13;
+
+                this.phase = Math.random() * Math.PI * 2;
+
+            }
+
+            update() {
+
+                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
+
+                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
+
+                if (this.x < -60) this.x = width + 60;
+
+                if (this.x > width + 60) this.x = -60;
+
+                if (this.y < -60) this.y = height + 60;
+
+                if (this.y > height + 60) this.y = -60;
+
+            }
+
+            draw() {
+
+                ctx.save();
+
+                const layers = isMobileDevice
+
+                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
+
+                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
+
+                for (let layer of layers) {
+
+                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
+
+                    ctx.beginPath();
+
+                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
+
+                    ctx.fill();
+
+                }
+
+                ctx.restore();
+
+            }
+
+        }
+
+        function resize() {
+
+            width = window.innerWidth; height = window.innerHeight;
+
+            canvas.width = width; canvas.height = height;
+
+            isMobileDevice = window.innerWidth < 768;
+
+        }
+
+        function initOrbs() {
+
+            orbs = [];
+
+            const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
+
+            for (let i = 0; i < count; i++) orbs.push(new Orb());
+
+        }
+
+        function animate() {
+
+            ctx.clearRect(0, 0, width, height);
+
+            for (let orb of orbs) { orb.update(); orb.draw(); }
+
+            requestAnimationFrame(animate);
+
+        }
+
+        window.addEventListener('resize', () => { resize(); initOrbs(); });
+
+        resize();
+
+        initOrbs();
+
+        animate();
+
     </script>
-</body>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9df5e5c5adb3f807',t:'MTc3NDAyMjA4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
 </html>
