@@ -7,9 +7,47 @@
  
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = { 
+            theme: { 
+                extend: { 
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                } 
+            } 
+        };
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
      
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: #050505;
+            color: #ffffff;
+        }
+
+        /* Hintergrundrauschen für einen edlen Textur-Look */
+        .noise-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* 7TV Animierter Text */
         .gif-text {
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
@@ -20,18 +58,20 @@
             background-clip: text;
             -webkit-background-clip: text;
             display: inline-block;
+            filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.2)); /* Leichtes violettes Glühen */
         }
+
         .o-replace {
             width: auto;
             vertical-align: middle;
+            transition: transform 0.3s ease;
         }
-        html, body {
-            height: 100%;
-            overflow: hidden;
+        
+        .o-replace:hover {
+            transform: rotate(180deg);
         }
-        body {
-            background: #050505;
-        }
+
+        /* 3D Tilt & Glassmorphism */
         .tilt-wrapper {
             perspective: 1400px;
             width: 100%;
@@ -40,10 +80,24 @@
             align-items: center;
             justify-content: center;
         }
+
         .tilt-content {
-            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition: transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1);
             transform-style: preserve-3d;
         }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2rem;
+            padding: 3rem 4rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+            transform: translateZ(30px); /* Hebt das Panel im 3D Raum an */
+        }
+
+        /* Navigation & Socials */
         .social-icons {
             position: fixed;
             top: 24px;
@@ -52,22 +106,7 @@
             display: flex;
             gap: 16px;
         }
-        @media (min-width: 768px) {
-            .social-icons { top: 32px; right: 32px; gap: 18px; }
-            .social-icons img { width: 26px; height: 26px; }
-        }
-        .social-icons img {
-            width: 22px;
-            height: 22px;
-            filter: brightness(0.85);
-            transition: all 0.2s ease;
-        }
-        .social-icons a:hover img {
-            filter: brightness(1);
-            transform: scale(1.15);
-        }
-
-        /* === TOP LEFT BUTTONS GROUP (Mod + image.png) === */
+        
         .top-left-group {
             position: fixed;
             top: 24px;
@@ -76,59 +115,121 @@
             display: flex;
             gap: 14px;
         }
+
         @media (min-width: 768px) {
-            .top-left-group { 
-                top: 32px; 
-                left: 32px; 
-                gap: 16px; 
-            }
+            .social-icons { top: 32px; right: 32px; gap: 20px; }
+            .top-left-group { top: 32px; left: 32px; gap: 20px; }
         }
-        .mod-button-small {
-            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
+
+        /* Icon Styles mit Tooltip */
+        .icon-btn {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        .mod-button-small:hover {
-            transform: scale(1.18);
+
+        .icon-btn img {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: brightness(0.7) contrast(1.2);
+            transition: all 0.3s ease;
+        }
+        
+        /* Spezifische Größe für Mod-Icons falls nötig */
+        .icon-btn.mod-btn img {
+            width: 24px;
+            height: 24px;
+        }
+
+        .icon-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+
+        .icon-btn:hover img {
+            filter: brightness(1) drop-shadow(0 0 8px rgba(255,255,255,0.3));
+        }
+
+        /* CSS Tooltip */
+        .tooltip {
+            position: absolute;
+            top: 120%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: rgba(15, 15, 15, 0.9);
+            color: #a1a1aa;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+            white-space: nowrap;
+        }
+
+        .icon-btn:hover .tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
-<body class="bg-[#050505] text-white font-sans">
-    <!-- ORBS CANVAS -->
-    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
+<body class="font-sans antialiased">
+    <div class="noise-bg"></div>
 
-    <!-- SOCIAL ICONS -->
-    <div class="social-icons">
-        <a href="https://twitch.tv/tuk7" target="_blank"><img src="twitch.png" alt="Twitch"></a>
-        <a href="https://x.com/tukfps" target="_blank"><img src="twitter.png" alt="Twitter"></a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
-    </div>
+    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-2]"></canvas>
 
-    <!-- TOP LEFT BUTTONS GROUP -->
-    <div class="top-left-group">
-        <!-- Mod Button -->
-        <a href="mods" class="mod-button-small">
-            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+    <div class="top-left-group animate-fade-in" style="animation-delay: 0.2s;">
+        <a href="mods" class="icon-btn mod-btn">
+            <img src="mod.png" alt="My Moderator Roles">
+            <span class="tooltip">MOD ROLES</span>
         </a>
-        
-        <!-- NEUER BUTTON zu img.tuk7.xyz -->
-        <a href="https://img.tuk7.xyz/" target="_blank" class="mod-button-small">
-            <img src="image.png" alt="img.tuk7.xyz – My Images" class="w-9 h-auto">
+        <a href="https://img.tuk7.xyz/" target="_blank" class="icon-btn mod-btn">
+            <img src="image.png" alt="My Images">
+            <span class="tooltip">GALLERY</span>
         </a>
     </div>
 
-    <!-- HERO -->
-    <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
+    <div class="social-icons animate-fade-in" style="animation-delay: 0.3s;">
+        <a href="https://twitch.tv/tuk7" target="_blank" class="icon-btn">
+            <img src="twitch.png" alt="Twitch">
+            <span class="tooltip">TWITCH</span>
+        </a>
+        <a href="https://x.com/tukfps" target="_blank" class="icon-btn">
+            <img src="twitter.png" alt="Twitter">
+            <span class="tooltip">X / TWITTER</span>
+        </a>
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" class="icon-btn">
+            <img src="discord.png" alt="Discord">
+            <span class="tooltip">DISCORD</span>
+        </a>
+    </div>
+
+    <section class="h-screen flex flex-col items-center justify-center px-6 text-center animate-fade-in">
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
-                <div class="-mt-8 sm:-mt-12 md:-mt-16">
-                    <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
+                <div class="glass-panel">
+                    <h1 class="gif-text text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none mb-4">
                         TUK7
                     </h1>
                  
-                    <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
+                    <p class="text-lg sm:text-xl md:text-2xl font-semibold text-zinc-300 flex items-center justify-center gap-x-2 flex-wrap tracking-wide" style="transform: translateZ(20px);">
                         TWITCH
-                        <span class="flex items-center whitespace-nowrap">
+                        <span class="flex items-center whitespace-nowrap text-white">
                             C
-                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
+                            <img src="o.png" class="o-replace h-[20px] sm:h-[24px] md:h-[28px] mx-[2px]" alt="O">
                             MMUNITY
                         </span>
                         MODERATOR
@@ -138,89 +239,108 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="absolute bottom-6 left-0 right-0 text-center text-[10px] text-zinc-500">
-        © 2026 TUK | All rights reserved.
+    <footer class="absolute bottom-6 left-0 right-0 text-center text-xs font-medium tracking-widest text-zinc-600 uppercase animate-fade-in" style="animation-delay: 0.5s;">
+        © 2026 TUK <span class="mx-2 opacity-50">•</span> All rights reserved.
     </footer>
 
     <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
-        
         // CLEAN URL REDIRECT
         if (window.location.pathname.endsWith('/index.html')) {
             window.location.replace(window.location.origin + '/');
         }
 
-        // 3D TILT
+        // 3D TILT EFFECT
         const tiltContent = document.getElementById('tilt-content');
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
-                const x = (window.innerWidth / 2 - e.clientX) / 55;
-                const y = (window.innerHeight / 2 - e.clientY) / 55;
-                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+                const xAxis = (window.innerWidth / 2 - e.clientX) / 45; // Etwas sensibler für besseres Feel
+                const yAxis = (window.innerHeight / 2 - e.clientY) / 45;
+                tiltContent.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
             });
-            document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
+            // Soft reset beim Verlassen
+            document.addEventListener('mouseleave', () => {
+                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
         }
 
-        // ORBS
+        // UPGRADED ORBS BACKGROUND
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = isMobile;
+
         class Orb {
             constructor() { this.reset(); }
             reset() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
-                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
+                this.radius = Math.random() * (isMobileDevice ? 50 : 80) + 20; // Größere, weichere Radien
+                this.speed = Math.random() * 0.2 + 0.05;
                 this.vx = (Math.random() - 0.5) * this.speed;
                 this.vy = (Math.random() - 0.5) * this.speed;
-                this.hue = 265 + Math.random() * 45;
-                this.opacity = Math.random() * 0.28 + 0.13;
+                this.hue = 260 + Math.random() * 50; // Lila / Blau Spektrum
+                this.opacity = Math.random() * 0.15 + 0.05; // Dezentere Base-Opacity
                 this.phase = Math.random() * Math.PI * 2;
             }
             update() {
-                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
-                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
-                if (this.x < -60) this.x = width + 60;
-                if (this.x > width + 60) this.x = -60;
-                if (this.y < -60) this.y = height + 60;
-                if (this.y > height + 60) this.y = -60;
+                this.x += this.vx + Math.sin(Date.now() / 2000 + this.phase) * 0.3;
+                this.y += this.vy + Math.cos(Date.now() / 1500 + this.phase) * 0.3;
+                
+                // Weicher Wrap-Around
+                if (this.x < -this.radius) this.x = width + this.radius;
+                if (this.x > width + this.radius) this.x = -this.radius;
+                if (this.y < -this.radius) this.y = height + this.radius;
+                if (this.y > height + this.radius) this.y = -this.radius;
             }
             draw() {
                 ctx.save();
-                const layers = isMobileDevice
-                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
-                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
-                for (let layer of layers) {
-                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+                ctx.globalCompositeOperation = 'screen'; // Macht Überschneidungen heller (Geiler Effekt)
+                
+                // Erstelle einen weichen Farbverlauf für die Orbs (Nebula Look)
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                gradient.addColorStop(0, `hsla(${this.hue}, 90%, 65%, ${this.opacity})`);
+                gradient.addColorStop(1, `hsla(${this.hue}, 90%, 65%, 0)`);
+                
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.restore();
             }
         }
+
         function resize() {
-            width = window.innerWidth; height = window.innerHeight;
-            canvas.width = width; canvas.height = height;
+            width = window.innerWidth; 
+            height = window.innerHeight;
+            canvas.width = width; 
+            canvas.height = height;
             isMobileDevice = window.innerWidth < 768;
         }
+
         function initOrbs() {
             orbs = [];
-            const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
+            const count = isMobileDevice ? 15 : 25; // Mehr Orbs, da sie jetzt weicher sind
             for (let i = 0; i < count; i++) orbs.push(new Orb());
         }
+
         function animate() {
             ctx.clearRect(0, 0, width, height);
-            for (let orb of orbs) { orb.update(); orb.draw(); }
+            for (let orb of orbs) { 
+                orb.update(); 
+                orb.draw(); 
+            }
             requestAnimationFrame(animate);
         }
-        window.addEventListener('resize', () => { resize(); initOrbs(); });
+
+        window.addEventListener('resize', () => { 
+            resize(); 
+            initOrbs(); 
+        });
+        
         resize();
         initOrbs();
         animate();
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9df5e5c5adb3f807',t:'MTc3NDAyMjA4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
