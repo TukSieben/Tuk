@@ -8,322 +8,161 @@
     <link rel="icon" href="logo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script>
-        tailwind.config = { 
-            theme: { 
-                extend: { 
-                    fontFamily: { 
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'], // Für einen techy Touch
-                    },
-                    colors: {
-                        cyber: {
-                            base: '#030303',
-                            purple: '#A855F7',
-                            cyan: '#22D3EE',
-                            glass: 'rgba(10, 10, 10, 0.4)',
-                        }
-                    },
-                    animation: {
-                        'fade-in-glitch': 'fadeInGlitch 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-                        'neon-pulse': 'neonPulse 2s ease-in-out infinite',
-                        'scanlines': 'scanlines 0.2s linear infinite',
-                    },
-                    keyframes: {
-                        fadeInGlitch: {
-                            '0%': { opacity: '0', transform: 'scale(1.1) translateY(30px) skewX(-15deg)' },
-                            '100%': { opacity: '1', transform: 'scale(1) translateY(0) skewX(0deg)' },
-                        },
-                        neonPulse: {
-                            '0%, 100%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.3), inset 0 0 10px rgba(34, 211, 238, 0.2)' },
-                            '50%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.5), inset 0 0 20px rgba(34, 211, 238, 0.4)' },
-                        },
-                        scanlines: {
-                            '0%': { backgroundPosition: '0% 0%' },
-                            '100%': { backgroundPosition: '0% 100%' },
-                        }
-                    }
-                } 
-            } 
-        };
-    </script>
-
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap');
      
-        html, body {
-            height: 100%;
-            overflow: hidden;
-            background: #030303;
+        body {
+            background-color: #0a0a0a;
             color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            overflow: hidden;
         }
 
-        /* HINTERGRUND-OVERKILL */
-        .cyber-bg {
+        /* Sanftes Umgebungslicht im Hintergrund */
+        .ambient-light {
             position: fixed;
-            inset: 0;
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(120, 119, 198, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            top: -20vw;
+            left: -10vw;
             z-index: -1;
-            pointer-events: none;
-        }
-        
-        /* Scanlines Overlay */
-        .scanlines-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            opacity: 0.08;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent,
-                transparent 1px,
-                #22D3EE 2px,
-                #22D3EE 3px
-            );
-            background-size: 100% 4px;
-            animation: scanlines 0.2s linear infinite;
+            filter: blur(100px);
+            animation: drift 20s ease-in-out infinite alternate;
         }
 
-        .noise-bg {
+        .ambient-light-2 {
             position: fixed;
-            inset: 0;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, rgba(0, 0, 0, 0) 60%);
+            bottom: -10vw;
+            right: -5vw;
             z-index: -1;
-            opacity: 0.035;
-            pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            filter: blur(80px);
+            animation: drift 25s ease-in-out infinite alternate-reverse;
         }
 
-        /* 7TV Animierter Text mit Glitch-Effekt */
-        .gif-text {
+        @keyframes drift {
+            from { transform: translate(0, 0); }
+            to { transform: translate(10%, 5%); }
+        }
+
+        /* Professionelle Typografie */
+        .hero-title {
+            font-weight: 800;
+            letter-spacing: -0.04em;
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
             background-clip: text;
             -webkit-background-clip: text;
-            display: inline-block;
-            filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.4));
-            transition: transform 0.1s ease;
-        }
-        
-        /* Interaktives Zittern beim Hover */
-        .gif-text:hover {
-            animation: glitch-shake 0.3s cubic-bezier(.25,.46,.45,.94) infinite;
-        }
-        
-        @keyframes glitch-shake {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
+            color: transparent;
+            filter: saturate(0.8); /* Weniger knallig, seriöser */
         }
 
+        /* 3D-Container (sehr subtil) */
+        .tilt-wrapper {
+            perspective: 1200px;
+        }
+
+        .content-card {
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            padding: 4rem 6rem;
+            transition: transform 0.2s ease-out;
+        }
+
+        /* Clean Buttons */
+        .nav-link {
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-link:hover {
+            opacity: 1;
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .nav-link img {
+            width: 20px;
+            height: 20px;
+            filter: grayscale(1) invert(1);
+        }
+
+        /* O-Replace Animation */
         .o-replace {
-            width: auto;
-            vertical-align: middle;
-            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-            filter: drop-shadow(0 0 8px #22D3EE);
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
         
         .o-replace:hover {
-            transform: rotate(360deg);
+            transform: scale(1.1);
         }
 
-        /* 3D Tilt & Glassmorphism Krasser */
-        .tilt-wrapper {
-            perspective: 1600px; // Mehr Tiefe
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .fade-in {
+            animation: fadeIn 1.2s ease-out forwards;
         }
 
-        .tilt-content {
-            transition: transform 0.1s cubic-bezier(0.25, 0.1, 0.25, 1);
-            transform-style: preserve-3d;
-        }
-
-        /* Überarbeitetes Glass Panel */
-        .cyber-panel {
-            background: cyber-glass;
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 2px solid;
-            border-image: linear-gradient(135deg, #A855F7, #22D3EE) 1; // Gradient Border
-            border-radius: 2rem;
-            padding: 3.5rem 5rem;
-            // Pulsierender Neon Glow
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), inset 0 0 10px rgba(34, 211, 238, 0.2);
-            animation: neon-pulse 3s ease-in-out infinite;
-            transform: translateZ(50px); /* Hebt das Panel im 3D Raum an */
-        }
-
-        /* NEON ICONS GROUP */
-        .top-left-group, .social-icons {
-            position: fixed;
-            z-index: 100;
-            display: flex;
-        }
-
-        .top-left-group { top: 24px; left: 24px; gap: 14px; }
-        .social-icons { top: 24px; right: 24px; gap: 16px; }
-
-        @media (min-width: 768px) {
-            .top-left-group { top: 32px; left: 32px; gap: 20px; }
-            .social-icons { top: 32px; right: 32px; gap: 22px; }
-        }
-
-        /* Überarbeitetes Icon Button Design */
-        .neon-btn {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: rgba(3, 3, 3, 0.8);
-            border: 2px solid;
-            border-color: #A855F7; // Purple Base
-            transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-        }
-
-        .neon-btn img {
-            width: 20px;
-            height: 20px;
-            object-fit: contain;
-            filter: brightness(0.9) contrast(1.1);
-            transition: all 0.3s ease;
-        }
-        
-        .neon-btn.mod-btn img {
-            width: 26px;
-            height: 26px;
-        }
-
-        .neon-btn:hover {
-            transform: translateY(-4px) scale(1.1) skewX(-10deg); // Skew beim Hover
-            border-color: #22D3EE; // Cyan Hover
-            box-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
-        }
-
-        .neon-btn:hover img {
-            filter: brightness(1) drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
-            animation: glitch-shake 0.3s ease infinite; // Glitch shake on icon hover
-        }
-
-        /* Krasserer Tooltip */
-        .tooltip {
-            position: absolute;
-            top: 130%;
-            left: 50%;
-            transform: translateX(-50%) translateY(10px);
-            background: rgba(3, 3, 3, 0.95);
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace; // Tech Font
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            padding: 7px 14px;
-            border-radius: 4px;
-            border: 1px solid #22D3EE; // Cyan Border
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.2s cubic-bezier(0.19, 1, 0.22, 1);
-            white-space: nowrap;
-            box-shadow: 0 0 10px rgba(34, 211, 238, 0.4);
-        }
-
-        .neon-btn:hover .tooltip {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        
-        /* Scanlines im Sub-Text */
-        .sub-text {
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.15em;
-            transform: translateZ(30px);
-            position: relative;
-        }
-        
-        .sub-text::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            opacity: 0.15;
-            background: repeating-linear-gradient(
-                to bottom,
-                transparent,
-                transparent 1px,
-                #fff 2px
-            );
-            background-size: 100% 3px;
-            pointer-events: none;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body class="font-sans antialiased overflow-hidden">
-    <div class="cyber-bg"></div>
-    <div class="scanlines-overlay"></div>
-    <div class="noise-bg"></div>
+<body>
+    <div class="ambient-light"></div>
+    <div class="ambient-light-2"></div>
 
-    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-3]"></canvas>
-
-    <div class="top-left-group animate-fade-in-glitch" style="animation-delay: 0.2s;">
-        <a href="mods" class="neon-btn mod-btn">
-            <img src="mod.png" alt="My Moderator Roles">
-            <span class="tooltip">/mods</span>
+    <div class="fixed top-8 left-8 flex gap-4 z-50 fade-in" style="animation-delay: 0.2s;">
+        <a href="mods" class="nav-link">
+            <img src="mod.png" alt="Mods">
         </a>
-        <a href="https://img.tuk7.xyz/" target="_blank" class="neon-btn mod-btn">
-            <img src="image.png" alt="My Images">
-            <span class="tooltip">/img</span>
+        <a href="https://img.tuk7.xyz/" target="_blank" class="nav-link">
+            <img src="image.png" alt="Gallery">
         </a>
     </div>
 
-    <div class="social-icons animate-fade-in-glitch" style="animation-delay: 0.3s;">
-        <a href="https://twitch.tv/tuk7" target="_blank" class="neon-btn">
-            <img src="twitch.png" alt="Twitch">
-            <span class="tooltip">TUK7</span>
-        </a>
-        <a href="https://x.com/tukfps" target="_blank" class="neon-btn">
-            <img src="twitter.png" alt="Twitter">
-            <span class="tooltip">@TUKFPS</span>
-        </a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" class="neon-btn">
-            <img src="discord.png" alt="Discord">
-            <span class="tooltip">JOIN.TUK</span>
-        </a>
+    <div class="fixed top-8 right-8 flex gap-4 z-50 fade-in" style="animation-delay: 0.3s;">
+        <a href="https://twitch.tv/tuk7" target="_blank" class="nav-link"><img src="twitch.png" alt="Twitch"></a>
+        <a href="https://x.com/tukfps" target="_blank" class="nav-link"><img src="twitter.png" alt="Twitter"></a>
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" class="nav-link"><img src="discord.png" alt="Discord"></a>
     </div>
 
-    <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
-        <div class="tilt-wrapper">
-            <div id="tilt-content" class="tilt-content">
-                <div class="cyber-panel animate-fade-in-glitch">
-                    <h1 class="gif-text text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none mb-4">
-                        TUK7
-                    </h1>
-                 
-                    <p class="sub-text text-xl sm:text-2xl md:text-3xl font-bold text-zinc-200 flex items-center justify-center gap-x-3 flex-wrap" style="transform: translateZ(30px);">
-                        TWITCH
-                        <span class="flex items-center whitespace-nowrap text-white font-black">
-                            C
-                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[32px] mx-[2px]" alt="O">
-                            MMUNITY
-                        </span>
-                        MODERATOR
-                    </p>
-                </div>
+    <main class="h-screen flex items-center justify-center p-6 tilt-wrapper">
+        <div id="card" class="content-card text-center fade-in">
+            <h1 class="hero-title text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-6">
+                TUK7
+            </h1>
+            
+            <div class="flex items-center justify-center gap-3 text-zinc-400 text-sm md:text-base font-medium tracking-[0.2em] uppercase">
+                <span>Twitch</span>
+                <span class="w-1 h-1 bg-zinc-700 rounded-full"></span>
+                <span class="flex items-center text-white">
+                    C
+                    <img src="o.png" class="o-replace h-4 md:h-5 mx-1" alt="O">
+                    mmunity
+                </span>
+                <span class="w-1 h-1 bg-zinc-700 rounded-full"></span>
+                <span>Moderator</span>
             </div>
         </div>
-    </section>
+    </main>
 
-    <footer class="absolute bottom-6 left-0 right-0 text-center text-xs font-medium tracking-[0.3em] text-zinc-700 uppercase animate-fade-in-glitch" style="animation-delay: 0.5s;">
-        [ © 2026 TUK <span class="mx-3 opacity-50">//</span> SYSTEM <span class="mx-3 opacity-50">//</span> <span class="text-cyber-cyan">ACTIVE</span> ]
+    <footer class="fixed bottom-8 w-full text-center text-[10px] tracking-[0.3em] text-zinc-600 uppercase fade-in" style="animation-delay: 0.5s;">
+        © 2026 TUK • Minimalist Interface
     </footer>
 
     <script>
@@ -332,140 +171,22 @@
             window.location.replace(window.location.origin + '/');
         }
 
-        // KRASSERER 3D TILT EFFECT
-        const tiltContent = document.getElementById('tilt-content');
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-        
+        // ULTRA-SOFT TILT EFFECT
+        const card = document.getElementById('card');
+        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         if (!isMobile) {
             document.addEventListener('mousemove', (e) => {
-                const xAxis = (window.innerWidth / 2 - e.clientX) / 35; // Intensiver
-                const yAxis = (window.innerHeight / 2 - e.clientY) / 35;
-                tiltContent.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                const rotateX = (window.innerHeight / 2 - e.clientY) / 70;
+                const rotateY = (e.clientX - window.innerWidth / 2) / 70;
+                
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
-            // Soft reset beim Verlassen
+
             document.addEventListener('mouseleave', () => {
-                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                card.style.transform = `rotateX(0deg) rotateY(0deg)`;
             });
         }
-
-        // REAKTIVES PARTIKEL-NETZWERK BACKGOUND (KEINE SOFTEN ORBS MEHR)
-        const canvas = document.getElementById('orb-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [], width, height, mouse = { x: null, y: null };
-
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.size = Math.random() * 2 + 1; // Winzige Partikel
-                this.speed = Math.random() * 0.5 + 0.1;
-                this.vx = (Math.random() - 0.5) * this.speed;
-                this.vy = (Math.random() - 0.5) * this.speed;
-                this.hue = Math.random() < 0.5 ? 260 : 180; // Violett oder Cyan Spektrum
-                this.opacity = Math.random() * 0.3 + 0.1;
-            }
-            update() {
-                // Maus Interaktion (Abstoßung)
-                if (mouse.x && !isMobileDevice) {
-                    const dx = this.x - mouse.x;
-                    const dy = this.y - mouse.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 150) {
-                        const forceX = dx / dist;
-                        const forceY = dy / dist;
-                        const power = (150 - dist) / 150;
-                        this.vx += forceX * power * 0.1;
-                        this.vy += forceY * power * 0.1;
-                    }
-                }
-                
-                // Reibung
-                this.vx *= 0.99;
-                this.vy *= 0.99;
-                
-                this.x += this.vx;
-                this.y += this.vy;
-                
-                // Weicher Wrap-Around
-                if (this.x < -10) this.x = width + 10;
-                if (this.x > width + 10) this.x = -10;
-                if (this.y < -10) this.y = height + 10;
-                if (this.y > height + 10) this.y = -10;
-            }
-            draw() {
-                ctx.save();
-                ctx.globalCompositeOperation = 'screen'; // Macht Überschneidungen heller
-                ctx.fillStyle = `hsla(${this.hue}, 90%, 65%, ${this.opacity})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.restore();
-            }
-        }
-
-        function connectParticles() {
-            ctx.globalCompositeOperation = 'screen';
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
-                    if (dist < 120) { // Verbinde, wenn nah genug
-                        ctx.beginPath();
-                        ctx.strokeStyle = `hsla(${particles[i].hue}, 80%, 70%, ${0.1 * (1 - dist/120)})`;
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function resize() {
-            width = window.innerWidth; 
-            height = window.innerHeight;
-            canvas.width = width; 
-            canvas.height = height;
-            isMobileDevice = window.innerWidth < 768;
-        }
-
-        function initParticles() {
-            particles = [];
-            const count = isMobileDevice ? 40 : 100; // Weniger Partikel, da sie sich verbinden
-            for (let i = 0; i < count; i++) particles.push(new Particle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            connectParticles();
-            for (let particle of particles) { 
-                particle.update(); 
-                particle.draw(); 
-            }
-            requestAnimationFrame(animate);
-        }
-
-        // MAUS EVENTS
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-        
-        window.addEventListener('mouseleave', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        window.addEventListener('resize', () => { 
-            resize(); 
-            initParticles(); 
-        });
-        
-        resize();
-        initParticles();
-        animate();
     </script>
 </body>
 </html>
