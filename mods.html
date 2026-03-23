@@ -69,12 +69,27 @@
         .back-home:hover { color: white; }
 
         .profile-img {
-            width: 140px;
-            height: 140px;
+            width: 160px;
+            height: 160px;
             object-fit: cover;
             border-radius: 9999px;
-            border: 5px solid #27272a;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+            border: 6px solid #27272a;
+            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.6);
+            transition: transform 0.7s ease;
+        }
+
+        .partner-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 52px;
+            height: 52px;
+            background: url('../partner.png') center/cover no-repeat;
+            filter: drop-shadow(0 10px 15px rgb(139 92 246 / 0.5));
+        }
+
+        .slide {
+            transition: all 800ms cubic-bezier(0.32, 0.72, 0, 1);
         }
     </style>
 </head>
@@ -109,12 +124,12 @@
             </div>
         </div>
 
-        <!-- NEUER SLIDER -->
-        <div class="relative max-w-md mx-auto">
-            <div id="channels-slider" class="relative h-[460px] overflow-hidden rounded-3xl"></div>
+        <!-- VERBESSERTER SLIDER -->
+        <div class="relative max-w-lg mx-auto">
+            <div id="channels-slider" class="relative h-[520px] overflow-hidden rounded-3xl"></div>
             
             <!-- Dots -->
-            <div id="slider-dots" class="flex justify-center gap-2 mt-8"></div>
+            <div id="slider-dots" class="flex justify-center gap-3 mt-10"></div>
         </div>
     </section>
 
@@ -126,7 +141,7 @@
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // ORBS (unverändert)
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
@@ -205,13 +220,16 @@
             const slide = document.createElement('a');
             slide.href = channel.link;
             slide.target = '_blank';
-            slide.className = `absolute inset-0 flex flex-col items-center justify-center text-center transition-all duration-700 ease-out ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-full'}`;
+            slide.className = `slide absolute inset-0 flex flex-col items-center justify-center text-center ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 translate-x-12'}`;
             
             slide.innerHTML = `
-                <img src="${channel.image}" class="profile-img mb-8">
-                <h3 class="text-4xl font-bold tracking-tight">${channel.name}</h3>
-                <p class="text-violet-400 text-2xl font-medium mt-2">${channel.followers} followers</p>
-                <p class="text-zinc-400 mt-6 text-sm">Moderator seit ${channel.since}</p>
+                <div class="relative">
+                    <img src="${channel.image}" class="profile-img">
+                    <div class="partner-badge"></div>
+                </div>
+                <h3 class="text-5xl font-bold tracking-tighter mt-10">${channel.name}</h3>
+                <p class="text-violet-400 text-3xl font-medium mt-3">${channel.followers} followers</p>
+                <p class="text-zinc-400 mt-8 text-base">Moderator seit ${channel.since}</p>
             `;
             return slide;
         }
@@ -225,44 +243,47 @@
                 slider.appendChild(slide);
 
                 const dot = document.createElement('div');
-                dot.className = `w-3 h-3 rounded-full transition-all cursor-pointer ${index === 0 ? 'bg-violet-400 scale-125' : 'bg-zinc-700'}`;
+                dot.className = `w-3.5 h-3.5 rounded-full transition-all duration-300 cursor-pointer ${index === 0 ? 'bg-violet-400 scale-125' : 'bg-zinc-700 hover:bg-zinc-500'}`;
                 dot.onclick = () => goToSlide(index);
                 dotsContainer.appendChild(dot);
             });
         }
 
         function goToSlide(newIndex) {
+            if (newIndex === currentIndex) return;
             clearInterval(slideInterval);
 
-            const slides = slider.children;
-            const dots = dotsContainer.children;
+            const slides = Array.from(slider.children);
+            const dots = Array.from(dotsContainer.children);
 
-            // Aktuellen Slide nach links swipen
-            slides[currentIndex].style.transition = 'all 0.7s ease-out';
-            slides[currentIndex].style.transform = 'translateX(-100%)';
-            slides[currentIndex].style.opacity = '0';
+            const currentSlide = slides[currentIndex];
+            const nextSlide = slides[newIndex];
 
-            setTimeout(() => {
-                slides[newIndex].style.transition = 'none';
-                slides[newIndex].style.transform = 'translateX(100%)';
-                slides[newIndex].style.opacity = '0';
+            // Aktuellen Slide nach links + leicht verkleinern
+            currentSlide.style.transition = 'all 800ms cubic-bezier(0.32, 0.72, 0, 1)';
+            currentSlide.style.transform = 'translateX(-80px) scale(0.92)';
+            currentSlide.style.opacity = '0';
 
-                void slides[newIndex].offsetWidth;
+            // Nächsten Slide vorbereiten (von rechts)
+            nextSlide.style.transition = 'none';
+            nextSlide.style.transform = 'translateX(80px) scale(0.92)';
+            nextSlide.style.opacity = '0';
 
-                slides[newIndex].style.transition = 'all 0.7s ease-out';
-                slides[newIndex].style.transform = 'translateX(0)';
-                slides[newIndex].style.opacity = '1';
+            void nextSlide.offsetWidth; // Force reflow
 
-                // Dots aktualisieren
-                for (let i = 0; i < dots.length; i++) {
-                    dots[i].classList.toggle('bg-violet-400', i === newIndex);
-                    dots[i].classList.toggle('scale-125', i === newIndex);
-                    dots[i].classList.toggle('bg-zinc-700', i !== newIndex);
-                }
+            nextSlide.style.transition = 'all 800ms cubic-bezier(0.32, 0.72, 0, 1)';
+            nextSlide.style.transform = 'translateX(0) scale(1)';
+            nextSlide.style.opacity = '1';
 
-                currentIndex = newIndex;
-                startAutoSlide();
-            }, 50);
+            // Dots aktualisieren
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('bg-violet-400', i === newIndex);
+                dot.classList.toggle('scale-125', i === newIndex);
+                dot.classList.toggle('bg-zinc-700', i !== newIndex);
+            });
+
+            currentIndex = newIndex;
+            startAutoSlide();
         }
 
         function startAutoSlide() {
@@ -270,7 +291,7 @@
                 let nextIndex = currentIndex + 1;
                 if (nextIndex >= myChannels.length) nextIndex = 0;
                 goToSlide(nextIndex);
-            }, 2000); // genau 2 Sekunden
+            }, 2000);
         }
 
         // ====================== INIT ======================
