@@ -35,7 +35,6 @@
             pointer-events: none;
             z-index: -1;
         }
-
         .social-icons {
             position: fixed;
             top: 24px;
@@ -58,7 +57,6 @@
             filter: brightness(1);
             transform: scale(1.15);
         }
-
         .back-home {
             position: fixed;
             top: 28px;
@@ -70,27 +68,31 @@
         }
         .back-home:hover { color: white; }
 
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        @media (min-width: 1024px) {
+            .channel-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .channel-card {
+            background: #18181b;
+            border: 1px solid #27272a;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .channel-card:hover {
+            transform: translateY(-6px);
+            border-color: #a5b4fc;
+        }
         .profile-img {
-            width: 180px;
-            height: 180px;
+            width: 96px;
+            height: 96px;
             object-fit: cover;
             border-radius: 9999px;
-            border: 6px solid #27272a;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.7);
-        }
-
-        .partner-badge {
-            position: absolute;
-            bottom: -6px;
-            right: -6px;
-            width: 58px;
-            height: 58px;
-            background: url('../partner.png') center/cover no-repeat;
-            filter: drop-shadow(0 8px 12px rgb(139 92 246 / 0.6));
-        }
-
-        .slide {
-            transition: all 900ms cubic-bezier(0.25, 0.1, 0.25, 1);
+            border: 4px solid #27272a;
         }
     </style>
 </head>
@@ -111,37 +113,42 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="../discord.png" alt="Discord"></a>
     </div>
 
-    <!-- MAIN CONTENT -->
-    <section class="pt-28 pb-20 px-6 max-w-5xl mx-auto">
-        <div class="text-center mb-16">
-            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter gif-text">Channels I Moderate</h1>
-            <p class="text-zinc-400 mt-4 text-xl">Proud Partner Moderator</p>
-            <p class="text-zinc-400 text-sm mt-2">Moderating for <span class="text-violet-400 font-semibold">100+ streamers</span> across Twitch</p>
+    <!-- CHANNELS SECTION -->
+    <section class="pt-24 pb-24 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-12">
+           
+            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight gif-text">Channels I Moderate</h1>
+           
+            <!-- Partner Channels mit Logo -->
+            <div class="flex items-center justify-center gap-4 mt-4">
+                <img src="partner.png" alt="Twitch Partner" class="h-9 md:h-11 w-auto">
+                <p class="text-zinc-400 text-2xl md:text-3xl font-semibold tracking-tight">My Partner Channels</p>
+            </div>
+
+            <p class="text-zinc-400 mt-3 text-lg">I currently moderate for <span class="text-violet-400 font-semibold">100+ streamers</span> in total</p>
             
-            <div class="mt-8 inline-flex items-center gap-3 bg-zinc-900/80 px-10 py-5 rounded-3xl border border-zinc-700">
-                <span class="text-sm text-zinc-400">Total followers moderated:</span>
+            <!-- GESAMT-FOLLOWER -->
+            <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
+                <span class="text-sm text-zinc-400">I moderate for</span>
                 <span id="total-followers" class="text-4xl font-bold text-violet-400">3,233,864</span>
+                <span class="text-sm text-zinc-400">followers</span>
             </div>
         </div>
 
-        <!-- SLIDER -->
-        <div class="relative max-w-md mx-auto">
-            <div id="channels-slider" class="relative h-[560px] overflow-hidden rounded-[2.75rem]"></div>
-            
-            <!-- Navigation Dots -->
-            <div id="slider-dots" class="flex justify-center gap-3 mt-12"></div>
+        <div id="channels-grid" class="channel-grid">
+            <!-- Wird automatisch gefüllt -->
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-10 text-center text-[10px] text-zinc-500">
+    <footer class="py-8 text-center text-[10px] text-zinc-500">
         © 2026 TUK | All rights reserved.
     </footer>
 
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // ORBS Background
+        // ORBS
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
@@ -189,118 +196,53 @@
             canvas.height = height; 
             isMobileDevice = window.innerWidth < 768; 
         }
+        
         function initOrbs() {
             orbs = [];
             const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
             for (let i = 0; i < count; i++) orbs.push(new Orb());
         }
+        
         function animate() {
             ctx.clearRect(0, 0, width, height);
             for (let orb of orbs) { orb.update(); orb.draw(); }
             requestAnimationFrame(animate);
         }
 
-        // ====================== SLIDER ======================
+        // DEINE 6 STREAMER
         const myChannels = [
-            { name: "Amar",        link: "https://twitch.tv/amar",        followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
-            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358",   since: "Feb 3, 2026",  image: "../st2.png" },
-            { name: "marco_scm",   link: "https://twitch.tv/marco_scm",   followers: "410,554",   since: "Nov 13, 2025", image: "../st3.png" },
-            { name: "Julistria",   link: "https://twitch.tv/julistria",   followers: "28,618",    since: "Dec 29, 2024", image: "../st4.png" },
-            { name: "Lele",        link: "https://twitch.tv/lele",        followers: "24,174",    since: "Feb 28, 2025", image: "../st5.png" },
-            { name: "Regy",        link: "https://twitch.tv/regy",        followers: "14,355",    since: "Feb 18, 2025", image: "../st6.png" }
+            { name: "Amar", link: "https://twitch.tv/amar", followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
+            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358", since: "Feb 3, 2026", image: "../st2.png" },
+            { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "410,554", since: "Nov 13, 2025", image: "../st3.png" },
+            { name: "Julistria", link: "https://twitch.tv/julistria", followers: "28,618", since: "Dec 29, 2024", image: "../st4.png" },
+            { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
+            { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" }
         ];
 
-        let currentIndex = 0;
-        let slideInterval;
-
-        const slider = document.getElementById('channels-slider');
-        const dotsContainer = document.getElementById('slider-dots');
-
-        function createSlide(channel, isActive = false) {
-            const slide = document.createElement('a');
-            slide.href = channel.link;
-            slide.target = '_blank';
-            slide.className = `slide absolute inset-0 flex flex-col items-center justify-center text-center ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 -translate-x-8'}`;
-            
-            slide.innerHTML = `
-                <div class="relative mb-10">
-                    <img src="${channel.image}" class="profile-img">
-                    <div class="partner-badge"></div>
-                </div>
-                <h3 class="text-5xl font-bold tracking-tighter">${channel.name}</h3>
-                <p class="text-violet-400 text-3xl font-medium mt-4">${channel.followers} followers</p>
-                <p class="text-zinc-400 mt-10 text-base tracking-wide">Moderator since ${channel.since}</p>
-            `;
-            return slide;
-        }
-
-        function renderSlider() {
-            slider.innerHTML = '';
-            dotsContainer.innerHTML = '';
-
-            myChannels.forEach((channel, index) => {
-                const slide = createSlide(channel, index === 0);
-                slider.appendChild(slide);
-
-                const dot = document.createElement('div');
-                dot.className = `w-3.5 h-3.5 rounded-full transition-all duration-300 cursor-pointer ${index === 0 ? 'bg-violet-400 scale-125' : 'bg-zinc-700 hover:bg-zinc-400'}`;
-                dot.onclick = () => goToSlide(index);
-                dotsContainer.appendChild(dot);
+        function renderChannels() {
+            const grid = document.getElementById('channels-grid');
+            grid.innerHTML = '';
+            myChannels.forEach(ch => {
+                const card = document.createElement('a');
+                card.href = ch.link;
+                card.target = '_blank';
+                card.className = 'channel-card flex flex-col items-center text-center p-6';
+                card.innerHTML = `
+                    <img src="${ch.image}" class="profile-img mb-6">
+                    <h3 class="text-2xl font-semibold">${ch.name}</h3>
+                    <p class="text-violet-400 font-medium mt-1">${ch.followers} followers</p>
+                    <p class="text-xs text-zinc-400 mt-4">Mod since ${ch.since}</p>
+                `;
+                grid.appendChild(card);
             });
         }
 
-        function goToSlide(newIndex) {
-            if (newIndex === currentIndex) return;
-            clearInterval(slideInterval);
-
-            const slides = Array.from(slider.children);
-            const dots = Array.from(dotsContainer.children);
-
-            const currentSlide = slides[currentIndex];
-            const nextSlide = slides[newIndex];
-
-            // Current slide exits to the left
-            currentSlide.style.transition = 'all 900ms cubic-bezier(0.25, 0.1, 0.25, 1)';
-            currentSlide.style.transform = 'translateX(-120px) scale(0.88)';
-            currentSlide.style.opacity = '0';
-
-            // Next slide enters from the right
-            nextSlide.style.transition = 'none';
-            nextSlide.style.transform = 'translateX(120px) scale(0.88)';
-            nextSlide.style.opacity = '0';
-
-            void nextSlide.offsetWidth;
-
-            nextSlide.style.transition = 'all 900ms cubic-bezier(0.25, 0.1, 0.25, 1)';
-            nextSlide.style.transform = 'translateX(0) scale(1)';
-            nextSlide.style.opacity = '1';
-
-            // Update dots
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('bg-violet-400', i === newIndex);
-                dot.classList.toggle('scale-125', i === newIndex);
-                dot.classList.toggle('bg-zinc-700', i !== newIndex);
-            });
-
-            currentIndex = newIndex;
-            startAutoSlide();
-        }
-
-        function startAutoSlide() {
-            slideInterval = setInterval(() => {
-                let next = currentIndex + 1;
-                if (next >= myChannels.length) next = 0;
-                goToSlide(next);
-            }, 2000);
-        }
-
-        // Init everything
+        // Init
         window.addEventListener('resize', () => { resize(); initOrbs(); });
         resize();
         initOrbs();
         animate();
-        renderSlider();
-        startAutoSlide();
+        renderChannels();
     </script>
 </body>
 </html>
