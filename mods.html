@@ -35,6 +35,7 @@
             pointer-events: none;
             z-index: -1;
         }
+
         .social-icons {
             position: fixed;
             top: 24px;
@@ -57,6 +58,7 @@
             filter: brightness(1);
             transform: scale(1.15);
         }
+
         .back-home {
             position: fixed;
             top: 28px;
@@ -69,27 +71,26 @@
         .back-home:hover { color: white; }
 
         .profile-img {
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             object-fit: cover;
             border-radius: 9999px;
             border: 6px solid #27272a;
-            box-shadow: 0 30px 60px -15px rgb(0 0 0 / 0.6);
-            transition: transform 0.7s ease;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.7);
         }
 
         .partner-badge {
             position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 52px;
-            height: 52px;
+            bottom: -6px;
+            right: -6px;
+            width: 58px;
+            height: 58px;
             background: url('../partner.png') center/cover no-repeat;
-            filter: drop-shadow(0 10px 15px rgb(139 92 246 / 0.5));
+            filter: drop-shadow(0 8px 12px rgb(139 92 246 / 0.6));
         }
 
         .slide {
-            transition: all 800ms cubic-bezier(0.32, 0.72, 0, 1);
+            transition: all 900ms cubic-bezier(0.25, 0.1, 0.25, 1);
         }
     </style>
 </head>
@@ -110,38 +111,37 @@
         <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="../discord.png" alt="Discord"></a>
     </div>
 
-    <!-- CHANNELS SECTION -->
-    <section class="pt-24 pb-24 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight gif-text">Channels I Moderate</h1>
-            <p class="text-zinc-400 mt-3 text-lg">My Partner Channels</p>
-            <p class="text-zinc-400 text-sm">I currently moderate for <span class="text-violet-400 font-semibold">100+ streamers</span> in total</p>
+    <!-- MAIN CONTENT -->
+    <section class="pt-28 pb-20 px-6 max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl md:text-7xl font-extrabold tracking-tighter gif-text">Channels I Moderate</h1>
+            <p class="text-zinc-400 mt-4 text-xl">Proud Partner Moderator</p>
+            <p class="text-zinc-400 text-sm mt-2">Moderating for <span class="text-violet-400 font-semibold">100+ streamers</span> across Twitch</p>
             
-            <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
-                <span class="text-sm text-zinc-400">I moderate for</span>
+            <div class="mt-8 inline-flex items-center gap-3 bg-zinc-900/80 px-10 py-5 rounded-3xl border border-zinc-700">
+                <span class="text-sm text-zinc-400">Total followers moderated:</span>
                 <span id="total-followers" class="text-4xl font-bold text-violet-400">3,233,864</span>
-                <span class="text-sm text-zinc-400">followers</span>
             </div>
         </div>
 
-        <!-- VERBESSERTER SLIDER -->
-        <div class="relative max-w-lg mx-auto">
-            <div id="channels-slider" class="relative h-[520px] overflow-hidden rounded-3xl"></div>
+        <!-- SLIDER -->
+        <div class="relative max-w-md mx-auto">
+            <div id="channels-slider" class="relative h-[560px] overflow-hidden rounded-[2.75rem]"></div>
             
-            <!-- Dots -->
-            <div id="slider-dots" class="flex justify-center gap-3 mt-10"></div>
+            <!-- Navigation Dots -->
+            <div id="slider-dots" class="flex justify-center gap-3 mt-12"></div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="py-8 text-center text-[10px] text-zinc-500">
+    <footer class="py-10 text-center text-[10px] text-zinc-500">
         © 2026 TUK | All rights reserved.
     </footer>
 
     <script>
         tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
 
-        // ORBS
+        // ORBS Background
         const canvas = document.getElementById('orb-canvas');
         const ctx = canvas.getContext('2d');
         let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
@@ -200,7 +200,7 @@
             requestAnimationFrame(animate);
         }
 
-        // ====================== STREAMER SLIDER ======================
+        // ====================== SLIDER ======================
         const myChannels = [
             { name: "Amar",        link: "https://twitch.tv/amar",        followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
             { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358",   since: "Feb 3, 2026",  image: "../st2.png" },
@@ -220,16 +220,16 @@
             const slide = document.createElement('a');
             slide.href = channel.link;
             slide.target = '_blank';
-            slide.className = `slide absolute inset-0 flex flex-col items-center justify-center text-center ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 translate-x-12'}`;
+            slide.className = `slide absolute inset-0 flex flex-col items-center justify-center text-center ${isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-95 -translate-x-8'}`;
             
             slide.innerHTML = `
-                <div class="relative">
+                <div class="relative mb-10">
                     <img src="${channel.image}" class="profile-img">
                     <div class="partner-badge"></div>
                 </div>
-                <h3 class="text-5xl font-bold tracking-tighter mt-10">${channel.name}</h3>
-                <p class="text-violet-400 text-3xl font-medium mt-3">${channel.followers} followers</p>
-                <p class="text-zinc-400 mt-8 text-base">Moderator seit ${channel.since}</p>
+                <h3 class="text-5xl font-bold tracking-tighter">${channel.name}</h3>
+                <p class="text-violet-400 text-3xl font-medium mt-4">${channel.followers} followers</p>
+                <p class="text-zinc-400 mt-10 text-base tracking-wide">Moderator since ${channel.since}</p>
             `;
             return slide;
         }
@@ -243,7 +243,7 @@
                 slider.appendChild(slide);
 
                 const dot = document.createElement('div');
-                dot.className = `w-3.5 h-3.5 rounded-full transition-all duration-300 cursor-pointer ${index === 0 ? 'bg-violet-400 scale-125' : 'bg-zinc-700 hover:bg-zinc-500'}`;
+                dot.className = `w-3.5 h-3.5 rounded-full transition-all duration-300 cursor-pointer ${index === 0 ? 'bg-violet-400 scale-125' : 'bg-zinc-700 hover:bg-zinc-400'}`;
                 dot.onclick = () => goToSlide(index);
                 dotsContainer.appendChild(dot);
             });
@@ -259,23 +259,23 @@
             const currentSlide = slides[currentIndex];
             const nextSlide = slides[newIndex];
 
-            // Aktuellen Slide nach links + leicht verkleinern
-            currentSlide.style.transition = 'all 800ms cubic-bezier(0.32, 0.72, 0, 1)';
-            currentSlide.style.transform = 'translateX(-80px) scale(0.92)';
+            // Current slide exits to the left
+            currentSlide.style.transition = 'all 900ms cubic-bezier(0.25, 0.1, 0.25, 1)';
+            currentSlide.style.transform = 'translateX(-120px) scale(0.88)';
             currentSlide.style.opacity = '0';
 
-            // Nächsten Slide vorbereiten (von rechts)
+            // Next slide enters from the right
             nextSlide.style.transition = 'none';
-            nextSlide.style.transform = 'translateX(80px) scale(0.92)';
+            nextSlide.style.transform = 'translateX(120px) scale(0.88)';
             nextSlide.style.opacity = '0';
 
-            void nextSlide.offsetWidth; // Force reflow
+            void nextSlide.offsetWidth;
 
-            nextSlide.style.transition = 'all 800ms cubic-bezier(0.32, 0.72, 0, 1)';
+            nextSlide.style.transition = 'all 900ms cubic-bezier(0.25, 0.1, 0.25, 1)';
             nextSlide.style.transform = 'translateX(0) scale(1)';
             nextSlide.style.opacity = '1';
 
-            // Dots aktualisieren
+            // Update dots
             dots.forEach((dot, i) => {
                 dot.classList.toggle('bg-violet-400', i === newIndex);
                 dot.classList.toggle('scale-125', i === newIndex);
@@ -288,13 +288,13 @@
 
         function startAutoSlide() {
             slideInterval = setInterval(() => {
-                let nextIndex = currentIndex + 1;
-                if (nextIndex >= myChannels.length) nextIndex = 0;
-                goToSlide(nextIndex);
+                let next = currentIndex + 1;
+                if (next >= myChannels.length) next = 0;
+                goToSlide(next);
             }, 2000);
         }
 
-        // ====================== INIT ======================
+        // Init everything
         window.addEventListener('resize', () => { resize(); initOrbs(); });
         resize();
         initOrbs();
