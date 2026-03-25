@@ -73,9 +73,14 @@
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 24px;
         }
+        
+        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 7 Karten perfekte Verteilung (4 + 3) */
         @media (min-width: 1024px) {
-            .channel-grid { grid-template-columns: repeat(3, 1fr); }
+            .channel-grid { 
+                grid-template-columns: repeat(4, 1fr); 
+            }
         }
+
         .channel-card {
             background: #18181b;
             border: 1px solid #27272a;
@@ -130,7 +135,7 @@
             <!-- GESAMT-FOLLOWER -->
             <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
                 <span class="text-sm text-zinc-400">I moderate for</span>
-                <span id="total-followers" class="text-4xl font-bold text-violet-400">3,233,864</span>
+                <span id="total-followers" class="text-4xl font-bold text-violet-400">3,252,630</span>
                 <span class="text-sm text-zinc-400">followers</span>
             </div>
         </div>
@@ -209,14 +214,15 @@
             requestAnimationFrame(animate);
         }
 
-        // DEINE 6 STREAMER
+        // PARTNER LIST (7 Kanäle – Kanyuji hinzugefügt)
         const myChannels = [
             { name: "Amar", link: "https://twitch.tv/amar", followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
             { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358", since: "Feb 3, 2026", image: "../st2.png" },
             { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "410,554", since: "Nov 13, 2025", image: "../st3.png" },
             { name: "Julistria", link: "https://twitch.tv/julistria", followers: "28,618", since: "Dec 29, 2024", image: "../st4.png" },
             { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
-            { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" }
+            { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" },
+            { name: "Kanyuji", link: "https://twitch.tv/kanyuji", followers: "10,940", since: "May 18, 2025", image: "../st7.png" }
         ];
 
         function renderChannels() {
