@@ -74,7 +74,7 @@
             gap: 24px;
         }
         
-        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 7 Karten perfekte Verteilung (4 + 3) */
+        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 8 Karten perfekte Verteilung (4 + 4) */
         @media (min-width: 1024px) {
             .channel-grid { 
                 grid-template-columns: repeat(4, 1fr); 
@@ -214,11 +214,12 @@
             requestAnimationFrame(animate);
         }
 
-        // PARTNER LIST (7 Kanäle – Kanyuji hinzugefügt)
+        // PARTNER LIST (8 Kanäle – LENA hinzugefügt)
         const myChannels = [
             { name: "Amar", link: "https://twitch.tv/amar", followers: "1,846,785", since: "Nov 25, 2025", image: "../st1.png" },
             { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "678,358", since: "Feb 3, 2026", image: "../st2.png" },
             { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "410,554", since: "Nov 13, 2025", image: "../st3.png" },
+            { name: "LENA", link: "https://twitch.tv/lena", followers: "31,019", since: "Nov 16, 2024", image: "../st8.png" }
             { name: "Julistria", link: "https://twitch.tv/julistria", followers: "28,618", since: "Dec 29, 2024", image: "../st4.png" },
             { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
             { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" },
