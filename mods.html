@@ -74,7 +74,7 @@
             gap: 24px;
         }
         
-        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 8 Karten perfekte Verteilung (4 + 4) */
+        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 9 Karten perfekte Verteilung */
         @media (min-width: 1024px) {
             .channel-grid { 
                 grid-template-columns: repeat(4, 1fr); 
@@ -135,7 +135,7 @@
             <!-- GESAMT-FOLLOWER -->
             <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
                 <span class="text-sm text-zinc-400">I moderate for</span>
-                <span id="total-followers" class="text-4xl font-bold text-violet-400">3,290,284</span>
+                <span id="total-followers" class="text-4xl font-bold text-violet-400">4,090,284</span>
                 <span class="text-sm text-zinc-400">followers</span>
             </div>
         </div>
@@ -214,16 +214,17 @@
             requestAnimationFrame(animate);
         }
 
-        // PARTNER LIST (8 Kanäle – sortiert nach Follower-Anzahl absteigend)
+        // PARTNER LIST (9 Kanäle – sortiert nach Follower-Anzahl absteigend)
         const myChannels = [
-            { name: "Amar", link: "https://twitch.tv/amar", followers: "1,857,150", since: "Nov 25, 2025", image: "../st1.png" },
-            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "679,593", since: "Feb 3, 2026", image: "../st2.png" },
-            { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "422,359", since: "Nov 13, 2025", image: "../st3.png" },
+            { name: "Amar", link: "https://twitch.tv/amar", followers: "1,858,252", since: "Nov 25, 2025", image: "../st1.png" },
+            { name: "noahreyli", link: "https://twitch.tv/noahreyli", followers: "792,077", since: "Apr 20, 2026", image: "../st9.png" },
+            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "679,731", since: "Feb 3, 2026", image: "../st2.png" },
+            { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "429,224", since: "Nov 13, 2025", image: "../st3.png" },
             { name: "LENA", link: "https://twitch.tv/lena", followers: "31,019", since: "Nov 16, 2024", image: "../st8.png" },
-            { name: "Julistria", link: "https://twitch.tv/julistria", followers: "29,208", since: "Dec 29, 2024", image: "../st4.png" },
+            { name: "Julistria", link: "https://twitch.tv/julistria", followers: "30,154", since: "Dec 29, 2024", image: "../st4.png" },
             { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
             { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" },
-            { name: "Kanyuji", link: "https://twitch.tv/kanyuji", followers: "10,940", since: "May 18, 2025", image: "../st7.png" }
+            { name: "Kanyuji", link: "https://twitch.tv/kanyuji", followers: "11,204", since: "May 18, 2025", image: "../st7.png" }
         ];
 
         function renderChannels() {
