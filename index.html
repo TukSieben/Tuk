@@ -52,11 +52,15 @@
 
         }
 
+        html {
+
+            scroll-behavior: smooth;
+
+        }
+
         html, body {
 
-            height: 100%;
-
-            overflow: hidden;
+            min-height: 100%;
 
         }
 
@@ -180,6 +184,14 @@
 
         }
 
+        .tool-btn.active, .variant-btn.active {
+
+            background-color: #7c3aed !important;
+
+            color: white !important;
+
+        }
+
     </style>
 
 </head>
@@ -224,7 +236,7 @@
 
     <!-- HERO -->
 
-    <section class="h-screen flex flex-col items-center justify-center px-6 text-center">
+    <section class="h-screen flex flex-col items-center justify-center px-6 text-center relative">
 
         <div class="tilt-wrapper">
 
@@ -264,15 +276,189 @@
 
         </div>
 
+
+
+        <!-- SCROLL DOWN INDICATOR -->
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
+
+            <div class="text-[10px] uppercase tracking-[2px] text-zinc-500 mb-1">Scroll for Regex Generator</div>
+
+            <button id="scroll-arrow" class="group flex flex-col items-center cursor-pointer">
+
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-zinc-400 group-hover:text-white transition-colors animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-9 9m0 0l-9-9m9 9V3" />
+
+                </svg>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- REGEX GENERATOR SECTION -->
+
+    <section id="regex-generator" class="min-h-[100dvh] flex items-center justify-center px-6 py-16 bg-[#0a0a0a]">
+
+        <div class="max-w-[620px] w-full">
+
+            <div class="text-center mb-10">
+
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-purple-400 mb-4 ring-1 ring-purple-500/30">CHAT MOD TOOLS ⚡</div>
+
+                <h2 class="text-5xl font-black tracking-[-1.5px]">Regex Generator</h2>
+
+                <p class="mt-4 text-lg text-zinc-400 max-w-md mx-auto">Instantly create advanced regex patterns for blocking words with leetspeak, symbols &amp; variations.<br>Copy &amp; paste directly into your chat filter (e.g. for Chatty / Fossabot / Twitch).</p>
+
+            </div>
+
+            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-9 border border-zinc-700 shadow-[0_0_80px_-10px_rgb(168,85,247)] ring-1 ring-purple-500/30 relative overflow-hidden">
+
+                <!-- Tool Selector -->
+
+                <div class="mb-6">
+
+                    <div class="mb-2">
+
+                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">SELECT TOOL</label>
+
+                    </div>
+
+                    <div class="flex p-1 bg-zinc-950 rounded-3xl border border-zinc-800" id="tool-selector">
+
+                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-purple-600 text-white shadow-inner transition-all">Chatty Regex</button>
+
+                        <button data-tool="fossabot" class="tool-btn flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">Fossabot</button>
+
+                    </div>
+
+                </div>
+
+                <!-- Fossabot Variants -->
+
+                <div id="fossabot-options" class="hidden mb-6">
+
+                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">FOSSABOT MODE</label>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm" id="fossabot-variant">
+
+                        <button data-variant="standard" class="variant-btn active px-4 py-2 rounded-2xl bg-zinc-700 text-white text-xs font-medium transition">Standard</button>
+
+                        <button data-variant="keywords" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Keywords</button>
+
+                        <button data-variant="blocked" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Blocked Terms</button>
+
+                        <button data-variant="negative" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Negative</button>
+
+                    </div>
+
+                </div>
+
+                <!-- Input -->
+
+                <div class="mb-6">
+
+                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">WORD TO BLOCK</label>
+
+                    <div class="flex gap-3">
+
+                        <input id="word-input" type="text" 
+
+                               class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-purple-500 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
+
+                               placeholder="asshole, fuck, bitch...">
+
+                        <button id="generate-btn"
+
+                                class="px-8 py-3.5 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-white active:scale-[0.985] transition-all text-black font-bold rounded-2xl text-sm tracking-wider flex items-center gap-2 shadow-lg">
+
+                            <span>GENERATE</span>
+
+                            <span class="text-xs opacity-60">⚡</span>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- Output -->
+
+                <div id="output-container" class="hidden mt-2">
+
+                    <div class="flex items-center justify-between mb-2">
+
+                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">YOUR REGEX (ready to copy)</label>
+
+                    </div>
+
+                    <div class="relative group">
+
+                        <textarea id="regex-output" readonly rows="3"
+
+                                  class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 text-sm font-mono text-emerald-400 leading-relaxed resize-none focus:outline-none focus:border-purple-500"></textarea>
+
+                        <button id="copy-btn"
+
+                                class="absolute top-3 right-3 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 transition text-xs font-medium rounded-xl flex items-center gap-1.5 text-white shadow">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16v-4m4 4v4m4-8v8m4-4v-4m-16 8h16" />
+
+                            </svg>
+
+                            <span>COPY</span>
+
+                        </button>
+
+                    </div>
+
+                    <p class="text-[10px] text-zinc-500 mt-3 px-1">Matches the word + common leetspeak variations. Format changes depending on selected tool.</p>
+
+                </div>
+
+            </div>
+
+            <!-- Quick Examples -->
+
+            <div class="mt-8 text-center">
+
+                <div class="text-[10px] uppercase tracking-[1.5px] text-zinc-500 mb-3">TRY THESE EXAMPLES</div>
+
+                <div class="flex flex-wrap justify-center gap-2">
+
+                    <button data-word="asshole" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">asshole</button>
+
+                    <button data-word="fuck" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">fuck</button>
+
+                    <button data-word="bitch" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">bitch</button>
+
+                    <button data-word="cunt" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">cunt</button>
+
+                    <button data-word="shit" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">shit</button>
+
+                    <button data-word="dick" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">dick</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </section>
 
 
 
     <!-- FOOTER -->
 
-    <footer class="absolute bottom-6 left-0 right-0 text-center text-[10px] text-zinc-500">
+    <footer class="text-center text-[10px] text-zinc-500 py-8 border-t border-zinc-900">
 
-        © 2026 TUK | All rights reserved.
+        © 2026 TUK | All rights reserved. • Made for the community
 
     </footer>
 
@@ -433,6 +619,372 @@
         initOrbs();
 
         animate();
+
+
+
+        // === SCROLL ARROW ===
+
+        const scrollArrow = document.getElementById('scroll-arrow');
+
+        if (scrollArrow) {
+
+            scrollArrow.addEventListener('click', () => {
+
+                const target = document.getElementById('regex-generator');
+
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            });
+
+        }
+
+
+
+        // === REGEX GENERATOR (Full Version) ===
+
+        const generateBtn = document.getElementById('generate-btn');
+
+        const wordInput = document.getElementById('word-input');
+
+        const outputContainer = document.getElementById('output-container');
+
+        const regexOutput = document.getElementById('regex-output');
+
+        const copyBtn = document.getElementById('copy-btn');
+
+        const exampleBtns = document.querySelectorAll('.example-btn');
+
+        const toolSelector = document.getElementById('tool-selector');
+
+        const fossabotOptions = document.getElementById('fossabot-options');
+
+        const fossabotVariantContainer = document.getElementById('fossabot-variant');
+
+
+
+        let currentTool = 'chatty';
+
+        let currentFossabotVariant = 'standard';
+
+
+
+        function autoRegenerateIfPossible() {
+
+            if (outputContainer && !outputContainer.classList.contains('hidden') && wordInput && wordInput.value.trim()) {
+
+                const newRegex = generateRegex(wordInput.value);
+
+                if (newRegex && regexOutput) {
+
+                    regexOutput.value = newRegex;
+
+                    regexOutput.focus();
+
+                    regexOutput.select();
+
+                }
+
+            }
+
+        }
+
+
+
+        if (toolSelector) {
+
+            toolSelector.querySelectorAll('.tool-btn').forEach(btn => {
+
+                btn.addEventListener('click', () => {
+
+                    toolSelector.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active', 'bg-purple-600'));
+
+                    btn.classList.add('active', 'bg-purple-600');
+
+                    currentTool = btn.dataset.tool;
+
+                    
+
+                    if (currentTool === 'fossabot') {
+
+                        fossabotOptions.classList.remove('hidden');
+
+                        fossabotOptions.classList.add('block');
+
+                    } else {
+
+                        fossabotOptions.classList.add('hidden');
+
+                        fossabotOptions.classList.remove('block');
+
+                    }
+
+                    autoRegenerateIfPossible();
+
+                });
+
+            });
+
+        }
+
+
+
+        if (fossabotVariantContainer) {
+
+            fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(btn => {
+
+                btn.addEventListener('click', () => {
+
+                    fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active', 'bg-zinc-700'));
+
+                    btn.classList.add('active', 'bg-zinc-700');
+
+                    currentFossabotVariant = btn.dataset.variant;
+
+                    autoRegenerateIfPossible();
+
+                });
+
+            });
+
+        }
+
+
+
+        function generateChattyRegex(word) {
+
+            if (!word || !word.trim()) return '';
+
+            let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
+
+            if (!w) return '';
+
+            const charMap = {
+
+                'a': '[a4а]', 'b': '[b8]', 'c': '[cс]', 'd': '[d]',
+
+                'e': '[e3еэ³€]', 'f': '[f]', 'g': '[g9]', 'h': '[h]',
+
+                'i': '[i1!і]', 'j': '[j]', 'k': '[k]', 'l': '[l1|]',
+
+                'm': '[m]', 'n': '[n]', 'o': '[o0о]', 'p': '[p]',
+
+                'q': '[q]', 'r': '[r]', 's': '[s52]', 't': '[t7+]', 
+
+                'u': '[u]', 'v': '[v]', 'w': '[w]', 'x': '[x]',
+
+                'y': '[y]', 'z': '[z2]'
+
+            };
+
+            let parts = [];
+
+            for (let char of w) {
+
+                const alt = charMap[char] || `[${char}]`;
+
+                parts.push(`(${alt}[\\W_]*?)+`);
+
+            }
+
+            parts.push(`([s52][\\W_]*?)*?`);
+
+            return 'regi:\\b' + parts.join('') + "\\b'";
+
+        }
+
+
+
+        function generateFossabotRegex(word, variant) {
+
+            if (!word || !word.trim()) return '';
+
+            let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
+
+            if (!w) return '';
+
+            let pattern = '';
+
+            for (let i = 0; i < w.length; i++) {
+
+                const char = w[i];
+
+                let group = char + '+';
+
+                if (char === 's') group = 's+';
+
+                pattern += group + '[\\W_]*';
+
+            }
+
+            pattern = pattern.slice(0, -6);
+
+            const startBoundary = '(?:^|_|\b)';
+
+            const endBoundary = '(?:$|_|\b)';
+
+            const full = `${startBoundary}${pattern}${endBoundary}`;
+
+            if (variant === 'standard') return full;
+
+            if (variant === 'keywords') return `regex:${full}`;
+
+            if (variant === 'blocked') return full;
+
+            if (variant === 'negative') return `regex:negative:${full}`;
+
+            return full;
+
+        }
+
+
+
+        function generateRegex(word) {
+
+            if (currentTool === 'chatty') return generateChattyRegex(word);
+
+            if (currentTool === 'fossabot') return generateFossabotRegex(word, currentFossabotVariant);
+
+            return '';
+
+        }
+
+
+
+        function showOutput(regexStr) {
+
+            if (!regexOutput || !outputContainer) return;
+
+            regexOutput.value = regexStr;
+
+            outputContainer.classList.remove('hidden');
+
+            outputContainer.classList.add('block');
+
+            setTimeout(() => {
+
+                regexOutput.focus();
+
+                regexOutput.select();
+
+            }, 50);
+
+        }
+
+
+
+        if (generateBtn && wordInput) {
+
+            generateBtn.addEventListener('click', () => {
+
+                const val = wordInput.value;
+
+                const regex = generateRegex(val);
+
+                if (regex) showOutput(regex);
+
+            });
+
+            wordInput.addEventListener('keypress', function(e) {
+
+                if (e.key === 'Enter') {
+
+                    const regex = generateRegex(wordInput.value);
+
+                    if (regex) showOutput(regex);
+
+                }
+
+            });
+
+        }
+
+
+
+        if (copyBtn && regexOutput) {
+
+            copyBtn.addEventListener('click', async () => {
+
+                const text = regexOutput.value;
+
+                if (!text) return;
+
+                try {
+
+                    await navigator.clipboard.writeText(text);
+
+                    const origHTML = copyBtn.innerHTML;
+
+                    copyBtn.innerHTML = `
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+
+                        </svg>
+
+                        <span>COPIED!</span>
+
+                    `;
+
+                    copyBtn.style.backgroundColor = '#166534';
+
+                    setTimeout(() => {
+
+                        copyBtn.innerHTML = origHTML;
+
+                        copyBtn.style.backgroundColor = '';
+
+                    }, 1800);
+
+                } catch (err) {
+
+                    regexOutput.select();
+
+                    document.execCommand('copy');
+
+                    copyBtn.innerHTML = 'COPIED!';
+
+                    setTimeout(() => copyBtn.innerHTML = origHTML || 'COPY', 1500);
+
+                }
+
+            });
+
+        }
+
+
+
+        if (exampleBtns.length) {
+
+            exampleBtns.forEach(btn => {
+
+                btn.addEventListener('click', () => {
+
+                    const word = btn.getAttribute('data-word');
+
+                    if (wordInput) wordInput.value = word;
+
+                    const regex = generateRegex(word);
+
+                    if (regex) showOutput(regex);
+
+                    const card = btn.closest('.bg-zinc-900\\/95');
+
+                    if (card) {
+
+                        card.style.transition = 'box-shadow 0.2s';
+
+                        card.style.boxShadow = '0 0 0 3px rgba(168, 85, 247, 0.3)';
+
+                        setTimeout(() => card.style.boxShadow = '', 600);
+
+                    }
+
+                });
+
+            });
+
+        }
 
     </script>
 
