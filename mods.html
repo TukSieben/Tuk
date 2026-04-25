@@ -70,14 +70,14 @@
 
         .channel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
         }
         
-        /* CLEAN LAYOUT: Auf großen Bildschirmen 4 Spalten → bei 9 Karten perfekte Verteilung */
+        /* CLEAN LAYOUT: Perfekte 3x3 Übersicht auf großen Bildschirmen (9 Karten) */
         @media (min-width: 1024px) {
             .channel-grid { 
-                grid-template-columns: repeat(4, 1fr); 
+                grid-template-columns: repeat(3, 1fr); 
             }
         }
 
@@ -135,7 +135,7 @@
             <!-- GESAMT-FOLLOWER -->
             <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
                 <span class="text-sm text-zinc-400">I moderate for</span>
-                <span id="total-followers" class="text-4xl font-bold text-violet-400">4,158,490</span>
+                <span id="total-followers" class="text-4xl font-bold text-violet-400">0</span>
                 <span class="text-sm text-zinc-400">followers</span>
             </div>
         </div>
@@ -145,9 +145,19 @@
         </div>
     </section>
 
+    <!-- VIEW ALL BUTTON -->
+    <div class="text-center pb-6">
+        <a href="https://mlu.terrance.cc/user/tuk7" 
+           target="_blank"
+           class="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-all duration-200 hover:underline underline-offset-4">
+            all my moderated channels
+            <span>↗</span>
+        </a>
+    </div>
+
     <!-- FOOTER -->
     <footer class="py-8 text-center text-[10px] text-zinc-500">
-        © 2026 TUK | All rights reserved.
+        © 2026 TUK | All rights reserved. • Made for the community
     </footer>
 
     <script>
@@ -245,12 +255,37 @@
             });
         }
 
+        // ANIMATION: Followers zählen langsam hoch (langsamer für mehr Wirkung)
+        function animateFollowers() {
+            const el = document.getElementById('total-followers');
+            const target = 4158490;
+            let startTime = null;
+            const duration = 2800; // 2.8 Sekunden – langsamer & beeindruckender
+
+            function update(currentTime) {
+                if (!startTime) startTime = currentTime;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                // Sanfte Ease-Out Animation
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const current = Math.floor(target * eased);
+                el.textContent = current.toLocaleString('en-US');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    el.textContent = target.toLocaleString('en-US');
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
         // Init
         window.addEventListener('resize', () => { resize(); initOrbs(); });
         resize();
         initOrbs();
         animate();
         renderChannels();
+        animateFollowers();
     </script>
 </body>
 </html>
