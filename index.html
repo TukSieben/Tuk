@@ -186,9 +186,9 @@
 
         .tool-btn.active, .variant-btn.active {
 
-            background-color: #7c3aed !important;
+            background-color: #f4f4f5 !important;
 
-            color: white !important;
+            color: #111827 !important;
 
         }
 
@@ -308,7 +308,7 @@
 
             <div class="text-center mb-10">
 
-                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-purple-400 mb-4 ring-1 ring-purple-500/30">CHAT MOD TOOLS</div>
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-4 ring-1 ring-zinc-400/30">CHAT MOD TOOLS</div>
 
                 <h2 class="text-5xl font-black tracking-[-1.5px]">Regex Generator</h2>
 
@@ -316,7 +316,7 @@
 
             </div>
 
-            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-9 border border-zinc-700 shadow-[0_0_80px_-10px_rgb(168,85,247)] ring-1 ring-purple-500/30 relative overflow-hidden">
+            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-9 border border-zinc-700 shadow-[0_0_80px_-10px_rgb(200,200,210)] ring-1 ring-zinc-400/30 relative overflow-hidden">
 
                 <!-- Tool Selector -->
 
@@ -330,7 +330,7 @@
 
                     <div class="flex p-1 bg-zinc-950 rounded-3xl border border-zinc-800" id="tool-selector">
 
-                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-purple-600 text-white shadow-inner transition-all">Chatty Regex</button>
+                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">Chatty Regex</button>
 
                         <button data-tool="fossabot" class="tool-btn flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">Fossabot Regex</button>
 
@@ -368,7 +368,7 @@
 
                         <input id="word-input" type="text" 
 
-                               class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-purple-500 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
+                               class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
 
                                placeholder="asshole, fuck, bitch...">
 
@@ -400,7 +400,7 @@
 
                         <textarea id="regex-output" readonly rows="3"
 
-                                  class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 text-sm font-mono text-emerald-400 leading-relaxed resize-none focus:outline-none focus:border-purple-500"></textarea>
+                                  class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 text-sm font-mono text-emerald-400 leading-relaxed resize-none focus:outline-none focus:border-zinc-400"></textarea>
 
                         <button id="copy-btn"
 
@@ -432,17 +432,17 @@
 
                 <div class="flex flex-wrap justify-center gap-2">
 
-                    <button data-word="asshole" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">asshole</button>
+                    <button data-word="asshole" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">asshole</button>
 
-                    <button data-word="fuck" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">fuck</button>
+                    <button data-word="fuck" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">fuck</button>
 
-                    <button data-word="bitch" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">bitch</button>
+                    <button data-word="bitch" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">bitch</button>
 
-                    <button data-word="cunt" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">cunt</button>
+                    <button data-word="cunt" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">cunt</button>
 
-                    <button data-word="shit" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">shit</button>
+                    <button data-word="shit" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">shit</button>
 
-                    <button data-word="dick" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-purple-900/60 hover:text-purple-300 border border-zinc-700 hover:border-purple-500/50 hover:scale-105 rounded-full transition">dick</button>
+                    <button data-word="dick" class="example-btn px-5 py-1.5 text-sm bg-zinc-800 hover:bg-zinc-700 hover:text-zinc-200 border border-zinc-700 hover:border-zinc-400/50 hover:scale-105 rounded-full transition">dick</button>
 
                 </div>
 
@@ -530,7 +530,7 @@
 
                 this.vy = (Math.random() - 0.5) * this.speed;
 
-                this.hue = 265 + Math.random() * 45;
+                this.hue = 200 + Math.random() * 40;
 
                 this.opacity = Math.random() * 0.28 + 0.13;
 
@@ -696,9 +696,9 @@
 
                 btn.addEventListener('click', () => {
 
-                    toolSelector.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active', 'bg-purple-600'));
+                    toolSelector.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active', 'bg-zinc-100'));
 
-                    btn.classList.add('active', 'bg-purple-600');
+                    btn.classList.add('active', 'bg-zinc-100');
 
                     currentTool = btn.dataset.tool;
 
@@ -974,7 +974,7 @@
 
                         card.style.transition = 'box-shadow 0.2s';
 
-                        card.style.boxShadow = '0 0 0 3px rgba(168, 85, 247, 0.3)';
+                        card.style.boxShadow = '0 0 0 3px rgba(200, 200, 210, 0.3)';
 
                         setTimeout(() => card.style.boxShadow = '', 600);
 
