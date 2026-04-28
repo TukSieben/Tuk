@@ -250,6 +250,18 @@
                 white-space: nowrap;
             }
         }
+        /* === SCROLL INDICATOR FADE === */
+        .scroll-indicator {
+            transition: opacity 0.32s ease, transform 0.32s ease, visibility 0.32s ease;
+            will-change: opacity, transform;
+        }
+        .scroll-indicator.is-faded {
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+            visibility: hidden;
+            pointer-events: none;
+        }
+
 
 
 
@@ -350,7 +362,7 @@
 
         <!-- SCROLL DOWN INDICATOR -->
 
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
+        <div id="scroll-indicator" class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
 
             <div class="text-[10px] uppercase tracking-[2px] text-zinc-500 mb-2">Scroll for more</div>
 
@@ -692,9 +704,18 @@
 
 
 
-        // === SCROLL ARROW ===
+        // === SCROLL ARROW + FADE ON SCROLL ===
 
         const scrollArrow = document.getElementById('scroll-arrow');
+        const scrollIndicator = document.getElementById('scroll-indicator');
+
+        function updateScrollIndicator() {
+            if (!scrollIndicator) return;
+            scrollIndicator.classList.toggle('is-faded', window.scrollY > 24);
+        }
+
+        window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+        updateScrollIndicator();
 
         if (scrollArrow) {
 
