@@ -18,7 +18,7 @@
 
     <style>
 
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Jersey+10&display=swap');
 
      
 
@@ -192,6 +192,68 @@
 
         }
 
+        /* === TOP CENTER NAV — CLEAN & SUBTLE === */
+        .top-center-nav {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            padding: 4px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(5, 5, 5, 0.38);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .top-center-nav a {
+            font-family: 'Jersey 10', Inter, sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 15px;
+            border-radius: 999px;
+            color: rgba(255, 255, 255, 0.52);
+            font-size: 12px;
+            line-height: 1;
+            font-weight: 400;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            transition: color 0.18s ease, background-color 0.18s ease;
+        }
+        .top-center-nav a:hover {
+            color: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.045);
+        }
+        .top-center-nav a:active {
+            background: rgba(255, 255, 255, 0.07);
+        }
+        @media (min-width: 768px) {
+            .top-center-nav { top: 20px; }
+            .top-center-nav a { padding: 10px 17px; }
+        }
+        @media (max-width: 620px) {
+            .top-center-nav {
+                top: 10px;
+                max-width: calc(100vw - 24px);
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+            .top-center-nav::-webkit-scrollbar { display: none; }
+            .top-center-nav a {
+                padding: 9px 10px;
+                font-size: 10.5px;
+                letter-spacing: 0.1em;
+                white-space: nowrap;
+            }
+        }
+
+
+
+
     </style>
 
 </head>
@@ -201,6 +263,14 @@
     <!-- ORBS CANVAS -->
 
     <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
+
+
+    <!-- TOP CENTER NAV -->
+    <nav class="top-center-nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#event-coordination">Events</a>
+        <a href="#regex-generator">Mod Tools</a>
+    </nav>
 
 
 
@@ -236,7 +306,7 @@
 
     <!-- HERO -->
 
-    <section class="h-screen flex flex-col items-center justify-center px-6 text-center relative">
+    <section id="about" class="h-screen flex flex-col items-center justify-center px-6 text-center relative">
 
         <div class="tilt-wrapper">
 
