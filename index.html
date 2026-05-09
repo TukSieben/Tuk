@@ -9,9 +9,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Jersey+10&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Jersey+10&family=Audiowide&display=swap');
 
         .gif-text {
+            font-family: 'Audiowide', 'Jersey 10', Inter, sans-serif;
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
             background-size: cover;
             background-position: center;
@@ -21,6 +22,9 @@
             background-clip: text;
             -webkit-background-clip: text;
             display: inline-block;
+            letter-spacing: 0.04em;
+            filter: drop-shadow(0 0 16px rgba(125, 211, 252, 0.42)) drop-shadow(0 0 36px rgba(59, 130, 246, 0.22));
+            text-transform: uppercase;
         }
 
         .o-replace {
@@ -244,7 +248,7 @@
         <div class="tilt-wrapper">
             <div id="tilt-content" class="tilt-content">
                 <div class="-mt-8 sm:-mt-12 md:-mt-16">
-                    <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
+                    <h1 class="gif-text text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black leading-none">
                         TUK7
                     </h1>
 
@@ -419,13 +423,8 @@
                             bot
                         </button>
 
-                        <button id="reset-btn" type="button" aria-label="Reset regex generator"
-                                class="group inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-950/90 border border-zinc-800 text-xs font-semibold tracking-wide text-zinc-400 hover:text-white hover:border-red-400/60 hover:bg-red-950/30 active:scale-95 focus:outline-none focus:ring-2 focus:ring-red-400/40 transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-zinc-500 group-hover:text-red-300 transition-colors duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v6h6M20 20v-6h-6" />
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M5.5 14.5A7 7 0 0 0 17.7 18M18.5 9.5A7 7 0 0 0 6.3 6" />
-                            </svg>
-                            <span class="reset-label">Reset</span>
+                        <button id="reset-btn" class="px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-500 hover:text-white hover:border-zinc-600 transition">
+                            reset
                         </button>
                     </div>
                 </div>
@@ -914,31 +913,9 @@
                 if (outputContainer) outputContainer.classList.add('hidden');
 
                 if (testResult) {
-                    testResult.textContent = 'Reset done — enter a new word to generate a regex.';
-                    testResult.className = 'mt-3 text-xs text-red-300';
+                    testResult.textContent = 'Generate a regex first, then test a message.';
+                    testResult.className = 'mt-3 text-xs text-zinc-500';
                 }
-
-                const resetLabel = resetBtn.querySelector('.reset-label');
-                const originalLabel = resetLabel ? resetLabel.textContent : '';
-
-                resetBtn.classList.add('border-red-400/70', 'bg-red-950/40', 'text-white');
-
-                if (resetLabel) {
-                    resetLabel.textContent = 'Reset done';
-                }
-
-                window.setTimeout(() => {
-                    resetBtn.classList.remove('border-red-400/70', 'bg-red-950/40', 'text-white');
-
-                    if (resetLabel) {
-                        resetLabel.textContent = originalLabel || 'Reset';
-                    }
-
-                    if (testResult && !wordInput.value && !regexOutput.value && !testInput.value) {
-                        testResult.textContent = 'Generate a regex first, then test a message.';
-                        testResult.className = 'mt-3 text-xs text-zinc-500';
-                    }
-                }, 1500);
 
                 if (wordInput) wordInput.focus();
             });
