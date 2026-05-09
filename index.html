@@ -504,17 +504,17 @@
                 const rect = tiltContent.getBoundingClientRect();
                 const centerX = rect.left + rect.width / 2;
                 const centerY = rect.top + rect.height / 2;
-                const maxDistance = 520;
+                const maxDistance = 560;
                 const distanceX = e.clientX - centerX;
                 const distanceY = e.clientY - centerY;
                 const distance = Math.hypot(distanceX, distanceY);
-                const strength = Math.max(0.35, 1 - Math.min(distance, maxDistance) / maxDistance);
-                const rotateY = (distanceX / rect.width) * 30 * strength;
-                const rotateX = -(distanceY / rect.height) * 24 * strength;
-                const moveX = (distanceX / rect.width) * 18 * strength;
-                const moveY = (distanceY / rect.height) * 14 * strength;
+                const strength = Math.max(0, 1 - Math.min(distance, maxDistance) / maxDistance);
+                const rotateY = (distanceX / rect.width) * 8 * strength;
+                const rotateX = -(distanceY / rect.height) * 6 * strength;
+                const moveX = (distanceX / rect.width) * 5 * strength;
+                const moveY = (distanceY / rect.height) * 4 * strength;
 
-                tiltContent.style.transform = `translate3d(${moveX}px, ${moveY}px, 55px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.045)`;
+                tiltContent.style.transform = `translate3d(${moveX}px, ${moveY}px, 18px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.012)`;
             });
 
             document.addEventListener('mouseleave', () => {
