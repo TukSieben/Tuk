@@ -326,7 +326,7 @@
 
     <!-- REGEX GENERATOR SECTION -->
     <section id="regex-generator" class="flex items-center justify-center px-6 pt-16 pb-10">
-        <div class="max-w-[620px] w-full">
+        <div class="max-w-[760px] w-full">
             <div class="text-center mb-10">
                 <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-4 ring-1 ring-zinc-400/30">
                     CHAT MOD TOOLS
@@ -343,7 +343,7 @@
                 </p>
             </div>
 
-            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-9 border border-zinc-700 relative overflow-hidden">
+            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-zinc-700 relative overflow-hidden">
 
                 <!-- Tool Selector -->
                 <div class="mb-6">
@@ -354,11 +354,11 @@
                     </div>
 
                     <div class="flex p-1 bg-zinc-950 rounded-3xl border border-zinc-800" id="tool-selector">
-                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">
+                        <button data-tool="chatty" class="tool-btn active flex-1 px-4 sm:px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">
                             Chatty Regex
                         </button>
 
-                        <button data-tool="fossabot" class="tool-btn flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">
+                        <button data-tool="fossabot" class="tool-btn flex-1 px-4 sm:px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">
                             Fossabot Regex
                         </button>
                     </div>
@@ -395,15 +395,32 @@
                         WORD TO BLOCK
                     </label>
 
-                    <div class="flex gap-3">
+                    <div class="flex flex-col sm:flex-row gap-3">
                         <input id="word-input" type="text"
                                class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
                                placeholder="asshole, fuck, bitch...">
 
                         <button id="generate-btn"
-                                class="px-8 py-3.5 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-white active:scale-[0.985] transition-all text-black font-bold rounded-2xl text-sm tracking-wider flex items-center gap-2 shadow-lg">
+                                class="px-8 py-3.5 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-white active:scale-[0.985] transition-all text-black font-bold rounded-2xl text-sm tracking-wider flex items-center justify-center gap-2 shadow-lg">
                             <span>GENERATE</span>
-                            <span class="text-xs opacity-60"></span>
+                        </button>
+                    </div>
+
+                    <div class="mt-3 flex flex-wrap gap-2">
+                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="idiot">
+                            idiot
+                        </button>
+
+                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="spam">
+                            spam
+                        </button>
+
+                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="bot">
+                            bot
+                        </button>
+
+                        <button id="reset-btn" class="px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-500 hover:text-white hover:border-zinc-600 transition">
+                            reset
                         </button>
                     </div>
                 </div>
@@ -433,6 +450,21 @@
                     <p class="text-[10px] text-zinc-500 mt-3 px-1">
                         Matches the word + common leetspeak variations. Format changes depending on selected tool.
                     </p>
+                </div>
+
+                <!-- Regex Test Preview -->
+                <div class="mt-6">
+                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
+                        TEST MESSAGE
+                    </label>
+
+                    <input id="test-input" type="text"
+                           class="w-full bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-sm focus:outline-none transition"
+                           placeholder="Type a test message here...">
+
+                    <div id="test-result" class="mt-3 text-xs text-zinc-500">
+                        Generate a regex first, then test a message.
+                    </div>
                 </div>
             </div>
         </div>
@@ -614,18 +646,20 @@
         const toolSelector = document.getElementById('tool-selector');
         const fossabotOptions = document.getElementById('fossabot-options');
         const fossabotVariantContainer = document.getElementById('fossabot-variant');
+        const testInput = document.getElementById('test-input');
+        const testResult = document.getElementById('test-result');
+        const resetBtn = document.getElementById('reset-btn');
 
         let currentTool = 'chatty';
         let currentFossabotVariant = 'standard';
 
         function autoRegenerateIfPossible() {
-            if (outputContainer && !outputContainer.classList.contains('hidden') && wordInput && wordInput.value.trim()) {
+            if (wordInput && wordInput.value.trim()) {
                 const newRegex = generateRegex(wordInput.value);
 
                 if (newRegex && regexOutput) {
-                    regexOutput.value = newRegex;
-                    regexOutput.focus();
-                    regexOutput.select();
+                    showOutput(newRegex, false);
+                    testCurrentMessage();
                 }
             }
         }
@@ -762,37 +796,124 @@
             return '';
         }
 
-        function showOutput(regexStr) {
+        function showOutput(regexStr, selectText = true) {
             if (!regexOutput || !outputContainer) return;
 
             regexOutput.value = regexStr;
             outputContainer.classList.remove('hidden');
             outputContainer.classList.add('block');
 
-            setTimeout(() => {
-                regexOutput.focus();
-                regexOutput.select();
-            }, 50);
+            if (selectText) {
+                setTimeout(() => {
+                    regexOutput.focus();
+                    regexOutput.select();
+                }, 50);
+            }
+        }
+
+        function generateFromInput(selectText = true) {
+            if (!wordInput) return;
+
+            const regex = generateRegex(wordInput.value);
+
+            if (regex) {
+                showOutput(regex, selectText);
+                testCurrentMessage();
+            }
+        }
+
+        function getPreviewRegexFromOutput(rawOutput) {
+            let raw = rawOutput || '';
+
+            raw = raw.replace(/^regi:/, '');
+            raw = raw.replace(/^regex:negative:/, '');
+            raw = raw.replace(/^regex:/, '');
+
+            if (raw.endsWith("'")) {
+                raw = raw.slice(0, -1);
+            }
+
+            return raw;
+        }
+
+        function testCurrentMessage() {
+            if (!testInput || !testResult || !regexOutput) return;
+
+            const message = testInput.value;
+            const rawOutput = regexOutput.value;
+
+            if (!rawOutput) {
+                testResult.textContent = 'Generate a regex first, then test a message.';
+                testResult.className = 'mt-3 text-xs text-zinc-500';
+                return;
+            }
+
+            if (!message.trim()) {
+                testResult.textContent = 'Type a test message to check if it matches.';
+                testResult.className = 'mt-3 text-xs text-zinc-500';
+                return;
+            }
+
+            try {
+                const previewPattern = getPreviewRegexFromOutput(rawOutput);
+                const testRegex = new RegExp(previewPattern, 'i');
+                const matched = testRegex.test(message);
+
+                if (matched) {
+                    testResult.textContent = 'Match found — this message would be flagged.';
+                    testResult.className = 'mt-3 text-xs text-emerald-400';
+                } else {
+                    testResult.textContent = 'No match — this message would not be flagged.';
+                    testResult.className = 'mt-3 text-xs text-zinc-500';
+                }
+            } catch (err) {
+                testResult.textContent = 'Preview test not available for this exact output format.';
+                testResult.className = 'mt-3 text-xs text-yellow-400';
+            }
         }
 
         if (generateBtn && wordInput) {
             generateBtn.addEventListener('click', () => {
-                const val = wordInput.value;
-                const regex = generateRegex(val);
+                generateFromInput(true);
+            });
 
-                if (regex) {
-                    showOutput(regex);
-                }
+            wordInput.addEventListener('input', () => {
+                generateFromInput(false);
             });
 
             wordInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
-                    const regex = generateRegex(wordInput.value);
-
-                    if (regex) {
-                        showOutput(regex);
-                    }
+                    generateFromInput(true);
                 }
+            });
+        }
+
+        if (testInput) {
+            testInput.addEventListener('input', testCurrentMessage);
+        }
+
+        document.querySelectorAll('.example-word').forEach(button => {
+            button.addEventListener('click', () => {
+                if (!wordInput) return;
+
+                wordInput.value = button.dataset.word;
+                generateFromInput(true);
+            });
+        });
+
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (wordInput) wordInput.value = '';
+                if (regexOutput) regexOutput.value = '';
+                if (testInput) testInput.value = '';
+                if (outputContainer) outputContainer.classList.add('hidden');
+
+                if (testResult) {
+                    testResult.textContent = 'Generate a regex first, then test a message.';
+                    testResult.className = 'mt-3 text-xs text-zinc-500';
+                }
+
+                if (wordInput) wordInput.focus();
             });
         }
 
