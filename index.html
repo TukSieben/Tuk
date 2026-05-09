@@ -1,962 +1,1516 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUK7 • Twitch Mod</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TUK7 — Twitch Guides & Resources</title>
+  <meta name="description" content="Practical guides and resources for Twitch chatters, moderators, and streamers.">
+  <meta property="og:title" content="TUK7 — Twitch Guides & Resources">
+  <meta property="og:description" content="Practical guides and resources for Twitch chatters, moderators, and streamers.">
+  <meta property="og:image" content="logo.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
 
-    <link rel="icon" href="logo.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Jersey+10&family=Audiowide&display=swap');
+    :root {
+      --bg: #050505;
+      --panel: #0b0b0d;
+      --panel-hover: #111114;
+      --input: #070708;
+      --border: rgba(255,255,255,.11);
+      --border-soft: rgba(255,255,255,.07);
+      --text: #f5f5f5;
+      --muted: #a1a1aa;
+      --dim: #66666f;
+      --accent: #9146ff;
+      --good: #34d399;
+      --warn: #facc15;
+      --font: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-heading: 'Geist', var(--font);
+      --font-logo: 'Archivo Black', var(--font-heading);
+    }
 
-        .gif-text {
-            font-family: 'Audiowide', 'Jersey 10', Inter, sans-serif;
-            background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            -webkit-background-clip: text;
-            display: inline-block;
-            letter-spacing: 0.04em;
-            filter: drop-shadow(0 0 16px rgba(125, 211, 252, 0.42)) drop-shadow(0 0 36px rgba(59, 130, 246, 0.22));
-            text-transform: uppercase;
-        }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        .hero-subtitle {
-            line-height: 1.2;
-        }
+    @media (pointer: fine) {
+      body {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 3l15 14-7 1.2-3.7 6.4z' fill='%23f5f5f5' stroke='%23050505' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 5 3, auto;
+      }
 
-        .o-replace {
-            width: auto;
-            height: 0.9em;
-            display: inline-block;
-            vertical-align: -0.08em;
-            margin: 0 0.03em;
-        }
+      a,
+      button,
+      .card,
+      .button,
+      .social-link,
+      .mod-sword-link,
+      .example-word,
+      .tool-btn,
+      .variant-btn,
+      .generate-btn,
+      .copy-btn,
+      .reset-btn {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M10.5 14.5V6.8a2 2 0 0 1 4 0v6.7l.8-1.1a1.8 1.8 0 0 1 3.1.4l.5-.7a1.8 1.8 0 0 1 3.1.5l.2-.3a1.8 1.8 0 0 1 3.2 1.1v5.1c0 5-3.2 8-8.2 8h-1.4c-3.2 0-5.3-1.3-6.9-4l-2.1-3.6a1.9 1.9 0 0 1 .6-2.6 1.9 1.9 0 0 1 2.6.6l.5.8Z' fill='%23f5f5f5' stroke='%23050505' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 11 6, pointer;
+      }
 
-        html {
-            scroll-behavior: smooth;
-        }
+      p,
+      h1,
+      h2,
+      span,
+      label,
+      .section-label,
+      .field-label,
+      .card-desc,
+      .hero-text,
+      .hero-subtitle,
+      .test-result {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M12 4h4' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M14 4v20' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M12 24h4' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M14 4v20' stroke='%23050505' stroke-width='4' stroke-linecap='round' opacity='.35'/%3E%3C/svg%3E") 14 14, text;
+      }
 
-        html, body {
-            min-height: 100%;
-        }
+      input,
+      textarea {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M12 4h4' stroke='%239146ff' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M14 4v20' stroke='%239146ff' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M12 24h4' stroke='%239146ff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") 14 14, text;
+      }
 
-        body {
-            background: #050505;
-        }
+      .card,
+      .card *,
+      a,
+      a *,
+      button,
+      button * {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M10.5 14.5V6.8a2 2 0 0 1 4 0v6.7l.8-1.1a1.8 1.8 0 0 1 3.1.4l.5-.7a1.8 1.8 0 0 1 3.1.5l.2-.3a1.8 1.8 0 0 1 3.2 1.1v5.1c0 5-3.2 8-8.2 8h-1.4c-3.2 0-5.3-1.3-6.9-4l-2.1-3.6a1.9 1.9 0 0 1 .6-2.6 1.9 1.9 0 0 1 2.6.6l.5.8Z' fill='%23f5f5f5' stroke='%23050505' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 11 6, pointer;
+      }
+    }
 
-        .tilt-wrapper {
-            perspective: 1400px;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -20%, rgba(145,70,255,.18), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-        .tilt-content {
-            transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
-            transform-style: preserve-3d;
-        }
+    a {
+      color: inherit;
+    }
 
-        .social-icons {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 50;
-            display: flex;
-            gap: 16px;
-        }
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
 
-        @media (min-width: 768px) {
-            .social-icons {
-                top: 32px;
-                right: 32px;
-                gap: 18px;
-            }
+    button {
+      cursor: pointer;
+    }
 
-            .social-icons img {
-                width: 26px;
-                height: 26px;
-            }
-        }
+    .page {
+      width: min(100%, 1100px);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-        .social-icons img {
-            width: 22px;
-            height: 22px;
-            filter: brightness(0.85);
-            transition: all 0.2s ease;
-        }
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
 
-        .social-icons a:hover img {
-            filter: brightness(1);
-            transform: scale(1.15);
-        }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-        .top-left-group {
-            position: fixed;
-            top: 17px;
-            left: 24px;
-            z-index: 50;
-            display: flex;
-            gap: 14px;
-        }
+    .mod-sword-link {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: rgba(255,255,255,.035);
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s ease, background .15s ease, border-color .15s ease, transform .15s ease;
+    }
 
-        @media (min-width: 768px) {
-            .top-left-group {
-                top: 27px;
-                left: 32px;
-                gap: 16px;
-            }
-        }
+    .mod-sword-link:hover {
+      color: #22c55e;
+      background: rgba(34,197,94,.08);
+      border-color: rgba(34,197,94,.28);
+      transform: translateY(-1px);
+    }
 
-        .mod-button-small {
-            transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+    .mod-sword-link svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+    }
 
-        .mod-button-small:hover {
-            transform: scale(1.18);
-        }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+    }
 
-        .tool-btn.active,
-        .variant-btn.active {
-            background-color: #f4f4f5 !important;
-            color: #111827 !important;
-        }
+    .brand img {
+      width: 28px;
+      height: 28px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
 
-        .top-center-nav {
-            position: fixed;
-            top: 16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 60;
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            padding: 4px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(5, 5, 5, 0.38);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
 
-        .top-center-nav a {
-            font-family: 'Jersey 10', Inter, sans-serif;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 9px 15px;
-            border-radius: 999px;
-            color: rgba(255, 255, 255, 0.52);
-            font-size: 12px;
-            line-height: 1;
-            font-weight: 400;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            transition: color 0.18s ease, background-color 0.18s ease;
-        }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      list-style: none;
+    }
 
-        .top-center-nav a:hover {
-            color: rgba(255, 255, 255, 0.9);
-            background: rgba(255, 255, 255, 0.045);
-        }
+    .nav-links a,
+    .social-link {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
 
-        .top-center-nav a:active {
-            background: rgba(255, 255, 255, 0.07);
-        }
+    .nav-links a:hover,
+    .social-link:hover {
+      color: var(--text);
+    }
 
-        @media (min-width: 768px) {
-            .top-center-nav {
-                top: 24px;
-            }
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-            .top-center-nav a {
-                padding: 10px 17px;
-            }
-        }
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0;
+    }
 
-        @media (max-width: 620px) {
-            .top-center-nav {
-                top: 16px;
-                max-width: calc(100vw - 24px);
-                overflow-x: auto;
-                scrollbar-width: none;
-            }
+    .social-link svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
 
-            .top-center-nav::-webkit-scrollbar {
-                display: none;
-            }
+    .hamburger {
+      display: none;
+      background: none;
+      border: 0;
+      color: var(--text);
+      cursor: pointer;
+      padding: 6px;
+    }
 
-            .top-center-nav a {
-                padding: 9px 10px;
-                font-size: 10.5px;
-                letter-spacing: 0.1em;
-                white-space: nowrap;
-            }
-        }
+    .hero {
+      min-height: calc(100vh - 72px);
+      display: grid;
+      place-items: center;
+      padding: 72px 0 96px;
+      text-align: center;
+    }
 
-        .scroll-indicator {
-            transition: opacity 0.32s ease, transform 0.32s ease, visibility 0.32s ease;
-            will-change: opacity, transform;
-        }
+    .hero-logo {
+      width: 92px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 26px;
+      border: 1px solid var(--border);
+      box-shadow: 0 0 60px rgba(145,70,255,.18);
+    }
 
-        .scroll-indicator.is-faded {
-            opacity: 0;
-            transform: translateX(-50%) translateY(10px);
-            visibility: hidden;
-            pointer-events: none;
-        }
-    </style>
+    .hero h1 {
+      font-family: var(--font-logo);
+      font-size: clamp(56px, 11vw, 118px);
+      line-height: .86;
+      letter-spacing: -.045em;
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+
+    .paint-text {
+      display: inline-block;
+      color: var(--text);
+      background-image: url("https://cdn.7tv.app/paint/01GCCF52Q000056Z5R14NPVHTC/layer/01JAMR1P9B4C4RMM42X350G0AV/4x.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      color: var(--text);
+      font-size: clamp(14px, 2vw, 18px);
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+
+    .hero-text {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .hero-actions,
+    .actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+
+    .button:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .button.primary {
+      background: var(--text);
+      border-color: var(--text);
+      color: #050505;
+    }
+
+    .button.primary:hover {
+      background: #d9d9d9;
+      border-color: #d9d9d9;
+    }
+
+    main {
+      padding: 0 0 90px;
+    }
+
+    .section {
+      padding: 62px 0;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      margin-bottom: 10px;
+    }
+
+    .section-header h2,
+    .feature-card h2,
+    .event-copy h2,
+    .tool-header h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+    }
+
+    .section-header h2 {
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .section-header p {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .card {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .card:hover {
+      background: var(--panel-hover);
+      border-color: var(--border);
+    }
+
+    .card-title {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .card-title-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .card-icon {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      color: var(--muted);
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .card:hover .card-icon {
+      color: var(--text);
+    }
+
+    .card-arrow {
+      color: var(--dim);
+      flex-shrink: 0;
+    }
+
+    .card-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .featured {
+      display: block;
+    }
+
+    .feature-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+      padding: 28px;
+      border-radius: 18px;
+      border: 0;
+      background:
+        radial-gradient(75% 90% at 8% 100%, rgba(96,255,245,.72) 0%, rgba(96,255,245,.28) 28%, rgba(96,255,245,0) 58%),
+        radial-gradient(70% 90% at 88% 100%, rgba(157,0,255,.52) 0%, rgba(157,0,255,.24) 30%, rgba(157,0,255,0) 62%),
+        radial-gradient(90% 85% at 50% 72%, rgba(88,28,255,.34) 0%, rgba(88,28,255,0) 56%),
+        linear-gradient(180deg, #040404 0%, #07070d 30%, #140028 68%, #1d063d 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+    }
+
+    .feature-card h2 {
+      max-width: 620px;
+      font-size: clamp(32px, 5vw, 60px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      margin-bottom: 16px;
+    }
+
+    .feature-card p {
+      max-width: 620px;
+      color: rgba(255,255,255,.82);
+      margin-bottom: 24px;
+    }
+
+    .feature-card .section-label {
+      color: rgba(255,255,255,.72);
+    }
+
+    .event-panel {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 240px minmax(0, 1fr);
+      gap: 36px;
+      align-items: center;
+      padding: 34px;
+      border-radius: 22px;
+      border: 0;
+      background:
+        radial-gradient(circle at 12% 18%, rgba(255,0,119,.58) 0%, rgba(255,0,119,.22) 24%, rgba(255,0,119,0) 44%),
+        radial-gradient(circle at 88% 18%, rgba(0,225,221,.42) 0%, rgba(0,225,221,.16) 24%, rgba(0,225,221,0) 46%),
+        radial-gradient(circle at 52% 46%, rgba(229,255,0,.92) 0%, rgba(229,255,0,.74) 15%, rgba(229,255,0,0) 34%),
+        linear-gradient(135deg, #00d8d6 0%, #00d8d6 16%, #e5ff00 16%, #e5ff00 43%, #ff0099 43%, #ff0066 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08);
+    }
+
+    .event-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.38)),
+        radial-gradient(circle at 50% 55%, rgba(26,0,44,.34), rgba(26,0,44,0) 46%);
+      pointer-events: none;
+    }
+
+    .event-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cup-link {
+      display: block;
+      padding: 14px;
+      border-radius: 22px;
+      border: 1px solid rgba(255,255,255,.28);
+      background: rgba(5,5,5,.28);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .cup-link:hover {
+      border-color: rgba(255,255,255,.48);
+      background: rgba(5,5,5,.38);
+    }
+
+    .cup-link img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    .event-copy h2 {
+      font-size: clamp(34px, 5vw, 60px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      margin-bottom: 16px;
+    }
+
+    .event-copy p {
+      max-width: 640px;
+      color: rgba(255,255,255,.88);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .event-copy .section-label {
+      color: rgba(255,255,255,.74);
+    }
+
+    .event-copy a:not(.button) {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .event-copy .actions {
+      justify-content: flex-start;
+      margin-top: 26px;
+    }
+
+    .tool-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .tool-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    .tool-header h2 {
+      font-size: clamp(38px, 7vw, 64px);
+      line-height: 1;
+      letter-spacing: -0.045em;
+      margin-bottom: 14px;
+    }
+
+    .tool-header p {
+      max-width: 560px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .tool-box {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid var(--border-soft);
+      background: rgba(11,11,13,.94);
+    }
+
+    .field,
+    .tool-row {
+      margin-bottom: 20px;
+    }
+
+    label,
+    .field-label {
+      display: block;
+      color: var(--dim);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .segmented {
+      display: flex;
+      gap: 6px;
+      padding: 5px;
+      border: 1px solid var(--border-soft);
+      border-radius: 16px;
+      background: var(--input);
+    }
+
+    .tool-btn,
+    .variant-btn {
+      min-height: 38px;
+      flex: 1;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .tool-btn:hover,
+    .variant-btn:hover {
+      color: var(--text);
+      background: rgba(255,255,255,.045);
+    }
+
+    .tool-btn.active,
+    .variant-btn.active {
+      background: var(--text);
+      color: #050505;
+    }
+
+    .variant-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 150px;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .input-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .action-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--border-soft);
+      border-radius: 14px;
+      background: var(--input);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: var(--border);
+    }
+
+    input {
+      min-height: 46px;
+      padding: 0 15px;
+    }
+
+    textarea {
+      min-height: 104px;
+      resize: vertical;
+      padding: 15px;
+      color: var(--good);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .generate-btn,
+    .copy-btn {
+      min-height: 46px;
+      border-radius: 14px;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: #050505;
+      padding: 0 18px;
+      font-size: 14px;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      white-space: nowrap;
+    }
+
+    .generate-btn:hover,
+    .copy-btn:hover {
+      background: #d9d9d9;
+      border-color: #d9d9d9;
+    }
+
+    .example-row {
+      min-height: 31px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .example-word {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 31px;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: var(--input);
+      color: var(--muted);
+      padding: 6px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .example-word:hover {
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .reset-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 31px;
+      border: 1px solid rgba(248, 113, 113, .28);
+      border-radius: 999px;
+      background: rgba(248, 113, 113, .08);
+      color: #fca5a5;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .reset-btn:hover {
+      color: #fecaca;
+      border-color: rgba(248, 113, 113, .48);
+      background: rgba(248, 113, 113, .14);
+    }
+
+    .output-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .test-result {
+      margin-top: 10px;
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    .test-result.match {
+      color: var(--good);
+    }
+
+    .test-result.warn {
+      color: var(--warn);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 28px 0;
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong {
+      color: var(--muted);
+    }
+
+    @media (max-width: 920px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-links.open {
+        display: flex;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+        padding: 12px 24px 18px;
+        background: #050505;
+        border-bottom: 1px solid var(--border-soft);
+      }
+
+      .nav-links.open li {
+        width: 100%;
+      }
+
+      .nav-links.open a {
+        display: block;
+        padding: 10px 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .event-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .cup-link {
+        max-width: 260px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      nav {
+        min-height: 64px;
+      }
+
+      .nav-right {
+        gap: 14px;
+      }
+
+      .socials {
+        gap: 10px;
+      }
+
+      .nav-links.open {
+        top: 64px;
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 70px 0 84px;
+      }
+
+      .hero-logo {
+        width: 76px;
+        height: 76px;
+      }
+
+      .hero h1 {
+        font-size: clamp(52px, 18vw, 88px);
+      }
+
+      .section {
+        padding: 48px 0;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-header p {
+        margin-top: 12px;
+      }
+
+      .card-grid,
+      .variant-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card {
+        min-height: auto;
+      }
+
+      .feature-card,
+      .event-panel,
+      .tool-box {
+        padding: 22px;
+      }
+
+      .input-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
+<body id="top">
 
-<body class="bg-[#050505] text-white font-sans">
+<div class="page">
+  <nav>
+    <div class="nav-left">
+      <a href="https://tuk7.xyz/mods" class="mod-sword-link" aria-label="My moderator roles">
+        <svg viewBox="0 0 24 24" aria-hidden="true" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14.5 3.5 20.5 9.5" />
+          <path d="M13.5 4.5 19.5 10.5" />
+          <path d="M18.8 5.2 5.7 18.3" />
+          <path d="M4.4 16.9 7.1 19.6" />
+          <path d="M3.2 20.8 5.7 18.3" />
+          <path d="M10.2 14.8 9.2 13.8" />
+        </svg>
+      </a>
 
-    <!-- ORBS CANVAS -->
-    <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
-
-    <!-- TOP CENTER NAV -->
-    <nav class="top-center-nav" aria-label="Main navigation">
-        <a href="#about">About</a>
-        <a href="#event-coordination">Events</a>
-        <a href="#regex-generator">Mod Tools</a>
-    </nav>
-
-    <!-- SOCIAL ICONS -->
-    <div class="social-icons">
-        <a href="https://twitch.tv/tuk7" target="_blank">
-            <img src="twitch.png" alt="Twitch">
-        </a>
-
-        <a href="https://x.com/tukk7_" target="_blank">
-            <img src="twitter.png" alt="Twitter">
-        </a>
-
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank">
-            <img src="discord.png" alt="Discord">
-        </a>
+      <a href="/" class="brand">
+        <img src="logo.png" alt="TUK7" onerror="this.style.display='none'">
+        <span>TUK7</span>
+      </a>
     </div>
 
-    <!-- TOP LEFT BUTTONS GROUP -->
-    <div class="top-left-group">
-        <a href="mods" class="mod-button-small">
-            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#top" data-scroll-top>Start</a></li>
+        <li><a href="#chatters">Chatters</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#mods">Mods</a></li>
+        <li><a href="#regex-generator">Regex</a></li>
+        <li><a href="#streamers">Streamers</a></li>
+        <li><a href="/faq">FAQ</a></li>
+      </ul>
+
+      <div class="socials" aria-label="Social links">
+        <a href="https://www.twitch.tv/tuk7" target="_blank" rel="noopener" class="social-link" aria-label="Twitch">
+          <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         </a>
+        <a href="https://x.com/tukk7_" target="_blank" rel="noopener" class="social-link" aria-label="X">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.258 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/@TukPresents" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" rel="noopener" class="social-link" aria-label="Discord">
+          <svg viewBox="0 0 24 24"><path d="M20.317 4.369A19.791 19.791 0 0 0 15.36 2.84a13.676 13.676 0 0 0-.635 1.318 18.27 18.27 0 0 0-5.45 0A13.91 13.91 0 0 0 8.64 2.84a19.736 19.736 0 0 0-4.958 1.53C.545 9.04-.33 13.594.09 18.083a19.9 19.9 0 0 0 6.073 3.074 14.58 14.58 0 0 0 1.303-2.11 12.938 12.938 0 0 1-2.05-.986c.172-.126.34-.256.502-.39a14.235 14.235 0 0 0 12.164 0c.164.134.331.264.503.39a12.99 12.99 0 0 1-2.054.988 14.546 14.546 0 0 0 1.304 2.108 19.868 19.868 0 0 0 6.075-3.074c.492-5.205-.839-9.717-3.593-13.714zM8.02 15.331c-1.183 0-2.157-1.087-2.157-2.423 0-1.336.956-2.423 2.157-2.423 1.21 0 2.176 1.096 2.157 2.423 0 1.336-.956 2.423-2.157 2.423zm7.96 0c-1.183 0-2.157-1.087-2.157-2.423 0-1.336.955-2.423 2.157-2.423 1.21 0 2.176 1.096 2.157 2.423 0 1.336-.947 2.423-2.157 2.423z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/tukfps/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163 18.162 15.404 18.162 12 15.403 5.838 12 5.838zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@tuk7_" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+        </a>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
     </div>
+  </nav>
 
-    <!-- HERO -->
-    <section id="about" class="h-screen flex flex-col items-center justify-center px-6 text-center relative">
-        <div class="tilt-wrapper">
-            <div id="tilt-content" class="tilt-content">
-                <div class="-mt-8 sm:-mt-12 md:-mt-16">
-                    <h1 class="gif-text text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-none">
-                        TUK7
-                    </h1>
+  <header class="hero" id="start">
+    <div>
+      <img src="logo.png" alt="TUK7" class="hero-logo" onerror="this.style.display='none'">
+      <h1><span class="paint-text">TUK7</span></h1>
+      <p class="hero-subtitle">Twitch Moderator &amp; Event Coordinator</p>
+      <p class="hero-text">Practical guides and tools for a better Twitch experience. Chat clients, emotes, extensions, moderation tools, streamer resources, and event work in one place.</p>
+      <div class="hero-actions">
+        <a href="#events" class="button">Colors Cup</a>
+        <a href="#regex-generator" class="button">Regex Tool</a>
+        <a href="/chat/chatterino" class="button">Better Chat</a>
+      </div>
+    </div>
+  </header>
 
-                    <p class="hero-subtitle mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white text-center">
-                        Twitch M<img src="o.png" class="o-replace" alt="o">derator &amp; Event Coordinator
-                    </p>
-                </div>
-            </div>
+  <main>
+    <section class="section">
+      <div class="featured">
+        <div class="feature-card">
+          <p class="section-label">Start here</p>
+          <h2>Become a better chatter.</h2>
+          <p>Start with a proper chat client, add emote support, then fine-tune your setup with extensions and useful settings.</p>
+          <a href="/chat/chatterino" class="button primary">Open Chat Guide</a>
         </div>
-
-        <!-- SCROLL DOWN INDICATOR -->
-        <div id="scroll-indicator" class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
-            <div class="text-[10px] uppercase tracking-[2px] text-zinc-500 mb-2">
-                Scroll for more
-            </div>
-
-            <button id="scroll-arrow" class="group flex items-center justify-center w-11 h-11 rounded-full border border-zinc-700/80 bg-zinc-950/70 backdrop-blur-sm hover:border-zinc-400 hover:bg-zinc-900 transition-all duration-200 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-y-0.5 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
-                </svg>
-            </button>
-        </div>
+      </div>
     </section>
 
-    <!-- EVENT COORDINATION SECTION -->
-    <section id="event-coordination" class="min-h-[70dvh] flex items-center justify-center px-6 py-16">
-        <div class="max-w-[900px] w-full text-center">
-            <div class="mb-8 flex justify-center">
-                <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer"
-                   class="group relative block w-40 sm:w-48 md:w-56 transition-all duration-300 hover:scale-[1.03]">
-
-                    <img
-                        src="cup.gif"
-                        alt="Colors Cup Logo Animation"
-                        class="w-full h-auto object-contain rounded-3xl border border-white/20 bg-zinc-950/40 p-3 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 group-hover:border-white/40 group-hover:ring-white/20"
-                    >
-
-                </a>
-            </div>
-
-            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-5 ring-1 ring-zinc-400/30">
-                EVENT WORK
-            </div>
-
-            <h2 class="text-4xl sm:text-5xl font-black tracking-[-1.5px]">
-                Event Coordinator
-            </h2>
-
-            <p class="mt-5 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
-                Beyond Twitch moderation, I support community-driven esports events as an Event Coordinator.
-                I am currently helping with
-                <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer" class="text-white font-semibold underline underline-offset-4 hover:text-zinc-300 transition">
-                    Colors Cup
-                </a>,
-                an inclusive esports event in Wiesbaden focused on fair play, respect and community.
-            </p>
-
-            <div class="mt-8 flex flex-wrap justify-center gap-3">
-                <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer"
-                   class="px-6 py-3 bg-white text-black font-bold rounded-2xl text-sm tracking-wider hover:bg-zinc-200 active:scale-[0.985] transition-all shadow-lg">
-                    VISIT COLORS CUP
-                </a>
-
-                <a href="#regex-generator"
-                   class="px-6 py-3 bg-zinc-900 text-white font-bold rounded-2xl text-sm tracking-wider border border-zinc-700 hover:bg-zinc-800 active:scale-[0.985] transition-all">
-                    MOD TOOLS
-                </a>
-            </div>
+    <section class="section" id="events">
+      <div class="event-panel">
+        <a href="https://www.colors-cup.de/" target="_blank" rel="noopener" class="cup-link" aria-label="Visit Colors Cup">
+          <img src="cup.gif" alt="Colors Cup logo animation">
+        </a>
+        <div class="event-copy">
+          <p class="section-label">Event work</p>
+          <h2>Event Coordinator</h2>
+          <p>Beyond Twitch moderation, I support community-driven esports events as an Event Coordinator. I am currently helping with <a href="https://www.colors-cup.de/" target="_blank" rel="noopener">Colors Cup</a>, an inclusive esports event in Wiesbaden focused on fair play, respect, and community.</p>
+          <div class="actions">
+            <a href="https://www.colors-cup.de/" target="_blank" rel="noopener" class="button primary">Visit Colors Cup</a>
+            <a href="#regex-generator" class="button">Mod Tools</a>
+          </div>
         </div>
+      </div>
     </section>
 
-    <!-- REGEX GENERATOR SECTION -->
-    <section id="regex-generator" class="flex items-center justify-center px-6 pt-16 pb-10">
-        <div class="max-w-[760px] w-full">
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-4 ring-1 ring-zinc-400/30">
-                    CHAT MOD TOOLS
-                </div>
-
-                <h2 class="text-5xl font-black tracking-[-1.5px]">
-                    Regex Generator
-                </h2>
-
-                <p class="mt-4 text-lg text-zinc-400 max-w-md mx-auto">
-                    Instantly create advanced regex patterns for blocking words with leetspeak, symbols &amp; variations.
-                    <br>
-                    Copy &amp; paste directly into your chat filter (e.g. for Chatty & Fossabot).
-                </p>
-            </div>
-
-            <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-6 sm:p-9 border border-zinc-700 relative overflow-hidden">
-
-                <!-- Tool Selector -->
-                <div class="mb-6">
-                    <div class="mb-2">
-                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">
-                            SELECT TOOL
-                        </label>
-                    </div>
-
-                    <div class="flex p-1 bg-zinc-950 rounded-3xl border border-zinc-800" id="tool-selector">
-                        <button data-tool="chatty" class="tool-btn active flex-1 px-4 sm:px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">
-                            Chatty Regex
-                        </button>
-
-                        <button data-tool="fossabot" class="tool-btn flex-1 px-4 sm:px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">
-                            Fossabot Regex
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Fossabot Variants -->
-                <div id="fossabot-options" class="hidden mb-6">
-                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
-                        FOSSABOT MODE
-                    </label>
-
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm" id="fossabot-variant">
-                        <button data-variant="standard" class="variant-btn active px-4 py-2 rounded-2xl bg-zinc-700 text-white text-xs font-medium transition">
-                            Standard
-                        </button>
-
-                        <button data-variant="keywords" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
-                            Keywords
-                        </button>
-
-                        <button data-variant="blocked" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
-                            Blocked Terms
-                        </button>
-
-                        <button data-variant="negative" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
-                            Negative
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Input -->
-                <div class="mb-6">
-                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
-                        WORD TO BLOCK
-                    </label>
-
-                    <div class="flex flex-col sm:flex-row gap-3">
-                        <input id="word-input" type="text"
-                               class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
-                               placeholder="asshole, fuck, bitch...">
-
-                        <button id="generate-btn"
-                                class="px-8 py-3.5 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-white active:scale-[0.985] transition-all text-black font-bold rounded-2xl text-sm tracking-wider flex items-center justify-center gap-2 shadow-lg">
-                            <span>GENERATE</span>
-                        </button>
-                    </div>
-
-                    <div class="mt-3 flex flex-wrap gap-2">
-                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="idiot">
-                            idiot
-                        </button>
-
-                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="spam">
-                            spam
-                        </button>
-
-                        <button class="example-word px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-400 hover:text-white hover:border-zinc-600 transition" data-word="bot">
-                            bot
-                        </button>
-
-                        <button id="reset-btn" class="px-3 py-1.5 rounded-full bg-zinc-950 border border-zinc-800 text-xs text-zinc-500 hover:text-white hover:border-zinc-600 transition">
-                            reset
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Output -->
-                <div id="output-container" class="hidden mt-2">
-                    <div class="flex items-center justify-between mb-2">
-                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">
-                            YOUR REGEX (ready to copy)
-                        </label>
-                    </div>
-
-                    <div class="relative group">
-                        <textarea id="regex-output" readonly rows="3"
-                                  class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 text-sm font-mono text-emerald-400 leading-relaxed resize-none focus:outline-none focus:border-zinc-400"></textarea>
-
-                        <button id="copy-btn"
-                                class="absolute top-3 right-3 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 transition text-xs font-medium rounded-xl flex items-center gap-1.5 text-white shadow">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 16v-4m4 4v4m4-8v8m4-4v-4m-16 8h16" />
-                            </svg>
-
-                            <span>COPY</span>
-                        </button>
-                    </div>
-
-                    <p class="text-[10px] text-zinc-500 mt-3 px-1">
-                        Matches the word + common leetspeak variations. Format changes depending on selected tool.
-                    </p>
-                </div>
-
-                <!-- Regex Test Preview -->
-                <div class="mt-6">
-                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
-                        TEST MESSAGE
-                    </label>
-
-                    <input id="test-input" type="text"
-                           class="w-full bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-sm focus:outline-none transition"
-                           placeholder="Type a test message here...">
-
-                    <div id="test-result" class="mt-3 text-xs text-zinc-500">
-                        Generate a regex first, then test a message.
-                    </div>
-                </div>
-            </div>
+    <section class="section" id="chatters">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Chatters</p>
+          <h2>Better Chat</h2>
         </div>
+        <p>Everything you need to make Twitch chat cleaner, faster, and more useful.</p>
+      </div>
+      <div class="card-grid">
+        <a href="/chat/chatterino" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg>Chatterino</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Use Chatterino instead of the native Twitch chat for a cleaner chat experience.</p>
+          </div>
+        </a>
+        <a href="/extensions" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v5"/><path d="M12 17v5"/><path d="M4.93 4.93l3.54 3.54"/><path d="M15.53 15.53l3.54 3.54"/><path d="M2 12h5"/><path d="M17 12h5"/><path d="M4.93 19.07l3.54-3.54"/><path d="M15.53 8.47l3.54-3.54"/></svg>Extensions</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Add useful features to Twitch chat with browser extensions.</p>
+          </div>
+        </a>
+        <a href="/extensions/emotes" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 10h.01"/><path d="M16 10h.01"/><path d="M8 15s1.5 2 4 2 4-2 4-2"/></svg>Emotes</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Learn how emotes work and which tools you need to see them properly.</p>
+          </div>
+        </a>
+        <a href="/mobile" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>Mobile</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Use emotes and better chat features when watching on mobile.</p>
+          </div>
+        </a>
+        <a href="/cosmetics" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.2 4.5 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z"/></svg>Cosmetics</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Badges, paints, and more ways to customize your chat appearance.</p>
+          </div>
+        </a>
+      </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer class="text-center text-[10px] text-zinc-500 py-5 border-t border-zinc-900">
-        © 2026 TUK | All rights reserved. • Made for the community
-    </footer>
+    <section class="section" id="mods">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Moderators</p>
+          <h2>Mod tools</h2>
+        </div>
+        <p>Useful tools for commands, emotes, moderation, and chat management.</p>
+      </div>
+      <div class="card-grid">
+        <a href="/bots/fossabot" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="12" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/><path d="M9 13h.01"/><path d="M15 13h.01"/></svg>Fossabot</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">A chatbot for moderation, commands, and stream management.</p>
+          </div>
+        </a>
+        <a href="/bots/potatbotat" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 11c0-3 2-5 5-5s5 2 5 5-2 7-6 7-4-4-4-7Z"/><path d="M10 10h.01"/><path d="M15 12h.01"/><path d="M12 16h.01"/></svg>PotatBotat</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">A useful tool for adding and managing emotes in chat.</p>
+          </div>
+        </a>
+        <a href="#regex-generator" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 17h16"/><path d="M8 7v10"/><path d="M16 7v10"/><path d="M10 12h4"/></svg>Regex Generator</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Create regex patterns for Chatty and Fossabot with leetspeak and symbol variations.</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif']
-                    }
-                }
-            }
-        };
+    <section class="section" id="regex-generator">
+      <div class="tool-wrap">
+        <div class="tool-header">
+          <p class="section-label">Chat mod tools</p>
+          <h2>Regex Generator</h2>
+          <p>Instantly create regex patterns for blocking words with leetspeak, symbols, and common variations. Copy the output directly into your chat filter.</p>
+        </div>
 
-        // CLEAN URL REDIRECT
-        if (window.location.pathname.endsWith('/index.html')) {
-            window.location.replace(window.location.origin + '/');
+        <div class="tool-box">
+          <div class="tool-row">
+            <span class="field-label">Select tool</span>
+            <div class="segmented" id="tool-selector">
+              <button type="button" data-tool="chatty" class="tool-btn active">Chatty Regex</button>
+              <button type="button" data-tool="fossabot" class="tool-btn">Fossabot Regex</button>
+            </div>
+          </div>
+
+          <div id="fossabot-options" class="tool-row hidden">
+            <span class="field-label">Fossabot mode</span>
+            <div class="variant-grid" id="fossabot-variant">
+              <button type="button" data-variant="standard" class="variant-btn active">Standard</button>
+              <button type="button" data-variant="keywords" class="variant-btn">Keywords</button>
+              <button type="button" data-variant="blocked" class="variant-btn">Blocked Terms</button>
+              <button type="button" data-variant="negative" class="variant-btn">Negative</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="word-input">Word to block</label>
+            <div class="input-row">
+              <div class="input-stack">
+                <input id="word-input" type="text" placeholder="asshole, fuck, bitch...">
+                <div class="example-row">
+                  <button type="button" class="example-word" data-word="idiot">idiot</button>
+                  <button type="button" class="example-word" data-word="spam">spam</button>
+                  <button type="button" class="example-word" data-word="bot">bot</button>
+                </div>
+              </div>
+              <div class="action-column">
+                <button type="button" id="generate-btn" class="generate-btn">Generate</button>
+                <button type="button" id="reset-btn" class="reset-btn" aria-label="Reset regex generator">↺ Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="output-container" class="field hidden">
+            <div class="output-head">
+              <label for="regex-output">Your regex</label>
+              <button type="button" id="copy-btn" class="copy-btn">Copy</button>
+            </div>
+            <textarea id="regex-output" readonly rows="3"></textarea>
+          </div>
+
+          <div class="field" style="margin-bottom:0">
+            <label for="test-input">Test message</label>
+            <input id="test-input" type="text" placeholder="Type a test message here...">
+            <div id="test-result" class="test-result">Generate a regex first, then test a message.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="streamers">
+      <div class="section-header">
+        <div>
+          <p class="section-label">Streamers</p>
+          <h2>Stream resources</h2>
+        </div>
+        <p>Simple resources for presentation, community interaction, and memorable moments.</p>
+      </div>
+      <div class="card-grid">
+        <a href="/overlays" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 9h5"/><path d="M7 13h10"/><path d="M15 17h2"/></svg>Overlays</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Improve your stream with clean chat overlays and simple visuals that make your content easier to follow.</p>
+          </div>
+        </a>
+        <a href="/raffle" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16v4a2 2 0 0 0 0 4v4H4v-4a2 2 0 0 0 0-4z"/><path d="M9 9h.01"/><path d="M9 15h.01"/></svg>Raffle</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Run giveaways and community events in a structured way.</p>
+          </div>
+        </a>
+        <a href="/albums" class="card">
+          <div>
+            <span class="card-title"><span class="card-title-main"><svg class="card-icon" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8"/><path d="M8 13h5"/><path d="M7 19l2-3 2 2 3-4 3 5"/></svg>Albums</span> <span class="card-arrow">→</span></span>
+            <p class="card-desc">Collect clips and memorable stream moments in one place.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 <strong>TUK7</strong> | All rights reserved.</p>
+      <p>Made for the community</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+
+  hamburger.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', event => {
+      if (a.hasAttribute('data-scroll-top')) {
+        event.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      navLinks.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const generateBtn = document.getElementById('generate-btn');
+  const wordInput = document.getElementById('word-input');
+  const outputContainer = document.getElementById('output-container');
+  const regexOutput = document.getElementById('regex-output');
+  const copyBtn = document.getElementById('copy-btn');
+  const toolSelector = document.getElementById('tool-selector');
+  const fossabotOptions = document.getElementById('fossabot-options');
+  const fossabotVariantContainer = document.getElementById('fossabot-variant');
+  const testInput = document.getElementById('test-input');
+  const testResult = document.getElementById('test-result');
+  const resetBtn = document.getElementById('reset-btn');
+
+  let currentTool = 'chatty';
+  let currentFossabotVariant = 'standard';
+
+  function autoRegenerateIfPossible() {
+    if (wordInput && wordInput.value.trim()) {
+      const newRegex = generateRegex(wordInput.value);
+      if (newRegex && regexOutput) {
+        showOutput(newRegex, false);
+        testCurrentMessage();
+      }
+    }
+  }
+
+  if (toolSelector) {
+    toolSelector.querySelectorAll('.tool-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toolSelector.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentTool = btn.dataset.tool;
+
+        if (currentTool === 'fossabot') {
+          fossabotOptions.classList.remove('hidden');
+        } else {
+          fossabotOptions.classList.add('hidden');
         }
 
-        // 3D TILT
-        const tiltContent = document.getElementById('tilt-content');
-        const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
-
-        if (!isMobile && tiltContent) {
-            document.addEventListener('mousemove', (e) => {
-                const x = (window.innerWidth / 2 - e.clientX) / 55;
-                const y = (window.innerHeight / 2 - e.clientY) / 55;
-                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-            });
-
-            document.addEventListener('mouseleave', () => {
-                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
-        }
-
-        // ORBS
-        const canvas = document.getElementById('orb-canvas');
-        const ctx = canvas.getContext('2d');
-
-        let orbs = [];
-        let width;
-        let height;
-        let isMobileDevice = isMobile;
-
-        class Orb {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
-                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
-                this.vx = (Math.random() - 0.5) * this.speed;
-                this.vy = (Math.random() - 0.5) * this.speed;
-                this.hue = 200 + Math.random() * 40;
-                this.opacity = Math.random() * 0.28 + 0.13;
-                this.phase = Math.random() * Math.PI * 2;
-            }
-
-            update() {
-                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
-                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
-
-                if (this.x < -60) this.x = width + 60;
-                if (this.x > width + 60) this.x = -60;
-                if (this.y < -60) this.y = height + 60;
-                if (this.y > height + 60) this.y = -60;
-            }
-
-            draw() {
-                ctx.save();
-
-                const layers = isMobileDevice
-                    ? [
-                        { size: this.radius * 3.8, alpha: this.opacity * 0.07 },
-                        { size: this.radius * 2.6, alpha: this.opacity * 0.12 },
-                        { size: this.radius * 1.6, alpha: this.opacity * 0.20 },
-                        { size: this.radius * 0.55, alpha: this.opacity * 0.68 }
-                    ]
-                    : [
-                        { size: this.radius * 4.2, alpha: this.opacity * 0.06 },
-                        { size: this.radius * 3.1, alpha: this.opacity * 0.09 },
-                        { size: this.radius * 2.2, alpha: this.opacity * 0.15 },
-                        { size: this.radius * 1.4, alpha: this.opacity * 0.22 },
-                        { size: this.radius * 0.55, alpha: this.opacity * 0.65 }
-                    ];
-
-                for (let layer of layers) {
-                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                ctx.restore();
-            }
-        }
-
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-
-            canvas.width = width;
-            canvas.height = height;
-
-            isMobileDevice = window.innerWidth < 768;
-        }
-
-        function initOrbs() {
-            orbs = [];
-
-            const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
-
-            for (let i = 0; i < count; i++) {
-                orbs.push(new Orb());
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-
-            for (let orb of orbs) {
-                orb.update();
-                orb.draw();
-            }
-
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', () => {
-            resize();
-            initOrbs();
-        });
-
-        resize();
-        initOrbs();
-        animate();
-
-        // SCROLL ARROW + FADE ON SCROLL
-        const scrollArrow = document.getElementById('scroll-arrow');
-        const scrollIndicator = document.getElementById('scroll-indicator');
-
-        function updateScrollIndicator() {
-            if (!scrollIndicator) return;
-            scrollIndicator.classList.toggle('is-faded', window.scrollY > 24);
-        }
-
-        window.addEventListener('scroll', updateScrollIndicator, { passive: true });
-        updateScrollIndicator();
-
-        if (scrollArrow) {
-            scrollArrow.addEventListener('click', () => {
-                const target = document.getElementById('regex-generator');
-
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        }
-
-        // REGEX GENERATOR
-        const generateBtn = document.getElementById('generate-btn');
-        const wordInput = document.getElementById('word-input');
-        const outputContainer = document.getElementById('output-container');
-        const regexOutput = document.getElementById('regex-output');
-        const copyBtn = document.getElementById('copy-btn');
-        const toolSelector = document.getElementById('tool-selector');
-        const fossabotOptions = document.getElementById('fossabot-options');
-        const fossabotVariantContainer = document.getElementById('fossabot-variant');
-        const testInput = document.getElementById('test-input');
-        const testResult = document.getElementById('test-result');
-        const resetBtn = document.getElementById('reset-btn');
-
-        let currentTool = 'chatty';
-        let currentFossabotVariant = 'standard';
-
-        function autoRegenerateIfPossible() {
-            if (wordInput && wordInput.value.trim()) {
-                const newRegex = generateRegex(wordInput.value);
-
-                if (newRegex && regexOutput) {
-                    showOutput(newRegex, false);
-                    testCurrentMessage();
-                }
-            }
-        }
-
-        if (toolSelector) {
-            toolSelector.querySelectorAll('.tool-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    toolSelector.querySelectorAll('.tool-btn').forEach(b => {
-                        b.classList.remove('active', 'bg-zinc-100');
-                    });
-
-                    btn.classList.add('active', 'bg-zinc-100');
-                    currentTool = btn.dataset.tool;
-
-                    if (currentTool === 'fossabot') {
-                        fossabotOptions.classList.remove('hidden');
-                        fossabotOptions.classList.add('block');
-                    } else {
-                        fossabotOptions.classList.add('hidden');
-                        fossabotOptions.classList.remove('block');
-                    }
-
-                    autoRegenerateIfPossible();
-                });
-            });
-        }
-
-        if (fossabotVariantContainer) {
-            fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(b => {
-                        b.classList.remove('active', 'bg-zinc-700');
-                    });
-
-                    btn.classList.add('active', 'bg-zinc-700');
-                    currentFossabotVariant = btn.dataset.variant;
-
-                    autoRegenerateIfPossible();
-                });
-            });
-        }
-
-        function generateChattyRegex(word) {
-            if (!word || !word.trim()) return '';
-
-            let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
-
-            if (!w) return '';
-
-            const charMap = {
-                'a': '[a4а]',
-                'b': '[b8]',
-                'c': '[cс]',
-                'd': '[d]',
-                'e': '[e3еэ³€]',
-                'f': '[f]',
-                'g': '[g9]',
-                'h': '[h]',
-                'i': '[i1!і]',
-                'j': '[j]',
-                'k': '[k]',
-                'l': '[l1|]',
-                'm': '[m]',
-                'n': '[n]',
-                'o': '[o0о]',
-                'p': '[p]',
-                'q': '[q]',
-                'r': '[r]',
-                's': '[s52]',
-                't': '[t7+]',
-                'u': '[u]',
-                'v': '[v]',
-                'w': '[w]',
-                'x': '[x]',
-                'y': '[y]',
-                'z': '[z2]'
-            };
-
-            let parts = [];
-
-            for (let char of w) {
-                const alt = charMap[char] || `[${char}]`;
-                parts.push(`(${alt}[\\W_]*?)+`);
-            }
-
-            parts.push(`([s52][\\W_]*?)*?`);
-
-            return 'regi:\\b' + parts.join('') + "\\b'";
-        }
-
-        function generateFossabotRegex(word, variant) {
-            if (!word || !word.trim()) return '';
-
-            let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
-
-            if (!w) return '';
-
-            let pattern = '';
-
-            for (let i = 0; i < w.length; i++) {
-                const char = w[i];
-                let group = char + '+';
-
-                if (char === 's') {
-                    group = 's+';
-                }
-
-                pattern += group + '[\\W_]*';
-            }
-
-            pattern = pattern.slice(0, -6);
-
-            const startBoundary = '(?:^|_|\\b)';
-            const endBoundary = '(?:$|_|\\b)';
-            const full = `${startBoundary}${pattern}${endBoundary}`;
-
-            if (variant === 'standard') return full;
-            if (variant === 'keywords') return `regex:${full}`;
-            if (variant === 'blocked') return full;
-            if (variant === 'negative') return `regex:negative:${full}`;
-
-            return full;
-        }
-
-        function generateRegex(word) {
-            if (currentTool === 'chatty') {
-                return generateChattyRegex(word);
-            }
-
-            if (currentTool === 'fossabot') {
-                return generateFossabotRegex(word, currentFossabotVariant);
-            }
-
-            return '';
-        }
-
-        function showOutput(regexStr, selectText = true) {
-            if (!regexOutput || !outputContainer) return;
-
-            regexOutput.value = regexStr;
-            outputContainer.classList.remove('hidden');
-            outputContainer.classList.add('block');
-
-            if (selectText) {
-                setTimeout(() => {
-                    regexOutput.focus();
-                    regexOutput.select();
-                }, 50);
-            }
-        }
-
-        function generateFromInput(selectText = true) {
-            if (!wordInput) return;
-
-            const regex = generateRegex(wordInput.value);
-
-            if (regex) {
-                showOutput(regex, selectText);
-                testCurrentMessage();
-            }
-        }
-
-        function getPreviewRegexFromOutput(rawOutput) {
-            let raw = rawOutput || '';
-
-            raw = raw.replace(/^regi:/, '');
-            raw = raw.replace(/^regex:negative:/, '');
-            raw = raw.replace(/^regex:/, '');
-
-            if (raw.endsWith("'")) {
-                raw = raw.slice(0, -1);
-            }
-
-            return raw;
-        }
-
-        function testCurrentMessage() {
-            if (!testInput || !testResult || !regexOutput) return;
-
-            const message = testInput.value;
-            const rawOutput = regexOutput.value;
-
-            if (!rawOutput) {
-                testResult.textContent = 'Generate a regex first, then test a message.';
-                testResult.className = 'mt-3 text-xs text-zinc-500';
-                return;
-            }
-
-            if (!message.trim()) {
-                testResult.textContent = 'Type a test message to check if it matches.';
-                testResult.className = 'mt-3 text-xs text-zinc-500';
-                return;
-            }
-
-            try {
-                const previewPattern = getPreviewRegexFromOutput(rawOutput);
-                const testRegex = new RegExp(previewPattern, 'i');
-                const matched = testRegex.test(message);
-
-                if (matched) {
-                    testResult.textContent = 'Match found — this message would be flagged.';
-                    testResult.className = 'mt-3 text-xs text-emerald-400';
-                } else {
-                    testResult.textContent = 'No match — this message would not be flagged.';
-                    testResult.className = 'mt-3 text-xs text-zinc-500';
-                }
-            } catch (err) {
-                testResult.textContent = 'Preview test not available for this exact output format.';
-                testResult.className = 'mt-3 text-xs text-yellow-400';
-            }
-        }
-
-        if (generateBtn && wordInput) {
-            generateBtn.addEventListener('click', () => {
-                generateFromInput(true);
-            });
-
-            wordInput.addEventListener('input', () => {
-                generateFromInput(false);
-            });
-
-            wordInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    generateFromInput(true);
-                }
-            });
-        }
-
-        if (testInput) {
-            testInput.addEventListener('input', testCurrentMessage);
-        }
-
-        document.querySelectorAll('.example-word').forEach(button => {
-            button.addEventListener('click', () => {
-                if (!wordInput) return;
-
-                wordInput.value = button.dataset.word;
-                generateFromInput(true);
-            });
-        });
-
-        if (resetBtn) {
-            resetBtn.addEventListener('click', () => {
-                if (wordInput) wordInput.value = '';
-                if (regexOutput) regexOutput.value = '';
-                if (testInput) testInput.value = '';
-                if (outputContainer) outputContainer.classList.add('hidden');
-
-                if (testResult) {
-                    testResult.textContent = 'Generate a regex first, then test a message.';
-                    testResult.className = 'mt-3 text-xs text-zinc-500';
-                }
-
-                if (wordInput) wordInput.focus();
-            });
-        }
-
-        if (copyBtn && regexOutput) {
-            copyBtn.addEventListener('click', async () => {
-                const text = regexOutput.value;
-
-                if (!text) return;
-
-                const origHTML = copyBtn.innerHTML;
-
-                try {
-                    await navigator.clipboard.writeText(text);
-
-                    copyBtn.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>COPIED!</span>
-                    `;
-
-                    copyBtn.style.backgroundColor = '#166534';
-
-                    setTimeout(() => {
-                        copyBtn.innerHTML = origHTML;
-                        copyBtn.style.backgroundColor = '';
-                    }, 1800);
-                } catch (err) {
-                    regexOutput.select();
-                    document.execCommand('copy');
-
-                    copyBtn.innerHTML = 'COPIED!';
-
-                    setTimeout(() => {
-                        copyBtn.innerHTML = origHTML || 'COPY';
-                    }, 1500);
-                }
-            });
-        }
-    </script>
+        autoRegenerateIfPossible();
+      });
+    });
+  }
+
+  if (fossabotVariantContainer) {
+    fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFossabotVariant = btn.dataset.variant;
+        autoRegenerateIfPossible();
+      });
+    });
+  }
+
+  function generateChattyRegex(word) {
+    if (!word || !word.trim()) return '';
+
+    let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
+    if (!w) return '';
+
+    const charMap = {
+      'a': '[a4а]',
+      'b': '[b8]',
+      'c': '[cс]',
+      'd': '[d]',
+      'e': '[e3еэ³€]',
+      'f': '[f]',
+      'g': '[g9]',
+      'h': '[h]',
+      'i': '[i1!і]',
+      'j': '[j]',
+      'k': '[k]',
+      'l': '[l1|]',
+      'm': '[m]',
+      'n': '[n]',
+      'o': '[o0о]',
+      'p': '[p]',
+      'q': '[q]',
+      'r': '[r]',
+      's': '[s52]',
+      't': '[t7+]',
+      'u': '[u]',
+      'v': '[v]',
+      'w': '[w]',
+      'x': '[x]',
+      'y': '[y]',
+      'z': '[z2]'
+    };
+
+    const parts = [];
+    for (const char of w) {
+      const alt = charMap[char] || `[${char}]`;
+      parts.push(`(${alt}[\\W_]*?)+`);
+    }
+
+    parts.push(`([s52][\\W_]*?)*?`);
+    return 'regi:\\b' + parts.join('') + "\\b'";
+  }
+
+  function generateFossabotRegex(word, variant) {
+    if (!word || !word.trim()) return '';
+
+    let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
+    if (!w) return '';
+
+    let pattern = '';
+    for (let i = 0; i < w.length; i++) {
+      const char = w[i];
+      let group = char + '+';
+      if (char === 's') group = 's+';
+      pattern += group + '[\\W_]*';
+    }
+
+    pattern = pattern.slice(0, -6);
+
+    const startBoundary = '(?:^|_|\\b)';
+    const endBoundary = '(?:$|_|\\b)';
+    const full = `${startBoundary}${pattern}${endBoundary}`;
+
+    if (variant === 'standard') return full;
+    if (variant === 'keywords') return `regex:${full}`;
+    if (variant === 'blocked') return full;
+    if (variant === 'negative') return `regex:negative:${full}`;
+
+    return full;
+  }
+
+  function generateRegex(word) {
+    if (currentTool === 'chatty') return generateChattyRegex(word);
+    if (currentTool === 'fossabot') return generateFossabotRegex(word, currentFossabotVariant);
+    return '';
+  }
+
+  function showOutput(regexStr, selectText = true) {
+    if (!regexOutput || !outputContainer) return;
+
+    regexOutput.value = regexStr;
+    outputContainer.classList.remove('hidden');
+
+    if (selectText) {
+      setTimeout(() => {
+        regexOutput.focus();
+        regexOutput.select();
+      }, 50);
+    }
+  }
+
+  function generateFromInput(selectText = true) {
+    if (!wordInput) return;
+    const regex = generateRegex(wordInput.value);
+
+    if (regex) {
+      showOutput(regex, selectText);
+      testCurrentMessage();
+    }
+  }
+
+  function getPreviewRegexFromOutput(rawOutput) {
+    let raw = rawOutput || '';
+    raw = raw.replace(/^regi:/, '');
+    raw = raw.replace(/^regex:negative:/, '');
+    raw = raw.replace(/^regex:/, '');
+
+    if (raw.endsWith("'")) {
+      raw = raw.slice(0, -1);
+    }
+
+    return raw;
+  }
+
+  function testCurrentMessage() {
+    if (!testInput || !testResult || !regexOutput) return;
+
+    const message = testInput.value;
+    const rawOutput = regexOutput.value;
+
+    testResult.className = 'test-result';
+
+    if (!rawOutput) {
+      testResult.textContent = 'Generate a regex first, then test a message.';
+      return;
+    }
+
+    if (!message.trim()) {
+      testResult.textContent = 'Type a test message to check if it matches.';
+      return;
+    }
+
+    try {
+      const previewPattern = getPreviewRegexFromOutput(rawOutput);
+      const testRegex = new RegExp(previewPattern, 'i');
+      const matched = testRegex.test(message);
+
+      if (matched) {
+        testResult.textContent = 'Match found — this message would be flagged.';
+        testResult.classList.add('match');
+      } else {
+        testResult.textContent = 'No match — this message would not be flagged.';
+      }
+    } catch (err) {
+      testResult.textContent = 'Preview test not available for this exact output format.';
+      testResult.classList.add('warn');
+    }
+  }
+
+  if (generateBtn && wordInput) {
+    generateBtn.addEventListener('click', () => generateFromInput(true));
+    wordInput.addEventListener('input', () => generateFromInput(false));
+    wordInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') generateFromInput(true);
+    });
+  }
+
+  if (testInput) {
+    testInput.addEventListener('input', testCurrentMessage);
+  }
+
+  document.querySelectorAll('.example-word').forEach(button => {
+    button.addEventListener('click', () => {
+      if (!wordInput) return;
+      wordInput.value = button.dataset.word;
+      generateFromInput(true);
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      if (wordInput) wordInput.value = '';
+      if (regexOutput) regexOutput.value = '';
+      if (testInput) testInput.value = '';
+      if (outputContainer) outputContainer.classList.add('hidden');
+      if (testResult) {
+        testResult.textContent = 'Generate a regex first, then test a message.';
+        testResult.className = 'test-result';
+      }
+      if (wordInput) wordInput.focus();
+    });
+  }
+
+  if (copyBtn && regexOutput) {
+    copyBtn.addEventListener('click', async () => {
+      const text = regexOutput.value;
+      if (!text) return;
+
+      const originalText = copyBtn.textContent;
+
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => copyBtn.textContent = originalText, 1500);
+      } catch (err) {
+        regexOutput.select();
+        document.execCommand('copy');
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => copyBtn.textContent = originalText, 1500);
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
