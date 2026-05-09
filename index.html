@@ -1,198 +1,124 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>TUK7 • Twitch Mod</title>
 
- 
-
     <link rel="icon" href="logo.png" type="image/png">
-
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Jersey+10&display=swap');
 
-     
-
         .gif-text {
-
             background-image: url("https://cdn.7tv.app/paint/01K8MA8QWMWM1C3VFZ68H36WPH/layer/01KDP7PDDQV5X0DM0SD2KQN9F8/4x.webp");
-
             background-size: cover;
-
             background-position: center;
-
             background-repeat: no-repeat;
-
             color: transparent;
-
             -webkit-text-fill-color: transparent;
-
             background-clip: text;
-
             -webkit-background-clip: text;
-
             display: inline-block;
-
         }
 
         .o-replace {
-
             width: auto;
-
             vertical-align: middle;
-
         }
 
         html {
-
             scroll-behavior: smooth;
-
         }
 
         html, body {
-
             min-height: 100%;
-
         }
 
         body {
-
             background: #050505;
-
         }
 
         .tilt-wrapper {
-
             perspective: 1400px;
-
             width: 100%;
-
             height: 100%;
-
             display: flex;
-
             align-items: center;
-
             justify-content: center;
-
         }
 
         .tilt-content {
-
             transition: transform 0.12s cubic-bezier(0.25, 0.1, 0.25, 1);
-
             transform-style: preserve-3d;
-
         }
 
         .social-icons {
-
             position: fixed;
-
             top: 24px;
-
             right: 24px;
-
             z-index: 50;
-
             display: flex;
-
             gap: 16px;
-
         }
 
         @media (min-width: 768px) {
+            .social-icons {
+                top: 32px;
+                right: 32px;
+                gap: 18px;
+            }
 
-            .social-icons { top: 32px; right: 32px; gap: 18px; }
-
-            .social-icons img { width: 26px; height: 26px; }
-
+            .social-icons img {
+                width: 26px;
+                height: 26px;
+            }
         }
 
         .social-icons img {
-
             width: 22px;
-
             height: 22px;
-
             filter: brightness(0.85);
-
             transition: all 0.2s ease;
-
         }
 
         .social-icons a:hover img {
-
             filter: brightness(1);
-
             transform: scale(1.15);
-
         }
 
-
-
-        /* === TOP LEFT BUTTONS GROUP (nur noch Mod Button) === */
-
         .top-left-group {
-
             position: fixed;
-
             top: 17px;
-
             left: 24px;
-
             z-index: 50;
-
             display: flex;
-
             gap: 14px;
-
         }
 
         @media (min-width: 768px) {
-
-            .top-left-group { 
-
-                top: 27px; 
-
-                left: 32px; 
-
-                gap: 16px; 
-
+            .top-left-group {
+                top: 27px;
+                left: 32px;
+                gap: 16px;
             }
-
         }
 
         .mod-button-small {
-
             transition: all 0.25s cubic-bezier(0.23, 1, 0.32, 1);
-
         }
 
         .mod-button-small:hover {
-
             transform: scale(1.18);
-
         }
 
-        .tool-btn.active, .variant-btn.active {
-
+        .tool-btn.active,
+        .variant-btn.active {
             background-color: #f4f4f5 !important;
-
             color: #111827 !important;
-
         }
 
-        /* === TOP CENTER NAV — CLEAN & SUBTLE === */
         .top-center-nav {
             position: fixed;
             top: 16px;
@@ -209,6 +135,7 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
         }
+
         .top-center-nav a {
             font-family: 'Jersey 10', Inter, sans-serif;
             display: inline-flex;
@@ -224,17 +151,26 @@
             text-transform: uppercase;
             transition: color 0.18s ease, background-color 0.18s ease;
         }
+
         .top-center-nav a:hover {
             color: rgba(255, 255, 255, 0.9);
             background: rgba(255, 255, 255, 0.045);
         }
+
         .top-center-nav a:active {
             background: rgba(255, 255, 255, 0.07);
         }
+
         @media (min-width: 768px) {
-            .top-center-nav { top: 24px; }
-            .top-center-nav a { padding: 10px 17px; }
+            .top-center-nav {
+                top: 24px;
+            }
+
+            .top-center-nav a {
+                padding: 10px 17px;
+            }
         }
+
         @media (max-width: 620px) {
             .top-center-nav {
                 top: 16px;
@@ -242,7 +178,11 @@
                 overflow-x: auto;
                 scrollbar-width: none;
             }
-            .top-center-nav::-webkit-scrollbar { display: none; }
+
+            .top-center-nav::-webkit-scrollbar {
+                display: none;
+            }
+
             .top-center-nav a {
                 padding: 9px 10px;
                 font-size: 10.5px;
@@ -250,32 +190,25 @@
                 white-space: nowrap;
             }
         }
-        /* === SCROLL INDICATOR FADE === */
+
         .scroll-indicator {
             transition: opacity 0.32s ease, transform 0.32s ease, visibility 0.32s ease;
             will-change: opacity, transform;
         }
+
         .scroll-indicator.is-faded {
             opacity: 0;
             transform: translateX(-50%) translateY(10px);
             visibility: hidden;
             pointer-events: none;
         }
-
-
-
-
-
     </style>
-
 </head>
 
 <body class="bg-[#050505] text-white font-sans">
 
     <!-- ORBS CANVAS -->
-
     <canvas id="orb-canvas" class="fixed inset-0 pointer-events-none z-[-1]"></canvas>
-
 
     <!-- TOP CENTER NAV -->
     <nav class="top-center-nav" aria-label="Main navigation">
@@ -284,103 +217,65 @@
         <a href="#regex-generator">Mod Tools</a>
     </nav>
 
-
-
     <!-- SOCIAL ICONS -->
-
     <div class="social-icons">
-
-        <a href="https://twitch.tv/tuk7" target="_blank"><img src="twitch.png" alt="Twitch"></a>
-
-        <a href="https://x.com/tukk7_" target="_blank"><img src="twitter.png" alt="Twitter"></a>
-
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="discord.png" alt="Discord"></a>
-
-    </div>
-
-
-
-    <!-- TOP LEFT BUTTONS GROUP (nur noch Mod Button) -->
-
-    <div class="top-left-group">
-
-        <!-- Mod Button -->
-
-        <a href="mods" class="mod-button-small">
-
-            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
-
+        <a href="https://twitch.tv/tuk7" target="_blank">
+            <img src="twitch.png" alt="Twitch">
         </a>
 
+        <a href="https://x.com/tukk7_" target="_blank">
+            <img src="twitter.png" alt="Twitter">
+        </a>
+
+        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank">
+            <img src="discord.png" alt="Discord">
+        </a>
     </div>
 
-
+    <!-- TOP LEFT BUTTONS GROUP -->
+    <div class="top-left-group">
+        <a href="mods" class="mod-button-small">
+            <img src="mod.png" alt="My Moderator Roles" class="w-9 h-auto">
+        </a>
+    </div>
 
     <!-- HERO -->
-
     <section id="about" class="h-screen flex flex-col items-center justify-center px-6 text-center relative">
-
         <div class="tilt-wrapper">
-
             <div id="tilt-content" class="tilt-content">
-
                 <div class="-mt-8 sm:-mt-12 md:-mt-16">
-
                     <h1 class="gif-text text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.05em] leading-none">
-
                         TUK7
-
                     </h1>
 
-                 
-
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-1 flex-wrap">
-
                         TWITCH
 
                         <span class="flex items-center whitespace-nowrap">
-
                             C
-
                             <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
-
                             MMUNITY
-
                         </span>
 
                         MODERATOR
-
                     </p>
-
                 </div>
-
             </div>
-
         </div>
-
-
 
         <!-- SCROLL DOWN INDICATOR -->
-
         <div id="scroll-indicator" class="scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center z-10">
-
-            <div class="text-[10px] uppercase tracking-[2px] text-zinc-500 mb-2">Scroll for more</div>
+            <div class="text-[10px] uppercase tracking-[2px] text-zinc-500 mb-2">
+                Scroll for more
+            </div>
 
             <button id="scroll-arrow" class="group flex items-center justify-center w-11 h-11 rounded-full border border-zinc-700/80 bg-zinc-950/70 backdrop-blur-sm hover:border-zinc-400 hover:bg-zinc-900 transition-all duration-200 cursor-pointer">
-
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-zinc-400 group-hover:text-white group-hover:translate-y-0.5 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
-
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6" />
-
                 </svg>
-
             </button>
-
         </div>
-
     </section>
-
-
 
     <!-- EVENT COORDINATION SECTION -->
     <section id="event-coordination" class="min-h-[70dvh] flex items-center justify-center px-6 py-16">
@@ -388,23 +283,39 @@
             <div class="mb-8 flex justify-center">
                 <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer"
                    class="group relative block w-40 sm:w-48 md:w-56 transition-all duration-300 hover:scale-[1.03]">
-                    <video class="w-full h-auto object-contain rounded-3xl border border-white/20 bg-zinc-950/40 p-3 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 group-hover:border-white/40 group-hover:ring-white/20" autoplay muted loop playsinline preload="metadata" aria-label="Colors Cup Logo Animation">
-                        <source src="cup.gif" type="video/mp4">
-                    </video>
+
+                    <img
+                        src="cup.gif"
+                        alt="Colors Cup Logo Animation"
+                        class="w-full h-auto object-contain rounded-3xl border border-white/20 bg-zinc-950/40 p-3 shadow-2xl shadow-black/40 ring-1 ring-white/10 transition-all duration-300 group-hover:border-white/40 group-hover:ring-white/20"
+                    >
+
                 </a>
             </div>
-            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-5 ring-1 ring-zinc-400/30">EVENT WORK</div>
-            <h2 class="text-4xl sm:text-5xl font-black tracking-[-1.5px]">Event Coordinator</h2>
+
+            <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-5 ring-1 ring-zinc-400/30">
+                EVENT WORK
+            </div>
+
+            <h2 class="text-4xl sm:text-5xl font-black tracking-[-1.5px]">
+                Event Coordinator
+            </h2>
+
             <p class="mt-5 text-lg sm:text-xl text-zinc-400 leading-relaxed max-w-2xl mx-auto">
                 Beyond Twitch moderation, I support community-driven esports events as an Event Coordinator.
-                I am currently helping with <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer" class="text-white font-semibold underline underline-offset-4 hover:text-zinc-300 transition">Colors Cup</a>,
+                I am currently helping with
+                <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer" class="text-white font-semibold underline underline-offset-4 hover:text-zinc-300 transition">
+                    Colors Cup
+                </a>,
                 an inclusive esports event in Wiesbaden focused on fair play, respect and community.
             </p>
+
             <div class="mt-8 flex flex-wrap justify-center gap-3">
                 <a href="https://www.colors-cup.de/" target="_blank" rel="noopener noreferrer"
                    class="px-6 py-3 bg-white text-black font-bold rounded-2xl text-sm tracking-wider hover:bg-zinc-200 active:scale-[0.985] transition-all shadow-lg">
                     VISIT COLORS CUP
                 </a>
+
                 <a href="#regex-generator"
                    class="px-6 py-3 bg-zinc-900 text-white font-bold rounded-2xl text-sm tracking-wider border border-zinc-700 hover:bg-zinc-800 active:scale-[0.985] transition-all">
                     MOD TOOLS
@@ -413,307 +324,263 @@
         </div>
     </section>
 
-
     <!-- REGEX GENERATOR SECTION -->
-
     <section id="regex-generator" class="flex items-center justify-center px-6 pt-16 pb-10">
-
         <div class="max-w-[620px] w-full">
-
             <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-4 ring-1 ring-zinc-400/30">
+                    CHAT MOD TOOLS
+                </div>
 
-                <div class="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-zinc-900 text-xs font-medium tracking-widest text-zinc-400 mb-4 ring-1 ring-zinc-400/30">CHAT MOD TOOLS</div>
+                <h2 class="text-5xl font-black tracking-[-1.5px]">
+                    Regex Generator
+                </h2>
 
-                <h2 class="text-5xl font-black tracking-[-1.5px]">Regex Generator</h2>
-
-                <p class="mt-4 text-lg text-zinc-400 max-w-md mx-auto">Instantly create advanced regex patterns for blocking words with leetspeak, symbols &amp; variations.<br>Copy &amp; paste directly into your chat filter (e.g. for Chatty & Fossabot).</p>
-
+                <p class="mt-4 text-lg text-zinc-400 max-w-md mx-auto">
+                    Instantly create advanced regex patterns for blocking words with leetspeak, symbols &amp; variations.
+                    <br>
+                    Copy &amp; paste directly into your chat filter (e.g. for Chatty & Fossabot).
+                </p>
             </div>
 
             <div class="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl p-9 border border-zinc-700 relative overflow-hidden">
 
                 <!-- Tool Selector -->
-
                 <div class="mb-6">
-
                     <div class="mb-2">
-
-                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">SELECT TOOL</label>
-
+                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">
+                            SELECT TOOL
+                        </label>
                     </div>
 
                     <div class="flex p-1 bg-zinc-950 rounded-3xl border border-zinc-800" id="tool-selector">
+                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">
+                            Chatty Regex
+                        </button>
 
-                        <button data-tool="chatty" class="tool-btn active flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white shadow-inner transition-all">Chatty Regex</button>
-
-                        <button data-tool="fossabot" class="tool-btn flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">Fossabot Regex</button>
-
+                        <button data-tool="fossabot" class="tool-btn flex-1 px-6 py-2.5 text-sm font-bold rounded-2xl bg-zinc-900 hover:bg-zinc-800 text-white transition-all">
+                            Fossabot Regex
+                        </button>
                     </div>
-
                 </div>
 
                 <!-- Fossabot Variants -->
-
                 <div id="fossabot-options" class="hidden mb-6">
-
-                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">FOSSABOT MODE</label>
+                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
+                        FOSSABOT MODE
+                    </label>
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm" id="fossabot-variant">
+                        <button data-variant="standard" class="variant-btn active px-4 py-2 rounded-2xl bg-zinc-700 text-white text-xs font-medium transition">
+                            Standard
+                        </button>
 
-                        <button data-variant="standard" class="variant-btn active px-4 py-2 rounded-2xl bg-zinc-700 text-white text-xs font-medium transition">Standard</button>
+                        <button data-variant="keywords" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
+                            Keywords
+                        </button>
 
-                        <button data-variant="keywords" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Keywords</button>
+                        <button data-variant="blocked" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
+                            Blocked Terms
+                        </button>
 
-                        <button data-variant="blocked" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Blocked Terms</button>
-
-                        <button data-variant="negative" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">Negative</button>
-
+                        <button data-variant="negative" class="variant-btn px-4 py-2 rounded-2xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-medium transition">
+                            Negative
+                        </button>
                     </div>
-
                 </div>
 
                 <!-- Input -->
-
                 <div class="mb-6">
-
-                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">WORD TO BLOCK</label>
+                    <label class="block text-xs font-semibold tracking-widest text-zinc-400 mb-2">
+                        WORD TO BLOCK
+                    </label>
 
                     <div class="flex gap-3">
-
-                        <input id="word-input" type="text" 
-
+                        <input id="word-input" type="text"
                                class="flex-1 bg-zinc-950 border border-zinc-700 focus:border-zinc-400 rounded-2xl px-6 py-3.5 text-white placeholder-zinc-500 text-lg font-light focus:outline-none transition"
-
                                placeholder="asshole, fuck, bitch...">
 
                         <button id="generate-btn"
-
                                 class="px-8 py-3.5 bg-gradient-to-r from-white to-zinc-100 hover:from-zinc-100 hover:to-white active:scale-[0.985] transition-all text-black font-bold rounded-2xl text-sm tracking-wider flex items-center gap-2 shadow-lg">
-
                             <span>GENERATE</span>
-
                             <span class="text-xs opacity-60"></span>
-
                         </button>
-
                     </div>
-
                 </div>
 
                 <!-- Output -->
-
                 <div id="output-container" class="hidden mt-2">
-
                     <div class="flex items-center justify-between mb-2">
-
-                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">YOUR REGEX (ready to copy)</label>
-
+                        <label class="block text-xs font-semibold tracking-widest text-zinc-400">
+                            YOUR REGEX (ready to copy)
+                        </label>
                     </div>
 
                     <div class="relative group">
-
                         <textarea id="regex-output" readonly rows="3"
-
                                   class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-4 text-sm font-mono text-emerald-400 leading-relaxed resize-none focus:outline-none focus:border-zinc-400"></textarea>
 
                         <button id="copy-btn"
-
                                 class="absolute top-3 right-3 px-4 py-2 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 transition text-xs font-medium rounded-xl flex items-center gap-1.5 text-white shadow">
-
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
-
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8 16v-4m4 4v4m4-8v8m4-4v-4m-16 8h16" />
-
                             </svg>
 
                             <span>COPY</span>
-
                         </button>
-
                     </div>
 
-                    <p class="text-[10px] text-zinc-500 mt-3 px-1">Matches the word + common leetspeak variations. Format changes depending on selected tool.</p>
-
+                    <p class="text-[10px] text-zinc-500 mt-3 px-1">
+                        Matches the word + common leetspeak variations. Format changes depending on selected tool.
+                    </p>
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
-
-
     <!-- FOOTER -->
-
     <footer class="text-center text-[10px] text-zinc-500 py-5 border-t border-zinc-900">
-
         © 2026 TUK | All rights reserved. • Made for the community
-
     </footer>
 
-
-
     <script>
-
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
-
-        
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        };
 
         // CLEAN URL REDIRECT
-
         if (window.location.pathname.endsWith('/index.html')) {
-
             window.location.replace(window.location.origin + '/');
-
         }
-
-
 
         // 3D TILT
-
         const tiltContent = document.getElementById('tilt-content');
-
         const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
 
-        if (!isMobile) {
-
+        if (!isMobile && tiltContent) {
             document.addEventListener('mousemove', (e) => {
-
                 const x = (window.innerWidth / 2 - e.clientX) / 55;
-
                 const y = (window.innerHeight / 2 - e.clientY) / 55;
-
                 tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-
             });
 
-            document.addEventListener('mouseleave', () => tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`);
-
+            document.addEventListener('mouseleave', () => {
+                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
         }
 
-
-
         // ORBS
-
         const canvas = document.getElementById('orb-canvas');
-
         const ctx = canvas.getContext('2d');
 
-        let orbs = [], width, height, isMobileDevice = isMobile;
+        let orbs = [];
+        let width;
+        let height;
+        let isMobileDevice = isMobile;
 
         class Orb {
-
-            constructor() { this.reset(); }
+            constructor() {
+                this.reset();
+            }
 
             reset() {
-
                 this.x = Math.random() * width;
-
                 this.y = Math.random() * height;
-
                 this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
-
                 this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
-
                 this.vx = (Math.random() - 0.5) * this.speed;
-
                 this.vy = (Math.random() - 0.5) * this.speed;
-
                 this.hue = 200 + Math.random() * 40;
-
                 this.opacity = Math.random() * 0.28 + 0.13;
-
                 this.phase = Math.random() * Math.PI * 2;
-
             }
 
             update() {
-
                 this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
-
                 this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
 
                 if (this.x < -60) this.x = width + 60;
-
                 if (this.x > width + 60) this.x = -60;
-
                 if (this.y < -60) this.y = height + 60;
-
                 if (this.y > height + 60) this.y = -60;
-
             }
 
             draw() {
-
                 ctx.save();
 
                 const layers = isMobileDevice
-
-                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
-
-                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
+                    ? [
+                        { size: this.radius * 3.8, alpha: this.opacity * 0.07 },
+                        { size: this.radius * 2.6, alpha: this.opacity * 0.12 },
+                        { size: this.radius * 1.6, alpha: this.opacity * 0.20 },
+                        { size: this.radius * 0.55, alpha: this.opacity * 0.68 }
+                    ]
+                    : [
+                        { size: this.radius * 4.2, alpha: this.opacity * 0.06 },
+                        { size: this.radius * 3.1, alpha: this.opacity * 0.09 },
+                        { size: this.radius * 2.2, alpha: this.opacity * 0.15 },
+                        { size: this.radius * 1.4, alpha: this.opacity * 0.22 },
+                        { size: this.radius * 0.55, alpha: this.opacity * 0.65 }
+                    ];
 
                 for (let layer of layers) {
-
                     ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
-
                     ctx.beginPath();
-
                     ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
-
                     ctx.fill();
-
                 }
 
                 ctx.restore();
-
             }
-
         }
 
         function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
 
-            width = window.innerWidth; height = window.innerHeight;
-
-            canvas.width = width; canvas.height = height;
+            canvas.width = width;
+            canvas.height = height;
 
             isMobileDevice = window.innerWidth < 768;
-
         }
 
         function initOrbs() {
-
             orbs = [];
 
             const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
 
-            for (let i = 0; i < count; i++) orbs.push(new Orb());
-
+            for (let i = 0; i < count; i++) {
+                orbs.push(new Orb());
+            }
         }
 
         function animate() {
-
             ctx.clearRect(0, 0, width, height);
 
-            for (let orb of orbs) { orb.update(); orb.draw(); }
+            for (let orb of orbs) {
+                orb.update();
+                orb.draw();
+            }
 
             requestAnimationFrame(animate);
-
         }
 
-        window.addEventListener('resize', () => { resize(); initOrbs(); });
+        window.addEventListener('resize', () => {
+            resize();
+            initOrbs();
+        });
 
         resize();
-
         initOrbs();
-
         animate();
 
-
-
-        // === SCROLL ARROW + FADE ON SCROLL ===
-
+        // SCROLL ARROW + FADE ON SCROLL
         const scrollArrow = document.getElementById('scroll-arrow');
         const scrollIndicator = document.getElementById('scroll-indicator');
 
@@ -726,129 +593,82 @@
         updateScrollIndicator();
 
         if (scrollArrow) {
-
             scrollArrow.addEventListener('click', () => {
-
                 const target = document.getElementById('regex-generator');
 
-                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
-
         }
 
-
-
-        // === REGEX GENERATOR (Full Version) ===
-
+        // REGEX GENERATOR
         const generateBtn = document.getElementById('generate-btn');
-
         const wordInput = document.getElementById('word-input');
-
         const outputContainer = document.getElementById('output-container');
-
         const regexOutput = document.getElementById('regex-output');
-
         const copyBtn = document.getElementById('copy-btn');
-
         const toolSelector = document.getElementById('tool-selector');
-
         const fossabotOptions = document.getElementById('fossabot-options');
-
         const fossabotVariantContainer = document.getElementById('fossabot-variant');
 
-
-
         let currentTool = 'chatty';
-
         let currentFossabotVariant = 'standard';
 
-
-
         function autoRegenerateIfPossible() {
-
             if (outputContainer && !outputContainer.classList.contains('hidden') && wordInput && wordInput.value.trim()) {
-
                 const newRegex = generateRegex(wordInput.value);
 
                 if (newRegex && regexOutput) {
-
                     regexOutput.value = newRegex;
-
                     regexOutput.focus();
-
                     regexOutput.select();
-
                 }
-
             }
-
         }
 
-
-
         if (toolSelector) {
-
             toolSelector.querySelectorAll('.tool-btn').forEach(btn => {
-
                 btn.addEventListener('click', () => {
-
-                    toolSelector.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active', 'bg-zinc-100'));
+                    toolSelector.querySelectorAll('.tool-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-zinc-100');
+                    });
 
                     btn.classList.add('active', 'bg-zinc-100');
-
                     currentTool = btn.dataset.tool;
 
-                    
-
                     if (currentTool === 'fossabot') {
-
                         fossabotOptions.classList.remove('hidden');
-
                         fossabotOptions.classList.add('block');
-
                     } else {
-
                         fossabotOptions.classList.add('hidden');
-
                         fossabotOptions.classList.remove('block');
-
                     }
 
                     autoRegenerateIfPossible();
-
                 });
-
             });
-
         }
 
-
-
         if (fossabotVariantContainer) {
-
             fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(btn => {
-
                 btn.addEventListener('click', () => {
-
-                    fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active', 'bg-zinc-700'));
+                    fossabotVariantContainer.querySelectorAll('.variant-btn').forEach(b => {
+                        b.classList.remove('active', 'bg-zinc-700');
+                    });
 
                     btn.classList.add('active', 'bg-zinc-700');
-
                     currentFossabotVariant = btn.dataset.variant;
 
                     autoRegenerateIfPossible();
-
                 });
-
             });
-
         }
 
-
-
         function generateChattyRegex(word) {
-
             if (!word || !word.trim()) return '';
 
             let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
@@ -856,43 +676,47 @@
             if (!w) return '';
 
             const charMap = {
-
-                'a': '[a4а]', 'b': '[b8]', 'c': '[cс]', 'd': '[d]',
-
-                'e': '[e3еэ³€]', 'f': '[f]', 'g': '[g9]', 'h': '[h]',
-
-                'i': '[i1!і]', 'j': '[j]', 'k': '[k]', 'l': '[l1|]',
-
-                'm': '[m]', 'n': '[n]', 'o': '[o0о]', 'p': '[p]',
-
-                'q': '[q]', 'r': '[r]', 's': '[s52]', 't': '[t7+]', 
-
-                'u': '[u]', 'v': '[v]', 'w': '[w]', 'x': '[x]',
-
-                'y': '[y]', 'z': '[z2]'
-
+                'a': '[a4а]',
+                'b': '[b8]',
+                'c': '[cс]',
+                'd': '[d]',
+                'e': '[e3еэ³€]',
+                'f': '[f]',
+                'g': '[g9]',
+                'h': '[h]',
+                'i': '[i1!і]',
+                'j': '[j]',
+                'k': '[k]',
+                'l': '[l1|]',
+                'm': '[m]',
+                'n': '[n]',
+                'o': '[o0о]',
+                'p': '[p]',
+                'q': '[q]',
+                'r': '[r]',
+                's': '[s52]',
+                't': '[t7+]',
+                'u': '[u]',
+                'v': '[v]',
+                'w': '[w]',
+                'x': '[x]',
+                'y': '[y]',
+                'z': '[z2]'
             };
 
             let parts = [];
 
             for (let char of w) {
-
                 const alt = charMap[char] || `[${char}]`;
-
                 parts.push(`(${alt}[\\W_]*?)+`);
-
             }
 
             parts.push(`([s52][\\W_]*?)*?`);
 
             return 'regi:\\b' + parts.join('') + "\\b'";
-
         }
 
-
-
         function generateFossabotRegex(word, variant) {
-
             if (!word || !word.trim()) return '';
 
             let w = word.trim().toLowerCase().replace(/[^a-z]/g, '');
@@ -902,157 +726,113 @@
             let pattern = '';
 
             for (let i = 0; i < w.length; i++) {
-
                 const char = w[i];
-
                 let group = char + '+';
 
-                if (char === 's') group = 's+';
+                if (char === 's') {
+                    group = 's+';
+                }
 
                 pattern += group + '[\\W_]*';
-
             }
 
             pattern = pattern.slice(0, -6);
 
-            const startBoundary = '(?:^|_|\b)';
-
-            const endBoundary = '(?:$|_|\b)';
-
+            const startBoundary = '(?:^|_|\\b)';
+            const endBoundary = '(?:$|_|\\b)';
             const full = `${startBoundary}${pattern}${endBoundary}`;
 
             if (variant === 'standard') return full;
-
             if (variant === 'keywords') return `regex:${full}`;
-
             if (variant === 'blocked') return full;
-
             if (variant === 'negative') return `regex:negative:${full}`;
 
             return full;
-
         }
-
-
 
         function generateRegex(word) {
+            if (currentTool === 'chatty') {
+                return generateChattyRegex(word);
+            }
 
-            if (currentTool === 'chatty') return generateChattyRegex(word);
-
-            if (currentTool === 'fossabot') return generateFossabotRegex(word, currentFossabotVariant);
+            if (currentTool === 'fossabot') {
+                return generateFossabotRegex(word, currentFossabotVariant);
+            }
 
             return '';
-
         }
 
-
-
         function showOutput(regexStr) {
-
             if (!regexOutput || !outputContainer) return;
 
             regexOutput.value = regexStr;
-
             outputContainer.classList.remove('hidden');
-
             outputContainer.classList.add('block');
 
             setTimeout(() => {
-
                 regexOutput.focus();
-
                 regexOutput.select();
-
             }, 50);
-
         }
 
-
-
         if (generateBtn && wordInput) {
-
             generateBtn.addEventListener('click', () => {
-
                 const val = wordInput.value;
-
                 const regex = generateRegex(val);
 
-                if (regex) showOutput(regex);
-
+                if (regex) {
+                    showOutput(regex);
+                }
             });
 
             wordInput.addEventListener('keypress', function(e) {
-
                 if (e.key === 'Enter') {
-
                     const regex = generateRegex(wordInput.value);
 
-                    if (regex) showOutput(regex);
-
+                    if (regex) {
+                        showOutput(regex);
+                    }
                 }
-
             });
-
         }
 
-
-
         if (copyBtn && regexOutput) {
-
             copyBtn.addEventListener('click', async () => {
-
                 const text = regexOutput.value;
 
                 if (!text) return;
 
-                try {
+                const origHTML = copyBtn.innerHTML;
 
+                try {
                     await navigator.clipboard.writeText(text);
 
-                    const origHTML = copyBtn.innerHTML;
-
                     copyBtn.innerHTML = `
-
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
-
                             <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-
                         </svg>
-
                         <span>COPIED!</span>
-
                     `;
 
                     copyBtn.style.backgroundColor = '#166534';
 
                     setTimeout(() => {
-
                         copyBtn.innerHTML = origHTML;
-
                         copyBtn.style.backgroundColor = '';
-
                     }, 1800);
-
                 } catch (err) {
-
                     regexOutput.select();
-
                     document.execCommand('copy');
 
                     copyBtn.innerHTML = 'COPIED!';
 
-                    setTimeout(() => copyBtn.innerHTML = origHTML || 'COPY', 1500);
-
+                    setTimeout(() => {
+                        copyBtn.innerHTML = origHTML || 'COPY';
+                    }, 1500);
                 }
-
             });
-
         }
-
-
-
     </script>
 
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9df5e5c5adb3f807',t:'MTc3NDAyMjA4OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-
+</body>
 </html>
