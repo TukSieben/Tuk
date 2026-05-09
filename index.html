@@ -253,13 +253,15 @@
                     </h1>
 
                     <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-2 flex-wrap">
-                        TWITCH
+                        <span>Twitch</span>
 
                         <span class="flex items-center whitespace-nowrap">
                             M
-                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="O">
-                            DERATOR
+                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="o">
+                            derator
                         </span>
+
+                        <span>&amp; Event Coordinator</span>
                     </p>
                 </div>
             </div>
@@ -499,13 +501,24 @@
 
         if (!isMobile && tiltContent) {
             document.addEventListener('mousemove', (e) => {
-                const x = (window.innerWidth / 2 - e.clientX) / 55;
-                const y = (window.innerHeight / 2 - e.clientY) / 55;
-                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+                const rect = tiltContent.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const maxDistance = 520;
+                const distanceX = e.clientX - centerX;
+                const distanceY = e.clientY - centerY;
+                const distance = Math.hypot(distanceX, distanceY);
+                const strength = Math.max(0.35, 1 - Math.min(distance, maxDistance) / maxDistance);
+                const rotateY = (distanceX / rect.width) * 30 * strength;
+                const rotateX = -(distanceY / rect.height) * 24 * strength;
+                const moveX = (distanceX / rect.width) * 18 * strength;
+                const moveY = (distanceY / rect.height) * 14 * strength;
+
+                tiltContent.style.transform = `translate3d(${moveX}px, ${moveY}px, 55px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.045)`;
             });
 
             document.addEventListener('mouseleave', () => {
-                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                tiltContent.style.transform = `translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) scale(1)`;
             });
         }
 
