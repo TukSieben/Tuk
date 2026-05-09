@@ -27,9 +27,16 @@
             text-transform: uppercase;
         }
 
+        .hero-subtitle {
+            line-height: 1.2;
+        }
+
         .o-replace {
             width: auto;
-            vertical-align: middle;
+            height: 0.9em;
+            display: inline-block;
+            vertical-align: -0.08em;
+            margin: 0 0.03em;
         }
 
         html {
@@ -252,16 +259,8 @@
                         TUK7
                     </h1>
 
-                    <p class="mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white flex items-center justify-center gap-x-2 flex-wrap">
-                        <span>Twitch</span>
-
-                        <span class="flex items-center whitespace-nowrap">
-                            M
-                            <img src="o.png" class="o-replace h-[22px] sm:h-[26px] md:h-[1.3em] mx-0.5" alt="o">
-                            derator
-                        </span>
-
-                        <span>&amp; Event Coordinator</span>
+                    <p class="hero-subtitle mt-6 sm:mt-7 text-lg sm:text-xl md:text-2xl font-medium text-white text-center">
+                        Twitch M<img src="o.png" class="o-replace" alt="o">derator &amp; Event Coordinator
                     </p>
                 </div>
             </div>
@@ -501,24 +500,13 @@
 
         if (!isMobile && tiltContent) {
             document.addEventListener('mousemove', (e) => {
-                const rect = tiltContent.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
-                const maxDistance = 560;
-                const distanceX = e.clientX - centerX;
-                const distanceY = e.clientY - centerY;
-                const distance = Math.hypot(distanceX, distanceY);
-                const strength = Math.max(0, 1 - Math.min(distance, maxDistance) / maxDistance);
-                const rotateY = (distanceX / rect.width) * 8 * strength;
-                const rotateX = -(distanceY / rect.height) * 6 * strength;
-                const moveX = (distanceX / rect.width) * 5 * strength;
-                const moveY = (distanceY / rect.height) * 4 * strength;
-
-                tiltContent.style.transform = `translate3d(${moveX}px, ${moveY}px, 18px) rotateY(${rotateY}deg) rotateX(${rotateX}deg) scale(1.012)`;
+                const x = (window.innerWidth / 2 - e.clientX) / 55;
+                const y = (window.innerHeight / 2 - e.clientY) / 55;
+                tiltContent.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
             });
 
             document.addEventListener('mouseleave', () => {
-                tiltContent.style.transform = `translate3d(0, 0, 0) rotateY(0deg) rotateX(0deg) scale(1)`;
+                tiltContent.style.transform = `rotateY(0deg) rotateX(0deg)`;
             });
         }
 
