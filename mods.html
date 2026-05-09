@@ -1,329 +1,578 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TUK7 • Moderator Roles</title>
- 
-    <link rel="icon" href="../logo.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
-     
-        .gif-text {
-            background-image: url("https://cdn.7tv.app/paint/01J5V7WVKR0007BA288WXC38TK/layer/01JAMR3CE2TDB8GKKV1YPNMAYG/4x.webp");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            -webkit-background-clip: text;
-            display: inline-block;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TUK7 — Moderator Roles</title>
+  <meta name="description" content="Moderator roles and partner channels moderated by TUK7.">
+  <meta property="og:title" content="TUK7 — Moderator Roles">
+  <meta property="og:description" content="Moderator roles and partner channels moderated by TUK7.">
+  <meta property="og:image" content="../logo.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="../logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Archivo+Black&display=swap" rel="stylesheet">
 
-        html, body {
-            height: 100%;
-            overflow-y: auto;
-        }
-        body {
-            background: #050505;
-        }
-        #orb-canvas {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .social-icons {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 50;
-            display: flex;
-            gap: 16px;
-        }
-        @media (min-width: 768px) {
-            .social-icons { top: 32px; right: 32px; gap: 18px; }
-            .social-icons img { width: 26px; height: 26px; }
-        }
-        .social-icons img {
-            width: 22px;
-            height: 22px;
-            filter: brightness(0.85);
-            transition: all 0.2s ease;
-        }
-        .social-icons a:hover img {
-            filter: brightness(1);
-            transform: scale(1.15);
-        }
-        .back-home {
-            position: fixed;
-            top: 28px;
-            left: 28px;
-            z-index: 50;
-            font-size: 14px;
-            color: #71717a;
-            transition: all 0.2s ease;
-        }
-        .back-home:hover { color: white; }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .channel-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-        }
-        
-        /* CLEAN LAYOUT: Perfekte 3x3 Übersicht auf großen Bildschirmen (9 Karten) */
-        @media (min-width: 1024px) {
-            .channel-grid { 
-                grid-template-columns: repeat(3, 1fr); 
-            }
-        }
+    :root {
+      --bg: #050505;
+      --panel: #0b0b0d;
+      --panel-hover: #111114;
+      --border: rgba(255,255,255,.11);
+      --border-soft: rgba(255,255,255,.07);
+      --text: #f5f5f5;
+      --muted: #a1a1aa;
+      --dim: #66666f;
+      --accent: #9146ff;
+      --font: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-logo: 'Archivo Black', var(--font);
+    }
 
-        .channel-card {
-            background: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 20px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(60px) scale(0.82);
-            transition: all 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-        .channel-card.visible {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-        }
-        .channel-card:hover {
-            transform: translateY(-6px);
-            border-color: #71717a;
-        }
-        .profile-img {
-            width: 96px;
-            height: 96px;
-            object-fit: cover;
-            border-radius: 9999px;
-            border: 4px solid #27272a;
-        }
-    </style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    @media (pointer: fine) {
+      body {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 3l15 14-7 1.2-3.7 6.4z' fill='%23f5f5f5' stroke='%23050505' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 5 3, auto;
+      }
+
+      a,
+      a *,
+      button,
+      button *,
+      .channel-card,
+      .channel-card * {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M10.5 14.5V6.8a2 2 0 0 1 4 0v6.7l.8-1.1a1.8 1.8 0 0 1 3.1.4l.5-.7a1.8 1.8 0 0 1 3.1.5l.2-.3a1.8 1.8 0 0 1 3.2 1.1v5.1c0 5-3.2 8-8.2 8h-1.4c-3.2 0-5.3-1.3-6.9-4l-2.1-3.6a1.9 1.9 0 0 1 .6-2.6 1.9 1.9 0 0 1 2.6.6l.5.8Z' fill='%23f5f5f5' stroke='%23050505' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 11 6, pointer;
+      }
+
+      p,
+      h1,
+      h2,
+      h3,
+      span {
+        cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M12 4h4' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M14 4v20' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M12 24h4' stroke='%23f5f5f5' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M14 4v20' stroke='%23050505' stroke-width='4' stroke-linecap='round' opacity='.35'/%3E%3C/svg%3E") 14 14, text;
+      }
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% -20%, rgba(145,70,255,.18), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      width: min(100%, 1180px);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -.04em;
+      white-space: nowrap;
+    }
+
+    .brand img {
+      width: 28px;
+      height: 28px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .socials {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .social-link {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .social-link:hover {
+      color: var(--text);
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0;
+    }
+
+    .social-link svg {
+      width: 17px;
+      height: 17px;
+      fill: currentColor;
+    }
+
+    .hero {
+      padding: 78px 0 54px;
+      text-align: center;
+    }
+
+    .paint-text {
+      display: inline-block;
+      color: var(--text);
+      background-image: url("https://cdn.7tv.app/paint/01J5V7WVKR0007BA288WXC38TK/layer/01JAMR3CE2TDB8GKKV1YPNMAYG/4x.webp");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h1 {
+      font-family: var(--font-logo);
+      font-size: clamp(46px, 9vw, 104px);
+      line-height: .9;
+      letter-spacing: -.045em;
+      font-weight: 400;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      color: var(--text);
+      font-size: clamp(18px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin-bottom: 12px;
+    }
+
+    .hero-text {
+      max-width: 620px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .stat-pill {
+      width: fit-content;
+      margin: 28px auto 0;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 14px 20px;
+      border: 1px solid var(--border-soft);
+      border-radius: 999px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .stat-pill span:first-child,
+    .stat-pill span:last-child {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    #total-followers {
+      color: var(--text);
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+
+    .partner-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .partner-row img {
+      height: 34px;
+      width: auto;
+    }
+
+    main {
+      padding: 26px 0 80px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      padding-top: 42px;
+      margin-bottom: 22px;
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .section-label {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 700;
+    }
+
+    .section-head p {
+      max-width: 360px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .channel-card {
+      min-height: 250px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--border-soft);
+      border-radius: 18px;
+      color: var(--text);
+      text-decoration: none;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .45s ease, transform .45s ease, background .15s ease, border-color .15s ease;
+    }
+
+    .channel-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .channel-card:hover {
+      background: var(--panel-hover);
+      border-color: var(--border);
+      transform: translateY(-2px);
+    }
+
+    .profile-img {
+      width: 92px;
+      height: 92px;
+      object-fit: cover;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+      background: #111;
+    }
+
+    .channel-card h3 {
+      font-size: 22px;
+      font-weight: 650;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .followers {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .since {
+      margin-top: 14px;
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    .all-link-wrap {
+      text-align: center;
+      margin-top: 28px;
+    }
+
+    .all-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .all-link:hover {
+      color: var(--text);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 28px 0;
+      color: var(--dim);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong {
+      color: var(--muted);
+    }
+
+    @media (max-width: 920px) {
+      nav {
+        align-items: flex-start;
+        padding-top: 18px;
+      }
+
+
+      .socials {
+        gap: 12px;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 12px;
+      }
+
+      .channel-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      nav {
+        min-height: 64px;
+      }
+
+      .hero {
+        padding: 58px 0 44px;
+      }
+
+      h1 {
+        font-size: clamp(42px, 17vw, 78px);
+      }
+
+      .partner-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .stat-pill {
+        width: 100%;
+        justify-content: center;
+        border-radius: 18px;
+        flex-wrap: wrap;
+      }
+
+      .channel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .channel-card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
-<body class="bg-[#050505] text-white font-sans">
+<body>
 
-    <!-- ORBS -->
-    <canvas id="orb-canvas"></canvas>
-
-    <!-- BACK TO HOME -->
-    <a href="/" class="back-home flex items-center gap-2">
-        ← Back to TUK7
+<div class="page">
+  <nav>
+    <a href="/" class="brand" aria-label="Back to TUK7 home">
+      <img src="../logo.png" alt="TUK7" onerror="this.style.display='none'">
+      <span>TUK7</span>
     </a>
 
-    <!-- SOCIAL ICONS -->
-    <div class="social-icons">
-        <a href="https://twitch.tv/tuk7" target="_blank"><img src="../twitch.png" alt="Twitch"></a>
-        <a href="https://x.com/tukk7_" target="_blank"><img src="../twitter.png" alt="Twitter"></a>
-        <a href="https://discord.gg/rS8Z7UpCRC" target="_blank"><img src="../discord.png" alt="Discord"></a>
+    <div class="socials" aria-label="Social links">
+      <a href="https://www.twitch.tv/tuk7" target="_blank" rel="noopener" class="social-link" aria-label="Twitch">
+        <svg viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+      </a>
+      <a href="https://x.com/tukk7_" target="_blank" rel="noopener" class="social-link" aria-label="X">
+        <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.258 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@TukPresents" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+      <a href="https://discord.gg/rS8Z7UpCRC" target="_blank" rel="noopener" class="social-link" aria-label="Discord">
+        <svg viewBox="0 0 24 24"><path d="M20.317 4.369A19.791 19.791 0 0 0 15.36 2.84a13.676 13.676 0 0 0-.635 1.318 18.27 18.27 0 0 0-5.45 0A13.91 13.91 0 0 0 8.64 2.84a19.736 19.736 0 0 0-4.958 1.53C.545 9.04-.33 13.594.09 18.083a19.9 19.9 0 0 0 6.073 3.074 14.58 14.58 0 0 0 1.303-2.11 12.938 12.938 0 0 1-2.05-.986c.172-.126.34-.256.502-.39a14.235 14.235 0 0 0 12.164 0c.164.134.331.264.503.39a12.99 12.99 0 0 1-2.054.988 14.546 14.546 0 0 0 1.304 2.108 19.868 19.868 0 0 0 6.075-3.074c.492-5.205-.839-9.717-3.593-13.714zM8.02 15.331c-1.183 0-2.157-1.087-2.157-2.423 0-1.336.956-2.423 2.157-2.423 1.21 0 2.176 1.096 2.157 2.423 0 1.336-.956 2.423-2.157 2.423zm7.96 0c-1.183 0-2.157-1.087-2.157-2.423 0-1.336.955-2.423 2.157-2.423 1.21 0 2.176 1.096 2.157 2.423 0 1.336-.947 2.423-2.157 2.423z"/></svg>
+      </a>
+      <a href="https://www.instagram.com/tukfps/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163 18.162 15.404 18.162 12 15.403 5.838 12 5.838zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.tiktok.com/@tuk7_" target="_blank" rel="noopener" class="social-link" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1><span class="paint-text">ROLES</span></h1>
+    <p class="hero-subtitle">Channels I Moderate</p>
+    <p class="hero-text">A clean overview of selected Twitch partner channels I currently moderate for, including follower counts and mod since dates.</p>
+
+    <div class="partner-row">
+      <img src="partner.png" alt="Twitch Partner" onerror="this.style.display='none'">
+      <span>My Partner Channels</span>
     </div>
 
-    <!-- CHANNELS SECTION -->
-    <section class="pt-24 pb-24 px-6 max-w-7xl mx-auto">
-        <div class="text-center mb-12">
-           
-            <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight gif-text">Channels I Moderate</h1>
-           
-            <!-- Partner Channels mit Logo -->
-            <div class="flex items-center justify-center gap-4 mt-4">
-                <img src="partner.png" alt="Twitch Partner" class="h-9 md:h-11 w-auto">
-                <p class="text-zinc-400 text-2xl md:text-3xl font-semibold tracking-tight">My Partner Channels</p>
-            </div>
+    <div class="stat-pill" aria-label="Total followers moderated">
+      <span>I moderate for</span>
+      <strong id="total-followers">0</strong>
+      <span>followers</span>
+    </div>
+  </header>
 
-            <p class="text-zinc-400 mt-3 text-lg">I currently moderate for <span class="text-zinc-400 font-semibold">120+ streamers</span> in total</p>
-            
-            <!-- GESAMT-FOLLOWER -->
-            <div class="mt-6 inline-flex items-center gap-3 bg-zinc-900/80 px-8 py-4 rounded-3xl border border-zinc-700">
-                <span class="text-sm text-zinc-400">I moderate for</span>
-                <span id="total-followers" class="text-4xl font-bold text-white">0</span>
-                <span class="text-sm text-zinc-400">followers</span>
-            </div>
-        </div>
-
-        <div id="channels-grid" class="channel-grid">
-            <!-- Wird automatisch gefüllt -->
-        </div>
-    </section>
-
-    <!-- VIEW ALL BUTTON -->
-    <div class="text-center pb-6">
-        <a href="https://mlu.terrance.cc/user/tuk7" 
-           target="_blank"
-           class="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-white transition-all duration-200 hover:underline underline-offset-4">
-            all my moderated channels
-            <span>↗</span>
-        </a>
+  <main>
+    <div class="section-head">
+      <div>
+        <p class="section-label">Partner channels</p>
+        <h2>Moderator roles</h2>
+      </div>
+      <p>I currently moderate for 120+ streamers in total. These are selected partner channels.</p>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="py-8 text-center text-[10px] text-zinc-500">
-        © 2026 TUK | All rights reserved. • Made for the community
-    </footer>
+    <div id="channels-grid" class="channel-grid"></div>
 
-    <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } } };
+    <div class="all-link-wrap">
+      <a href="https://mlu.terrance.cc/user/tuk7" target="_blank" rel="noopener" class="all-link">
+        View all moderated channels <span>↗</span>
+      </a>
+    </div>
+  </main>
 
-        // ORBS
-        const canvas = document.getElementById('orb-canvas');
-        const ctx = canvas.getContext('2d');
-        let orbs = [], width, height, isMobileDevice = window.innerWidth < 768;
+  <footer>
+    <div class="footer-inner">
+      <p>© 2026 <strong>TUK7</strong> | All rights reserved.</p>
+      <p>Made for the community</p>
+    </div>
+  </footer>
+</div>
 
-        class Orb {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.radius = Math.random() * (isMobileDevice ? 4.2 : 5.5) + (isMobileDevice ? 1.8 : 2.8);
-                this.speed = Math.random() * (isMobileDevice ? 0.22 : 0.35) + (isMobileDevice ? 0.08 : 0.15);
-                this.vx = (Math.random() - 0.5) * this.speed;
-                this.vy = (Math.random() - 0.5) * this.speed;
-                this.hue = 200 + Math.random() * 40;
-                this.opacity = Math.random() * 0.28 + 0.13;
-                this.phase = Math.random() * Math.PI * 2;
-            }
-            update() {
-                this.x += this.vx + Math.sin(Date.now() / 1400 + this.phase) * (isMobileDevice ? 0.28 : 0.45);
-                this.y += this.vy + Math.cos(Date.now() / 1100 + this.phase) * (isMobileDevice ? 0.18 : 0.3);
-                if (this.x < -60) this.x = width + 60;
-                if (this.x > width + 60) this.x = -60;
-                if (this.y < -60) this.y = height + 60;
-                if (this.y > height + 60) this.y = -60;
-            }
-            draw() {
-                ctx.save();
-                const layers = isMobileDevice 
-                    ? [{ size: this.radius * 3.8, alpha: this.opacity * 0.07 }, { size: this.radius * 2.6, alpha: this.opacity * 0.12 }, { size: this.radius * 1.6, alpha: this.opacity * 0.20 }, { size: this.radius * 0.55, alpha: this.opacity * 0.68 }]
-                    : [{ size: this.radius * 4.2, alpha: this.opacity * 0.06 }, { size: this.radius * 3.1, alpha: this.opacity * 0.09 }, { size: this.radius * 2.2, alpha: this.opacity * 0.15 }, { size: this.radius * 1.4, alpha: this.opacity * 0.22 }, { size: this.radius * 0.55, alpha: this.opacity * 0.65 }];
-                for (let layer of layers) {
-                    ctx.fillStyle = `hsla(${this.hue}, 90%, 72%, ${layer.alpha})`;
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, layer.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                ctx.restore();
-            }
-        }
+<script>
+  const myChannels = [
+    { name: "Amar", link: "https://twitch.tv/amar", followers: "1,860,710", since: "Nov 25, 2025", image: "../st1.png" },
+    { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "1,650,918", since: "Feb 3, 2026", image: "../st2.png" },
+    { name: "noahreyli", link: "https://twitch.tv/noahreyli", followers: "792,669", since: "Apr 20, 2026", image: "../st9.png" },
+    { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "429,224", since: "Nov 13, 2025", image: "../st3.png" },
+    { name: "LENA", link: "https://twitch.tv/lena", followers: "31,019", since: "Nov 16, 2024", image: "../st8.png" },
+    { name: "Julistria", link: "https://twitch.tv/julistria", followers: "30,966", since: "Dec 29, 2024", image: "../st4.png" },
+    { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
+    { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" },
+    { name: "Kanyuji", link: "https://twitch.tv/kanyuji", followers: "11,204", since: "May 18, 2025", image: "../st7.png" }
+  ];
 
-        function resize() { 
-            width = window.innerWidth; 
-            height = window.innerHeight; 
-            canvas.width = width; 
-            canvas.height = height; 
-            isMobileDevice = window.innerWidth < 768; 
-        }
-        
-        function initOrbs() {
-            orbs = [];
-            const count = Math.max(5, Math.min(Math.floor(width / 105), 14));
-            for (let i = 0; i < count; i++) orbs.push(new Orb());
-        }
-        
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            for (let orb of orbs) { orb.update(); orb.draw(); }
-            requestAnimationFrame(animate);
-        }
+  function renderChannels() {
+    const grid = document.getElementById('channels-grid');
+    if (!grid) return;
 
-        // PARTNER LIST (9 Kanäle – sortiert nach Follower-Anzahl absteigend)
-        const myChannels = [
-            { name: "Amar", link: "https://twitch.tv/amar", followers: "1,860,710", since: "Nov 25, 2025", image: "../st1.png" },
-            { name: "Chefstrobel", link: "https://twitch.tv/chefstrobel", followers: "1,650,918", since: "Feb 3, 2026", image: "../st2.png" },
-            { name: "noahreyli", link: "https://twitch.tv/noahreyli", followers: "792,669", since: "Apr 20, 2026", image: "../st9.png" },
-            { name: "marco_scm", link: "https://twitch.tv/marco_scm", followers: "429,224", since: "Nov 13, 2025", image: "../st3.png" },
-            { name: "LENA", link: "https://twitch.tv/lena", followers: "31,019", since: "Nov 16, 2024", image: "../st8.png" },
-            { name: "Julistria", link: "https://twitch.tv/julistria", followers: "30,966", since: "Dec 29, 2024", image: "../st4.png" },
-            { name: "Lele", link: "https://twitch.tv/lele", followers: "24,174", since: "Feb 28, 2025", image: "../st5.png" },
-            { name: "Regy", link: "https://twitch.tv/regy", followers: "14,355", since: "Feb 18, 2025", image: "../st6.png" },
-            { name: "Kanyuji", link: "https://twitch.tv/kanyuji", followers: "11,204", since: "May 18, 2025", image: "../st7.png" }
-        ];
+    grid.innerHTML = '';
 
-        function renderChannels() {
-            const grid = document.getElementById('channels-grid');
-            grid.innerHTML = '';
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const index = parseInt(entry.target.dataset.index || 0);
-                        const delay = index * 85;
-                        
-                        setTimeout(() => {
-                            entry.target.classList.add('visible');
-                        }, delay);
-                        
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.15,
-                rootMargin: '0px 0px -50px 0px'
-            });
+    myChannels.forEach((channel, index) => {
+      const card = document.createElement('a');
+      card.href = channel.link;
+      card.target = '_blank';
+      card.rel = 'noopener';
+      card.className = 'channel-card';
+      card.dataset.index = String(index);
+      card.innerHTML = `
+        <img src="${channel.image}" alt="${channel.name}" class="profile-img">
+        <h3>${channel.name}</h3>
+        <p class="followers">${channel.followers} followers</p>
+        <p class="since">Mod since ${channel.since}</p>
+      `;
+      grid.appendChild(card);
+    });
 
-            myChannels.forEach((ch, index) => {
-                const card = document.createElement('a');
-                card.href = ch.link;
-                card.target = '_blank';
-                card.className = 'channel-card flex flex-col items-center text-center p-6';
-                card.dataset.index = index;
-                card.innerHTML = `
-                    <img src="${ch.image}" class="profile-img mb-6">
-                    <h3 class="text-2xl font-semibold">${ch.name}</h3>
-                    <p class="text-zinc-400 font-medium mt-1">${ch.followers} followers</p>
-                    <p class="text-xs text-zinc-400 mt-4">Mod since ${ch.since}</p>
-                `;
-                grid.appendChild(card);
-                observer.observe(card);
-            });
-        }
+    setTimeout(() => {
+      document.querySelectorAll('.channel-card').forEach((card, index) => {
+        setTimeout(() => card.classList.add('visible'), index * 65);
+      });
+    }, 80);
+  }
 
-        // Force ALL cards to pop immediately on load (with nice stagger)
-        function forceShowAllCards() {
-            setTimeout(() => {
-                document.querySelectorAll('.channel-card').forEach((card, index) => {
-                    setTimeout(() => {
-                        card.classList.add('visible');
-                    }, index * 60);
-                });
-            }, 80);
-        }
+  function animateFollowers() {
+    const el = document.getElementById('total-followers');
+    if (!el) return;
 
-        function animateFollowers() {
-            const el = document.getElementById('total-followers');
-            const target = 5106714;
-            let startTime = null;
-            const duration = 2800;
+    const target = 5106714;
+    const duration = 2400;
+    let startTime = null;
 
-            function update(currentTime) {
-                if (!startTime) startTime = currentTime;
-                const progress = Math.min((currentTime - startTime) / duration, 1);
-                const eased = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(target * eased);
-                el.textContent = current.toLocaleString('en-US');
+    function update(currentTime) {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(target * eased);
+      el.textContent = current.toLocaleString('en-US');
 
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    el.textContent = target.toLocaleString('en-US');
-                }
-            }
-            requestAnimationFrame(update);
-        }
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target.toLocaleString('en-US');
+      }
+    }
 
-        window.addEventListener('resize', () => { resize(); initOrbs(); });
-        resize();
-        initOrbs();
-        animate();
-        renderChannels();
-        forceShowAllCards();
-        animateFollowers();
-    </script>
+    requestAnimationFrame(update);
+  }
+
+  renderChannels();
+  animateFollowers();
+</script>
+
 </body>
 </html>
