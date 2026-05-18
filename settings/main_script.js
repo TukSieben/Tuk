@@ -1,6 +1,12 @@
 // --- Global Transitions & Audio Feedback ---
 
 document.addEventListener('DOMContentLoaded', () => {
+    // 0. Clean URL (Remove index.html from URL bar)
+    if (window.location.pathname.endsWith('index.html')) {
+        const cleanUrl = window.location.pathname.replace('index.html', '');
+        window.history.replaceState({}, document.title, cleanUrl);
+    }
+
     // 1. Page Transitions (Fade Out)
     const links = document.querySelectorAll('a');
     links.forEach(link => {
