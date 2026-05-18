@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crosshairs - TUK</title>
+    <link rel="icon" type="image/png" href="../../fav.png">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="dark-theme">
+    <svg style="display: none;">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+    </svg>
+    <div class="noise"></div>
+    <div class="custom-cursor"></div>
+    <header>
+        <nav>
+            <a href="../../index.html" class="back-link">←</a>
+            <ul class="nav-links">
+                <li><a href="../valorant/index.html" class="nav-link">Valorant</a></li>
+                <li><a href="../davinci/index.html" class="nav-link">DaVinci Resolve</a></li>
+                <li><a href="../topaz/index.html" class="nav-link">Topaz Video AI</a></li>
+                <li><a href="../rawaccel/index.html" class="nav-link">RawAccel</a></li>
+                <li><a href="../crosshairs/index.html" class="nav-link active">Crosshairs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="crosshairs">
+            <h2>Crosshairs</h2>
+            <div class="settings-grid" style="display: flex; flex-direction: column; gap: 2rem; background: none; border: none;">
+                
+                <!-- Crosshair Card 1 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x1.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;d;1;f;0;0t;4;0l;1;0v;1;0o;0;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;d;1;f;0;0t;4;0l;1;0v;1;0o;0;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 2 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x2.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;c;5;u;00FFFFFF;o;1;b;1;f;0;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;c;5;u;00FFFFFF;o;1;b;1;f;0;0l;3;0v;3;0o;0;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 3 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x3.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;p;0;P;u;000000FF;h;0;f;0;0l;4;0v;4;0o;0;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;p;0;0;P;u;000000FF;h;0;f;0;0l;4;0v;4;0o;0;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 4 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x4.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;c;5;u;000000FF;h;0;f;0;0t;1;0l;1;0v;1;0o;1;0a;1;0m;1;0f;0;0s;0;1t;1;1l;1;1v;1;1o;0;1a;1;1m;0;1f;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;c;5;u;000000FF;h;0;f;0;0t;1;0l;1;0v;1;0o;1;0a;1;0m;1;0f;0;0s;0;1t;1;1l;1;1v;1;1o;0;1a;1;1m;0;1f;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 5 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x5.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;c;4;h;0;0l;5;0v;4;0g;1;0o;2;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;c;4;h;0;0l;5;0v;4;0g;1;0o;2;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 6 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x6.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;u;000000FF;h;0;f;0;0t;4;0l;2;0v;2;0o;1;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;u;000000FF;h;0;f;0;0t;4;0l;2;0v;2;0o;1;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+                <!-- Crosshair Card 7 -->
+                <div class="ch-card">
+                    <div class="ch-preview">
+                        <img src="x7.png" alt="Crosshair Preview">
+                    </div>
+                    <div class="ch-info">
+                        <div class="ch-code-box">0;P;c;5;u;000080FF;h;0;f;0;m;1;0l;3;0v;3;0g;1;0o;0;0a;1;0f;0;1b;0</div>
+                        <button class="ch-copy-btn" onclick="copyToClipboard('0;P;c;5;u;000080FF;h;0;f;0;m;1;0l;3;0v;3;0g;1;0o;0;0a;1;0f;0;1b;0', this)">Copy</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TUK7.XYZ</p>
+    </footer>
+
+    <script src="../main_script.js"></script>
+    <script>
+        // --- Custom Cursor Logic ---
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const links = document.querySelectorAll('a, button');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2.5)';
+                cursor.style.mixBlendMode = 'difference';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.mixBlendMode = 'normal';
+            });
+        });
+
+        // --- Copy to Clipboard Logic ---
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = 'Copied';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

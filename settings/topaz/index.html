@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topaz Video AI Settings - TUK</title>
+    <link rel="icon" type="image/png" href="../../fav.png">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="dark-theme">
+    <svg style="display: none;">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+    </svg>
+    <div class="noise"></div>
+    <div class="custom-cursor"></div>
+    <header>
+        <nav>
+            <a href="../../index.html" class="back-link">←</a>
+            <ul class="nav-links">
+                <li><a href="../valorant/index.html" class="nav-link">Valorant</a></li>
+                <li><a href="../davinci/index.html" class="nav-link">DaVinci Resolve</a></li>
+                <li><a href="../topaz/index.html" class="nav-link active">Topaz Video AI</a></li>
+                <li><a href="../rawaccel/index.html" class="nav-link">RawAccel</a></li>
+                <li><a href="../crosshairs/index.html" class="nav-link">Crosshairs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="topaz">
+            <h2>Topaz Video AI</h2>
+            <div class="topaz-container">
+                <div class="settings-image">
+                    <img src="topaz1.png" alt="Topaz Settings 1">
+                </div>
+                <div class="settings-image">
+                    <img src="topaz2.png" alt="Topaz Settings 2">
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TUK7.XYZ</p>
+    </footer>
+
+    <script src="../main_script.js"></script>
+    <script>
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const links = document.querySelectorAll('a, button');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2.5)';
+                cursor.style.mixBlendMode = 'difference';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.mixBlendMode = 'normal';
+            });
+        });
+    </script>
+</body>
+</html>

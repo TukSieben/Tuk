@@ -1,0 +1,175 @@
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --secondary-text: #888888;
+    --border-color: #222222;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: none !important; /* Hide cursor on EVERYTHING */
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+    cursor: none;
+    animation: fadeInPage 0.5s ease-out; /* Fade In Effekt */
+}
+
+@keyframes fadeInPage {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.4s ease-in;
+}
+
+/* FOOLPROOF SVG GRAIN */
+.noise {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Ganz unten über dem Background */
+    pointer-events: none;
+    opacity: 0.18;
+    filter: url(#noiseFilter);
+}
+
+/* Custom Cursor */
+.custom-cursor {
+    width: 8px;
+    height: 8px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+    transition: transform 0.15s ease-out;
+}
+
+.landing-content {
+    text-align: center;
+    position: relative;
+    padding: 2rem;
+    z-index: 2; /* Über dem Noise */
+}
+
+.profile-container {
+    margin-bottom: 1.5rem;
+}
+
+.profile-pic {
+    width: 105px; /* Von 80px auf 105px */
+    height: 105px;
+    border-radius: 50%;
+    border: 2px solid var(--text-color);
+    padding: 4px;
+    background-color: var(--bg-color);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    position: relative;
+    z-index: 5;
+}
+
+.profile-pic:hover {
+    transform: scale(1.05);
+}
+
+.username {
+    font-size: 1.4rem; /* Von 1.2rem auf 1.4rem */
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.35rem;
+    text-transform: lowercase;
+}
+
+.description {
+    color: var(--secondary-text);
+    font-size: 0.85rem; /* Von 0.8rem auf 0.85rem */
+    font-weight: 400;
+    margin-bottom: 2rem;
+    letter-spacing: 0;
+}
+
+.preview-container {
+    margin-bottom: 2.5rem;
+    max-width: 500px; /* Von 400px auf 500px */
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 5;
+}
+
+.main-preview-img {
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+.cta-text {
+    font-size: 0.75rem; /* Etwas größer als Footer, aber selbe Art */
+    color: var(--secondary-text);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-style: italic;
+}
+
+.main-nav {
+    position: relative;
+    display: inline-block;
+    z-index: 5;
+}
+
+.enter-btn {
+    display: inline-block;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 0.8rem; /* Von 0.9rem auf 0.8rem */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    padding: 0.8rem 2.5rem; /* Von 1rem 3rem auf 0.8rem 2.5rem */
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    background-color: var(--bg-color);
+}
+
+.enter-btn:hover {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    border-color: var(--text-color);
+}
+
+footer {
+    position: absolute;
+    bottom: 2rem;
+    color: var(--secondary-text);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+@media (max-width: 1200px) {
+    .hand-drawn-arrow { display: none; }
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaVinci Resolve Settings - TUK</title>
+    <link rel="icon" type="image/png" href="../../fav.png">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="dark-theme">
+    <svg style="display: none;">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.6" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+    </svg>
+    <div class="noise"></div>
+    <div class="custom-cursor"></div>
+    <header>
+        <nav>
+            <a href="../../index.html" class="back-link">←</a>
+            <ul class="nav-links">
+                <li><a href="../valorant/index.html" class="nav-link">Valorant</a></li>
+                <li><a href="../davinci/index.html" class="nav-link active">DaVinci Resolve</a></li>
+                <li><a href="../topaz/index.html" class="nav-link">Topaz Video AI</a></li>
+                <li><a href="../rawaccel/index.html" class="nav-link">RawAccel</a></li>
+                <li><a href="../crosshairs/index.html" class="nav-link">Crosshairs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="davinci">
+            <h2>DaVinci Resolve Tuk's Settings</h2>
+            
+            <div class="featured-image-container">
+                <div class="settings-image">
+                    <img src="fusion.png" alt="Fusion Main View">
+                </div>
+            </div>
+
+            <div class="accordion-container">
+                <div class="accordion-item">
+                    <button class="accordion-header">Sharpen</button>
+                    <div class="accordion-content">
+                        <div class="settings-card">
+                            <div class="settings-image">
+                                <img src="s_sharpen1.png" alt="Sharpen Settings">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Hue / Sat / Bright</button>
+                    <div class="accordion-content">
+                        <div class="settings-card">
+                            <div class="settings-image">
+                                <img src="s_huesatbright1.png" alt="HueSatBright Settings">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">RSMB</button>
+                    <div class="accordion-content">
+                        <div class="settings-card">
+                            <div class="settings-image">
+                                <img src="rsmb1.png" alt="RSMB Settings">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Timeline Settings</button>
+                    <div class="accordion-content">
+                        <div class="settings-card">
+                            <div class="settings-image">
+                                <img src="timeline.png" alt="Timeline Settings">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <button class="accordion-header">Export Settings</button>
+                    <div class="accordion-content">
+                        <div class="settings-card">
+                            <div class="settings-image">
+                                <img src="export.png" alt="Export Settings">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 TUK7.XYZ</p>
+    </footer>
+
+    <script src="../main_script.js"></script>
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.querySelector('.custom-cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        const links = document.querySelectorAll('a, button');
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(2.5)';
+                cursor.style.mixBlendMode = 'difference';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.mixBlendMode = 'normal';
+            });
+        });
+
+        // Accordion Logic
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
