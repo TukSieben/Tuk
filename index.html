@@ -3,28 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tuk | Professional Twitch Moderator</title>
+    <title>Tuk | Moderator & Event Coordinator</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
-    
-    <!-- Modern Font: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Cache-buster updated -->
-    <link rel="stylesheet" href="style.css?v=6">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
-    
-    <!-- Navigation -->
+    <!-- Grid Background -->
+    <div class="grid-bg"></div>
+
+    <!-- Top Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo">
-                <span class="logo-text">TUK</span>
-                <span class="logo-dot"></span>
+                TUK<span class="logo-dot"></span>
             </div>
             <div class="nav-links">
-                <a href="#" class="nav-icon" aria-label="Email">
+                <a href="mailto:contact@tuk.com" class="nav-icon" aria-label="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                 </a>
                 <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="nav-icon" aria-label="Twitter">
@@ -35,19 +30,36 @@
                         <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0314a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
                     </svg>
                 </a>
+                
+                <div class="toggle-container" style="margin-left: 12px;">
+                  <input type="checkbox" class="toggle-input" id="themeToggle">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 142" class="toggle">
+                    <path d="M71 142C31.7878 142 0 110.212 0 71C0 31.7878 31.7878 0 71 0C110.212 0 119 30 146 30C173 30 182 0 221 0C260 0 292 31.7878 292 71C292 110.212 260.212 142 221 142C181.788 142 173 112 146 112C119 112 110.212 142 71 142Z" class="toggle-background"></path>
+                    <rect rx="6" height="64" width="12" y="39" x="64" class="toggle-icon on"></rect>
+                    <path d="M221 91C232.046 91 241 82.0457 241 71C241 59.9543 232.046 51 221 51C209.954 51 201 59.9543 201 71C201 82.0457 209.954 91 221 91ZM221 103C238.673 103 253 88.6731 253 71C253 53.3269 238.673 39 221 39C203.327 39 189 53.3269 189 71C189 88.6731 203.327 103 221 103Z" fill-rule="evenodd" class="toggle-icon off"></path>
+                    <g filter="url('#goo')">
+                      <rect fill="#fff" rx="29" height="58" width="116" y="42" x="13" class="toggle-circle-center"></rect>
+                      <rect fill="#fff" rx="58" height="114" width="114" y="14" x="14" class="toggle-circle left"></rect>
+                      <rect fill="#fff" rx="58" height="114" width="114" y="14" x="164" class="toggle-circle right"></rect>
+                    </g>
+                    <filter id="goo">
+                      <feGaussianBlur stdDeviation="10" result="blur" in="SourceGraphic"></feGaussianBlur>
+                      <feColorMatrix result="goo" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" mode="matrix" in="blur"></feColorMatrix>
+                    </filter>
+                  </svg>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Main Hero Section -->
+    <!-- Main Content -->
     <main class="hero-section">
         <div class="hero-container">
-            
-            <!-- Left Side: Content -->
+            <!-- Left Side: Text -->
             <div class="hero-content">
                 <div class="badge">
-                    <span class="badge-icon">✨</span>
-                    <span class="badge-text">Moderation & Events</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary)"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    Moderation & Events
                 </div>
                 
                 <h1 class="headline">
@@ -56,11 +68,11 @@
                 </h1>
                 
                 <p class="subtitle">
-                    Professional Twitch moderation and event coordination for top-tier creators. Ensuring a safe, engaging, and highly active community experience.
+                    Ensuring safe communities and executing flawless events. Because your focus should be on the stream, not the spam.
                 </p>
-                
+
                 <div class="cta-group">
-                    <a href="#" class="btn btn-primary">
+                    <a href="mailto:contact@tuk.com" class="btn btn-primary">
                         Get in Touch
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
                     </a>
@@ -86,5 +98,24 @@
         <p>&copy; 2026 Tuk. All rights reserved.</p>
     </footer>
 
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        
+        // Initial setup for existing preferences (optional)
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                document.body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.classList.remove('light-mode');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 </html>
