@@ -345,7 +345,7 @@ body {
 /* completely redone toggle and droid */
 
 .bb8-toggle {
-  --toggle-size: 5px; /* Scaled down for navbar */
+  --toggle-size: 16px; /* Restored to native size so 0.063em isn't rounded to 0px by browsers */
   --margin-top-for-head: 0;
   --toggle-width: 10.625em;
   --toggle-height: 5.625em;
@@ -373,6 +373,9 @@ body {
   font-size: var(--toggle-size);
   display: inline-block;
   vertical-align: middle;
+  transform: scale(0.35);
+  transform-origin: center;
+  margin: -29px -55px; /* Collapse the extra layout space created by scaling */
 }
 
 .bb8-toggle__checkbox {
