@@ -96,32 +96,6 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.status-badge {
-    position: absolute;
-    bottom: -4px;
-    right: -10px;
-    background: #18181b;
-    border: 1px solid var(--card-border);
-    padding: 4px 8px;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.7rem;
-    font-weight: 500;
-    color: var(--text-secondary);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-}
-
-.status-dot {
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary);
-    border-radius: 50%;
-    box-shadow: 0 0 8px var(--primary);
-    animation: pulse 2s infinite;
-}
-
 .profile-info {
     display: flex;
     flex-direction: column;
@@ -260,14 +234,3 @@ body {
     }
 }
 
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
-    }
-    70% {
-        box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
-    }
-}
