@@ -371,11 +371,12 @@ body {
   cursor: pointer;
   margin-top: var(--margin-top-for-head);
   font-size: var(--toggle-size);
-  display: inline-block;
-  vertical-align: middle;
-  transform: scale(0.35);
-  transform-origin: center;
-  margin: -29px -55px; /* Collapse the extra layout space created by scaling */
+  position: fixed;
+  right: 24px;
+  top: 12px;
+  transform: scale(0.5);
+  transform-origin: right top;
+  z-index: 1000;
 }
 
 .bb8-toggle__checkbox {
