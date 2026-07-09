@@ -9,11 +9,13 @@
     --card-bg: rgba(24, 24, 27, 0.6);
     --card-border: rgba(255, 255, 255, 0.08);
     
+    --grid-color: rgba(255, 255, 255, 0.03);
+    
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .light-mode {
-    --bg-base: #f4f4f5; /* Zinc 100 */
+    --bg-base: #e4e4e7; /* Zinc 200 - Softer, eye-friendly off-white */
     --text-primary: #09090b; /* Zinc 950 */
     --text-secondary: #52525b; /* Zinc 600 */
     
@@ -24,6 +26,8 @@
     
     --primary: #0ea5e9;
     --primary-hover: #0284c7;
+    
+    --grid-color: rgba(0, 0, 0, 0.05); /* Darker grid for light mode */
 }
 
 * {
@@ -54,8 +58,8 @@ body {
     height: 100%;
     background-size: 40px 40px;
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
     z-index: -1;
     pointer-events: none;
     transition: opacity 0.4s ease;
