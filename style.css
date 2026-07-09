@@ -209,83 +209,17 @@ body {
     animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.visual-glow {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    background: var(--primary);
-    filter: blur(120px);
-    opacity: 0.15;
-    border-radius: 50%;
-    z-index: -1;
-    animation: float 8s ease-in-out infinite alternate;
+/* Custom 3D Logo */
+.custom-3d-logo {
+    max-width: 100%;
+    width: 380px;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+    animation: float 6s ease-in-out infinite alternate;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
 }
 
-/* Abstract Shape */
-.abstract-shape-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-}
-
-.abstract-ring {
-    position: absolute;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    animation: spin linear infinite;
-}
-
-.abstract-ring-1 {
-    width: 250px;
-    height: 250px;
-    border-top-color: var(--primary);
-    border-right-color: transparent;
-    animation-duration: 20s;
-}
-
-.abstract-ring-2 {
-    width: 180px;
-    height: 180px;
-    border-bottom-color: var(--primary);
-    border-left-color: transparent;
-    animation-duration: 15s;
-    animation-direction: reverse;
-}
-
-.abstract-core {
-    width: 100px;
-    height: 100px;
-    background: rgba(24, 24, 27, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
-    color: var(--text-primary);
-    animation: pulseCore 4s ease-in-out infinite alternate;
-}
-
-.abstract-core svg {
-    color: var(--primary);
-    filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.4));
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-@keyframes pulseCore {
-    0% { transform: scale(1); box-shadow: 0 0 40px rgba(56, 189, 248, 0.1); }
-    100% { transform: scale(1.05); box-shadow: 0 0 60px rgba(56, 189, 248, 0.3); }
-}
 
 
 /* Footer */
