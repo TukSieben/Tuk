@@ -32,7 +32,7 @@
                 </a>
                 
                 <label class="bb8-toggle" style="margin-left: 12px;">
-                  <input class="bb8-toggle__checkbox" type="checkbox" id="themeToggle">
+                  <input class="bb8-toggle__checkbox" type="checkbox" id="themeToggle" checked>
                   <div class="bb8-toggle__container">
                     <div class="bb8-toggle__scenery">
                       <div class="bb8-toggle__star"></div>
@@ -120,16 +120,20 @@
         // Initial setup for existing preferences (optional)
         if (localStorage.getItem('theme') === 'light') {
             document.body.classList.add('light-mode');
-            themeToggle.checked = true;
+            themeToggle.checked = false; // Left side (Day) = Light Mode
+        } else {
+            themeToggle.checked = true; // Right side (Night) = Default Dark Mode
         }
 
         themeToggle.addEventListener('change', () => {
             if (themeToggle.checked) {
-                document.body.classList.add('light-mode');
-                localStorage.setItem('theme', 'light');
-            } else {
+                // Checked means Night / Dark Mode
                 document.body.classList.remove('light-mode');
                 localStorage.setItem('theme', 'dark');
+            } else {
+                // Unchecked means Day / Light Mode
+                document.body.classList.add('light-mode');
+                localStorage.setItem('theme', 'light');
             }
         });
     </script>
