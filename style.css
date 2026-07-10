@@ -251,7 +251,6 @@ body {
     background: var(--text-secondary);
     border-color: var(--text-secondary);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 .btn-secondary {
@@ -292,11 +291,6 @@ body {
     object-fit: contain;
     background: transparent;
     animation: float 6s ease-in-out infinite alternate;
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.5));
-}
-
-.light-mode .custom-3d-logo {
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15));
 }
 
 /* Footer */
@@ -352,34 +346,6 @@ body {
     }
 }
 
-/* From Uiverse.io by Galahhad */ 
-/* REMASTERED */
-/* RTX-ON */
-/* completely redone toggle and droid */
-
-.bb8-toggle {
-  --toggle-size: 16px; /* Restored to native size so 0.063em isn't rounded to 0px by browsers */
-  --margin-top-for-head: 0;
-  --toggle-width: 10.625em;
-  --toggle-height: 5.625em;
-  --toggle-offset: calc((var(--toggle-height) - var(--bb8-diameter)) / 2);
-  --toggle-bg: linear-gradient(#2c4770, #070e2b 35%, #628cac 50% 70%, #a6c5d4)
-    no-repeat;
-  --bb8-diameter: 4.375em;
-  --radius: 99em;
-  --transition: 0.4s;
-  --accent: #de7d2f;
-  --bb8-bg: #fff;
-}
-
-.bb8-toggle,
-.bb8-toggle *,
-.bb8-toggle *::before,
-.bb8-toggle *::after {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 /* Theme Switch */
 /* The switch - the box around the slider */
 .switch {
@@ -389,7 +355,6 @@ body {
   width: 4em;
   height: 2.2em;
   border-radius: 30px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   margin-left: 0.5rem; /* Small gap from Discord icon */
 }
 
