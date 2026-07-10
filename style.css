@@ -137,6 +137,19 @@ body {
     align-items: center;
 }
 
+.nav-text-link {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    margin-right: 8px; /* space between text and icons */
+}
+
+.nav-text-link:hover {
+    color: var(--primary);
+}
+
 .nav-icon {
     color: var(--text-secondary);
     transition: var(--transition);
@@ -599,9 +612,66 @@ body {
     color: var(--text-secondary);
     line-height: 1.6;
 }
+/* Roles Page Styles */
+.roles-page {
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.streamers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+}
+
+.streamer-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.streamer-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--text-secondary);
+}
+
+.light-mode .streamer-card:hover {
+    background: var(--card-hover);
+    border-color: var(--card-border-hover);
+}
+
+.streamer-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--card-border);
+}
+
+.streamer-info h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.streamer-info .followers {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
 
 @media (max-width: 768px) {
-    .services-grid {
+    .services-grid, .streamers-grid {
         grid-template-columns: 1fr;
     }
 }
