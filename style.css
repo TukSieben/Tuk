@@ -632,10 +632,12 @@ body {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 24px;
+    padding: 32px 24px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
+    text-align: center;
+    gap: 16px;
     text-decoration: none;
     color: var(--text-primary);
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
@@ -652,11 +654,12 @@ body {
 }
 
 .streamer-avatar {
-    width: 64px;
-    height: 64px;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
     object-fit: cover;
     background: var(--card-border);
+    margin-bottom: 8px;
 }
 
 .streamer-info h3 {
