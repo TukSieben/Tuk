@@ -181,6 +181,11 @@ body {
     position: relative;
 }
 
+.roles-hero {
+    padding-top: 100px;
+    padding-bottom: 30px;
+}
+
 .hero-container {
     width: 100%;
     max-width: 1200px;
@@ -520,6 +525,11 @@ body {
     justify-content: center;
     border-top: 1px solid var(--card-border);
     transition: border-color 0.4s ease;
+}
+
+.roles-content {
+    padding-top: 40px;
+    border-top: none;
 }
 
 .expertise-container {
