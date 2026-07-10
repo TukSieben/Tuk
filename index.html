@@ -6,9 +6,9 @@
     <title>Tuk | Moderator & Event Coordinator</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=17">
+    <link rel="stylesheet" href="style.css?v=18">
 </head>
-<body>
+<body class="preload">
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader">
@@ -156,6 +156,11 @@
         } else {
             themeToggle.checked = true; // Right side (Night) = Default Dark Mode
         }
+        
+        // Remove preload class after a tiny delay so initial theme application doesn't transition
+        setTimeout(() => {
+            document.body.classList.remove('preload');
+        }, 50);
 
         themeToggle.addEventListener('change', () => {
             if (themeToggle.checked) {
