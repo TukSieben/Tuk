@@ -5,10 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tuk | Moderator & Event Coordinator</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=18">
+    <link rel="preload" href="logo.png" as="image">
+    <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body class="preload">
+    <script>
+        // Prevent theme flash (FOUC) by applying it before browser paints the body
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+        }
+    </script>
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader">
@@ -149,9 +158,8 @@
         // Theme Toggle Logic
         const themeToggle = document.getElementById('themeToggle');
         
-        // Initial setup for existing preferences (optional)
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-mode');
+        // Match checkbox state to the theme that was already set at the top of the body
+        if (document.body.classList.contains('light-mode')) {
             themeToggle.checked = false; // Left side (Day) = Light Mode
         } else {
             themeToggle.checked = true; // Right side (Night) = Default Dark Mode
