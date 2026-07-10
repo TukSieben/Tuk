@@ -110,20 +110,25 @@ body {
     align-items: center;
 }
 
-.logo {
+.logo-wrapper {
     display: flex;
     align-items: baseline;
+    gap: 12px;
+}
+
+.logo {
     font-size: 1.2rem;
     font-weight: 800;
     letter-spacing: 0.1em;
 }
 
-.logo-dot {
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary);
-    border-radius: 50%;
-    margin-left: 2px;
+.logo-subtitle {
+    font-family: 'Caveat', cursive;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+    transform: translateY(1px);
 }
 
 .nav-links {
