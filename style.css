@@ -666,6 +666,16 @@ body {
     font-size: 1.15rem;
     font-weight: 600;
     margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.verified-badge {
+    width: 18px;
+    height: 18px;
+    user-select: none;
 }
 
 .streamer-info .followers {
