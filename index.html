@@ -6,7 +6,7 @@
     <title>Tuk | Moderator & Event Coordinator</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
     <!-- Preloader -->
@@ -132,13 +132,10 @@
         // Preloader Logic
         window.addEventListener('load', () => {
             const preloader = document.getElementById('preloader');
-            // Show loader for at least 800ms so the user can see the cool animation, then fade it out.
+            preloader.classList.add('hidden');
             setTimeout(() => {
-                preloader.classList.add('hidden');
-                setTimeout(() => {
-                    preloader.style.display = 'none';
-                }, 500); // Wait for transition to finish
-            }, 800);
+                preloader.style.display = 'none';
+            }, 500); // Wait for transition to finish
         });
 
         // Theme Toggle Logic
