@@ -6,7 +6,7 @@
     <title>Tuk | Moderator & Event Coordinator</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=16">
+    <link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
     <!-- Preloader -->
@@ -130,12 +130,20 @@
 
     <script>
         // Preloader Logic
+        // The preloader is completely hidden by default in CSS to prevent the 0.1s flash on fast reloads.
+        const preloader = document.getElementById('preloader');
+        
+        let loaderTimeout = setTimeout(() => {
+            // Only if the page takes longer than 150ms to load, show the loader.
+            preloader.classList.add('show');
+        }, 150);
+
         window.addEventListener('load', () => {
-            const preloader = document.getElementById('preloader');
-            preloader.classList.add('hidden');
+            clearTimeout(loaderTimeout); // Cancel the "show" timer if it loaded fast
+            preloader.classList.remove('show');
             setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500); // Wait for transition to finish
+                preloader.style.display = 'none'; // Completely remove from DOM flow after fade out
+            }, 300);
         });
 
         // Theme Toggle Logic

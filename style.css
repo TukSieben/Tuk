@@ -1087,23 +1087,31 @@ body {
   background-position: 0 0 !important;
 }
 
-/* Preloader Overlay */
+/* Preloader Background Overlay */
 #preloader {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: var(--bg-dark); /* Matches dark theme background */
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-base);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-#preloader.hidden {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    
+    /* Initially hidden to prevent flash on fast loads */
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+}
+
+/* We remove .hidden and instead JS will manage opacity/visibility manually or via a .show class */
+#preloader.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 /* From Uiverse.io by andrew-manzyk */ 
