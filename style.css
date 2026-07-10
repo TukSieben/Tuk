@@ -177,7 +177,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .badge {
@@ -200,11 +199,11 @@ body {
 }
 
 .headline {
-    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 800;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 24px;
+    line-height: 1.05;
+    letter-spacing: -0.05em;
+    margin-bottom: 20px;
 }
 
 .highlight {
@@ -215,10 +214,10 @@ body {
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.5;
     color: var(--text-secondary);
-    max-width: 480px;
+    max-width: 440px;
     margin-bottom: 32px;
 }
 
@@ -233,9 +232,9 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 0.95rem;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.85rem;
     font-weight: 500;
     text-decoration: none;
     transition: var(--transition);
@@ -276,21 +275,19 @@ body {
 /* Right Visuals */
 .hero-visuals {
     position: relative;
-    height: 500px;
+    height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Custom 3D Logo */
 .custom-3d-logo {
     max-width: 100%;
-    width: 380px;
+    width: 320px;
     height: auto;
     object-fit: contain;
     background: transparent;
-    animation: float 6s ease-in-out infinite alternate;
 }
 
 /* Footer */
@@ -454,267 +451,129 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
     
-    /* Initially hidden to prevent flash on fast loads */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
 }
 
-/* We remove .hidden and instead JS will manage opacity/visibility manually or via a .show class */
 #preloader.show {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
 
-/* From Uiverse.io by andrew-manzyk */ 
-.loader {
-  --main-size: 4em;
-  --text-color: #ffffff;
-  --shine-color: #ffffff40;
-  --shadow-color: #aaaaaa;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  user-select: none;
-  position: relative;
-  font-size: var(--main-size);
-  font-weight: 900;
-  text-transform: uppercase;
-  color: var(--text-color);
-  width: 7.3em;
-  height: 1em;
-  filter: drop-shadow(0 0 0.05em var(--shine-color));
+/* Minimalist Loader Circle */
+.loader-circle {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--card-border);
+    border-top-color: var(--text-primary);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
-.loader .text {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  position: absolute;
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
-.loader .text:nth-child(1) {
-  clip-path: polygon(0% 0%, 11.11% 0%, 11.11% 100%, 0% 100%);
-  font-size: calc(var(--main-size) / 20);
-  margin-left: -2.1em;
-  opacity: 0.6;
+/* Scroll Animations */
+.fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.loader .text:nth-child(2) {
-  clip-path: polygon(11.11% 0%, 22.22% 0%, 22.22% 100%, 11.11% 100%);
-  font-size: calc(var(--main-size) / 16);
-  margin-left: -0.98em;
-  opacity: 0.7;
+.fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
-.loader .text:nth-child(3) {
-  clip-path: polygon(22.22% 0%, 33.33% 0%, 33.33% 100%, 22.22% 100%);
-  font-size: calc(var(--main-size) / 13);
-  margin-left: -0.33em;
-  opacity: 0.8;
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+
+/* Expertise Section */
+.expertise-section {
+    padding: 80px 24px;
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid var(--card-border);
+    transition: border-color 0.4s ease;
 }
 
-.loader .text:nth-child(4) {
-  clip-path: polygon(33.33% 0%, 44.44% 0%, 44.44% 100%, 33.33% 100%);
-  font-size: calc(var(--main-size) / 11);
-  margin-left: -0.05em;
-  opacity: 0.9;
+.expertise-container {
+    width: 100%;
+    max-width: 1200px;
 }
 
-.loader .text:nth-child(5) {
-  clip-path: polygon(44.44% 0%, 55.55% 0%, 55.55% 100%, 44.44% 100%);
-  font-size: calc(var(--main-size) / 10);
-  margin-left: 0em;
-  opacity: 1;
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -0.03em;
+    text-align: center;
 }
 
-.loader .text:nth-child(6) {
-  clip-path: polygon(55.55% 0%, 66.66% 0%, 66.66% 100%, 55.55% 100%);
-  font-size: calc(var(--main-size) / 11);
-  margin-left: 0.05em;
-  opacity: 0.9;
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
 }
 
-.loader .text:nth-child(7) {
-  clip-path: polygon(66.66% 0%, 77.77% 0%, 77.77% 100%, 66.66% 100%);
-  font-size: calc(var(--main-size) / 13);
-  margin-left: 0.33em;
-  opacity: 0.8;
+.service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 32px 24px;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-.loader .text:nth-child(8) {
-  clip-path: polygon(77.77% 0%, 88.88% 0%, 88.88% 100%, 77.77% 100%);
-  font-size: calc(var(--main-size) / 16);
-  margin-left: 0.98em;
-  opacity: 0.7;
+.service-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--text-secondary);
 }
 
-.loader .text:nth-child(9) {
-  clip-path: polygon(88.88% 0%, 100% 0%, 100% 100%, 88.88% 100%);
-  font-size: calc(var(--main-size) / 20);
-  margin-left: 2.1em;
-  opacity: 0.6;
+.light-mode .service-card:hover {
+    background: var(--card-hover);
+    border-color: var(--card-border-hover);
 }
 
-.loader .text span {
-  animation:
-    scrolling 2s cubic-bezier(0.1, 0.6, 0.9, 0.4) infinite,
-    shadow 2s cubic-bezier(0.1, 0.6, 0.9, 0.4) infinite;
+.service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--text-primary);
 }
 
-.loader .text:nth-child(1) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 4%,
-    var(--shadow-color) 7%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
+.light-mode .service-icon {
+    background: rgba(0, 0, 0, 0.03);
 }
 
-.loader .text:nth-child(2) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 9%,
-    var(--shadow-color) 13%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
+.service-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
 }
 
-.loader .text:nth-child(3) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 15%,
-    var(--shadow-color) 18%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
+.service-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
 }
 
-.loader .text:nth-child(4) span {
-  background: linear-gradient(
-    to right,
-    var(--text-color) 20%,
-    var(--shadow-color) 23%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
-}
-
-.loader .text:nth-child(6) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 29%,
-    var(--text-color) 32%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
-}
-
-.loader .text:nth-child(7) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 34%,
-    var(--text-color) 37%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
-}
-
-.loader .text:nth-child(8) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 39%,
-    var(--text-color) 42%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
-}
-
-.loader .text:nth-child(9) span {
-  background: linear-gradient(
-    to right,
-    var(--shadow-color) 45%,
-    var(--text-color) 48%
-  );
-  background-size: 200% auto;
-  background-clip: text;
-  color: transparent;
-}
-
-.loader .line {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  height: 0.05em;
-  width: calc(var(--main-size) / 2);
-  margin-top: 0.9em;
-  border-radius: 0.05em;
-}
-
-.loader .line::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: var(--text-color);
-  opacity: 0.3;
-}
-
-.loader .line::after {
-  content: "";
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background-color: var(--text-color);
-  border-radius: 0.05em;
-  transform: translateX(-90%);
-  animation: wobble 2s cubic-bezier(0.5, 0.8, 0.5, 0.2) infinite;
-}
-
-@keyframes wobble {
-  0% {
-    transform: translateX(-90%);
-  }
-  50% {
-    transform: translateX(90%);
-  }
-  100% {
-    transform: translateX(-90%);
-  }
-}
-
-@keyframes scrolling {
-  0% {
-    transform: translateX(-100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes shadow {
-  0% {
-    background-position: -98% 0;
-  }
-  100% {
-    background-position: 102% 0;
-  }
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
 }
