@@ -50,7 +50,7 @@ body {
     color: var(--text-primary);
     /* Typography */
     --font-primary: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    --font-headline: 'Space Grotesk', var(--font-primary);
+    --font-headline: 'Syne', var(--font-primary);
     font-family: var(--font-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
