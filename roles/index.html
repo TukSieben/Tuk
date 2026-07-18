@@ -254,6 +254,31 @@
         document.querySelectorAll('.fade-up').forEach(el => {
             observer.observe(el);
         });
+
+        // Live Twitch Follower Count Updater
+        // Extracts channel name from the a href and fetches current follower count
+        const streamerCards = document.querySelectorAll('.streamer-card');
+        streamerCards.forEach(async (card) => {
+            const href = card.getAttribute('href');
+            if (href && href.includes('twitch.tv/')) {
+                const channel = href.split('twitch.tv/')[1].split('/')[0].split('?')[0];
+                const followerEl = card.querySelector('.followers');
+                if (channel && followerEl) {
+                    try {
+                        const response = await fetch(`https://decapi.me/twitch/followcount/${channel}`);
+                        if (response.ok) {
+                            const countText = await response.text();
+                            const count = parseInt(countText, 10);
+                            if (!isNaN(count)) {
+                                followerEl.textContent = count.toLocaleString('en-US') + ' followers';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error fetching live followers for', channel, error);
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
