@@ -638,8 +638,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     background: rgba(100, 100, 255, 0.1);
     border-radius: 50%;
     border: 1px solid rgba(100, 100, 255, 0.2);
@@ -647,8 +647,8 @@ body {
 }
 
 .chatty-logo-img {
-    width: 64px;
-    height: 64px;
+    width: 110px;
+    height: 110px;
     object-fit: contain;
 }
 
