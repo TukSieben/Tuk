@@ -646,10 +646,10 @@ body {
     box-shadow: 0 0 40px rgba(100, 100, 255, 0.15);
 }
 
-.chatty-visual svg {
+.chatty-logo-img {
     width: 64px;
     height: 64px;
-    color: #8b8bff;
+    object-fit: contain;
 }
 
 @media (max-width: 768px) {
