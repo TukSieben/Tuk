@@ -566,6 +566,7 @@ body {
     border-radius: 16px;
     padding: 40px 60px;
     display: flex;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
