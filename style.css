@@ -280,6 +280,13 @@ body {
     transform: translateY(-2px);
 }
 
+.btn-primary.copied-effect {
+    background: #83c223;
+    border-color: #83c223;
+    color: #111;
+    transform: scale(0.95);
+}
+
 .btn-secondary {
     background: rgba(255, 255, 255, 0.03);
     color: var(--text-primary);
