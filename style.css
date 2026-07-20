@@ -601,7 +601,7 @@ body {
 }
 
 .chatty-highlight {
-    color: #a970ff; /* Subtle Twitch purple */
+    color: #83c223;
 }
 
 .chatty-banner p {
@@ -618,7 +618,7 @@ body {
 }
 
 .chatty-banner p a:hover {
-    color: #a970ff;
+    color: #83c223;
 }
 
 .chatty-visual {
