@@ -702,12 +702,12 @@ body {
 
 .streamer-card:hover {
     transform: translateY(-4px);
-    border-color: var(--text-secondary);
+    border-color: #83c223;
 }
 
 .light-mode .streamer-card:hover {
     background: var(--card-hover);
-    border-color: var(--card-border-hover);
+    border-color: #83c223;
 }
 
 .streamer-avatar {
