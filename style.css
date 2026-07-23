@@ -151,7 +151,7 @@ body {
 }
 
 .nav-text-link:hover {
-    color: var(--primary);
+    color: #83c223;
 }
 
 .nav-icon {
@@ -702,12 +702,12 @@ body {
 
 .streamer-card:hover {
     transform: translateY(-4px);
-    border-color: #83c223;
+    border-color: var(--text-secondary);
 }
 
 .light-mode .streamer-card:hover {
     background: var(--card-hover);
-    border-color: #83c223;
+    border-color: var(--card-border-hover);
 }
 
 .streamer-avatar {
