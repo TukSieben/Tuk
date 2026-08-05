@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Poppins:wght@400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <link rel="preload" href="../logo.png" as="image">
-    <link rel="stylesheet" href="../style.css?v=50">
+    <link rel="stylesheet" href="../style.css?v=51">
 </head>
 <body class="preload">
     <script>
@@ -298,12 +298,18 @@
                 const href = card.getAttribute('href');
                 let count = 0; // Fallback value
                 let isLive = false;
+                let avatarUrl = '';
                 
                 // Read static text first to have a fallback if API fails
                 const followerEl = card.querySelector('.followers');
                 if (followerEl) {
                     const fallbackCount = parseInt(followerEl.textContent.replace(/,/g, ''), 10);
                     if (!isNaN(fallbackCount)) count = fallbackCount;
+                }
+                
+                const avatarEl = card.querySelector('.streamer-avatar');
+                if (avatarEl) {
+                    avatarUrl = avatarEl.src;
                 }
 
                 if (href && href.includes('twitch.tv/')) {
@@ -319,6 +325,7 @@
                                 if (Date.now() - parsed.timestamp < 3 * 60 * 1000) { // 3 minutes cache
                                     count = parsed.followers;
                                     isLive = parsed.isLive;
+                                    if (parsed.avatarUrl) avatarUrl = parsed.avatarUrl;
                                     useCache = true;
                                 }
                             } catch (e) {
@@ -327,11 +334,12 @@
                         }
 
                         if (!useCache) {
-                            // Fetch both followers and uptime in parallel for this channel
+                            // Fetch followers, uptime, and avatar in parallel for this channel
                             try {
-                                const [followRes, uptimeRes] = await Promise.all([
+                                const [followRes, uptimeRes, avatarRes] = await Promise.all([
                                     fetch(`https://decapi.me/twitch/followcount/${channel}`),
-                                    fetch(`https://decapi.me/twitch/uptime/${channel}`)
+                                    fetch(`https://decapi.me/twitch/uptime/${channel}`),
+                                    fetch(`https://decapi.me/twitch/avatar/${channel}`)
                                 ]);
                                 
                                 if (followRes.ok) {
@@ -344,11 +352,19 @@
                                     const uptimeText = await uptimeRes.text();
                                     isLive = !uptimeText.toLowerCase().includes('offline');
                                 }
+
+                                if (avatarRes.ok) {
+                                    const avatarText = (await avatarRes.text()).trim();
+                                    if (avatarText.startsWith('http')) {
+                                        avatarUrl = avatarText;
+                                    }
+                                }
                                 
                                 // Save to cache
                                 localStorage.setItem(cacheKey, JSON.stringify({
                                     followers: count,
                                     isLive,
+                                    avatarUrl,
                                     timestamp: Date.now()
                                 }));
                             } catch (error) {
@@ -359,6 +375,11 @@
                         // Update DOM: Followers count
                         if (followerEl) {
                             followerEl.textContent = count.toLocaleString('en-US') + ' followers';
+                        }
+
+                        // Update DOM: Avatar
+                        if (avatarEl && avatarUrl) {
+                            avatarEl.src = avatarUrl;
                         }
 
                         // Update DOM: Live Badge
