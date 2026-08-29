@@ -830,7 +830,7 @@ body {
     font-family: var(--font-headline);
     font-size: 3.5rem;
     font-weight: 800;
-    color: var(--primary);
+    color: #83c223;
     margin-bottom: 8px;
     line-height: 1;
 }
