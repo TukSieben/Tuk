@@ -32,10 +32,10 @@
         <div class="nav-container">
             <div class="logo-wrapper">
                 <div class="logo">TUK</div>
-                <div class="logo-subtitle">Twitch Moderator & Event Coordinator</div>
+                <div class="logo-subtitle" data-en="Twitch Moderator & Event Coordinator" data-de="Twitch Moderator & Event Koordinator">Twitch Moderator & Event Coordinator</div>
             </div>
             <div class="nav-links">
-                <a href="/roles" class="nav-text-link">Roles</a>
+                <a href="/roles" class="nav-text-link" data-en="Roles" data-de="Rollen">Roles</a>
                 <a href="https://twitch.tv/tuk7" target="_blank" rel="noopener noreferrer" class="nav-icon" aria-label="Twitch">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path></svg>
                 </a>
@@ -48,6 +48,7 @@
                     </svg>
                 </a>
                 
+                <button id="langToggleBtn" class="lang-toggle-btn">EN</button>
                 <!-- Theme Switch -->
                 <label class="switch">
                   <input id="themeToggle" type="checkbox" />
@@ -74,12 +75,12 @@
             <!-- Left Side: Text -->
             <div class="hero-content">
                 
-                <h1 class="headline fade-up delay-1">
+                <h1 class="headline fade-up delay-1" data-en="Your stream.<br><span class=&quot;highlight&quot;>Your rules.</span>" data-de="Dein Stream.<br><span class=&quot;highlight&quot;>Deine Regeln.</span>">
                     Your stream.<br>
                     <span class="highlight">Your rules.</span>
                 </h1>
                 
-                <p class="subtitle fade-up delay-2">
+                <p class="subtitle fade-up delay-2" data-en="A great moderator has your back. We manage the chat and handle the background tasks, so you can focus 100% on entertaining your community." data-de="Ein guter Moderator hält dir den Rücken frei. Wir managen den Chat und erledigen die Hintergrundaufgaben, damit du dich zu 100% auf die Unterhaltung deiner Community konzentrieren kannst.">
                     A great moderator has your back. We manage the chat and handle the background tasks, so you can focus 100% on entertaining your community.
                 </p>
 
@@ -92,7 +93,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0314a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>
                         </svg>
-                        Join Discord
+                        <span data-en="Join Discord" data-de="Discord beitreten">Join Discord</span>
                     </a>
                 </div>
             </div>
@@ -104,13 +105,31 @@
         </div>
     </main>
     
+        <!-- Stats Section -->
+    <section class="stats-section fade-up delay-1">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3 class="stat-number"><span class="counter" data-target="130">0</span>+</h3>
+                <p class="stat-label" data-en="Streamers" data-de="Streamer">Streamers</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="stat-number"><span class="counter" data-target="5">0</span>+</h3>
+                <p class="stat-label" data-en="Years Experience" data-de="Jahre Erfahrung">Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <h3 class="stat-number"><span class="counter" data-target="15">0</span>M+</h3>
+                <p class="stat-label" data-en="Total Followers" data-de="Gesamtfollower">Total Followers</p>
+            </div>
+        </div>
+    </section>
+
     <!-- Tooling Section -->
     <section class="tooling-section fade-up delay-1">
         <div class="chatty-banner">
             <div class="chatty-content">
-                <div class="chatty-badge">Moderation Tool</div>
-                <h2>I use <span class="chatty-highlight">Chatty</span> <img src="32.png" alt="Chatty Icon" class="chatty-inline-icon"></h2>
-                <p>I use the chat tool <a href="https://chatty.github.io/" target="_blank" rel="noopener noreferrer">Chatty</a> to moderate streamers because it is much clearer and easier to follow in fast-moving chats.</p>
+                <div class="chatty-badge" data-en="Moderation Tool" data-de="Moderations-Tool">Moderation Tool</div>
+                <h2 data-en="I use <span class=&quot;chatty-highlight&quot;>Chatty</span> <img src=&quot;32.png&quot; alt=&quot;Chatty Icon&quot; class=&quot;chatty-inline-icon&quot;>" data-de="Ich nutze <span class=&quot;chatty-highlight&quot;>Chatty</span> <img src=&quot;32.png&quot; alt=&quot;Chatty Icon&quot; class=&quot;chatty-inline-icon&quot;>">I use <span class="chatty-highlight">Chatty</span> <img src="32.png" alt="Chatty Icon" class="chatty-inline-icon"></h2>
+                <p data-en="I use the chat tool <a href=&quot;https://chatty.github.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;>Chatty</a> to moderate streamers because it is much clearer and easier to follow in fast-moving chats." data-de="Ich nutze das Chat-Tool <a href=&quot;https://chatty.github.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;>Chatty</a>, um Streamer zu moderieren, da es viel übersichtlicher ist und es leichter fällt, schnellen Chats zu folgen.">I use the chat tool <a href="https://chatty.github.io/" target="_blank" rel="noopener noreferrer">Chatty</a> to moderate streamers because it is much clearer and easier to follow in fast-moving chats.</p>
             </div>
             <div class="chatty-visual">
                 <img src="alien.gif" alt="Alien Logo" class="chatty-logo-img">
@@ -203,6 +222,62 @@
             }).catch(err => {
                 console.error('Failed to copy: ', err);
             });
+        });
+
+        // Language Toggle Logic
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        let currentLang = localStorage.getItem('tuk_lang') || 'en';
+
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-en][data-de]').forEach(el => {
+                el.innerHTML = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
+            });
+            langToggleBtn.textContent = lang === 'de' ? 'DE' : 'EN';
+            
+            // Re-bind email copy text if it changed
+            if (lang === 'de') {
+                copyText.innerText = 'tukk@tuta.io'; // keep email
+            }
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'en' ? 'de' : 'en';
+            localStorage.setItem('tuk_lang', currentLang);
+            updateLanguage(currentLang);
+        });
+
+        // Initialize language
+        updateLanguage(currentLang);
+
+        // Counter Animation Logic
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    const duration = 2000; // ms
+                    const step = target / (duration / 16); // 60fps
+                    let current = 0;
+
+                    const updateCounter = () => {
+                        current += step;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+
+                    updateCounter();
+                    obs.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => {
+            counterObserver.observe(counter);
         });
     </script>
 </body>

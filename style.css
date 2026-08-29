@@ -783,3 +783,65 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* Language Toggle */
+.lang-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    color: var(--text-primary);
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 8px;
+    transition: var(--transition);
+    margin-right: 12px;
+}
+.lang-toggle-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+/* Stats Section */
+.stats-section {
+    padding: 40px 24px;
+    display: flex;
+    justify-content: center;
+}
+.stats-container {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 40px 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.stat-item {
+    text-align: center;
+    flex: 1;
+}
+.stat-number {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+    line-height: 1;
+}
+.stat-label {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+@media (max-width: 768px) {
+    .stats-container {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
