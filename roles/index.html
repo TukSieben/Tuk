@@ -36,11 +36,11 @@
                 </a>
                 <div class="logo-wrapper">
                     <div class="logo">TUK</div>
-                    <div class="logo-subtitle">Twitch Moderator & Event Coordinator</div>
+                    <div class="logo-subtitle" data-en="Twitch Moderator & Event Coordinator" data-de="Twitch Moderator & Event Koordinator">Twitch Moderator & Event Coordinator</div>
                 </div>
             </div>
             <div class="nav-links">
-                <a href="/roles" class="nav-text-link">Roles</a>
+                <a href="/roles" class="nav-text-link" data-en="Roles" data-de="Rollen">Roles</a>
                 <a href="https://twitch.tv/tuk7" target="_blank" rel="noopener noreferrer" class="nav-icon" aria-label="Twitch">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path></svg>
                 </a>
@@ -53,6 +53,7 @@
                     </svg>
                 </a>
                 
+                <button id="langToggleBtn" class="lang-toggle-btn">EN</button>
                 <!-- Theme Switch -->
                 <label class="switch">
                   <input id="themeToggle" type="checkbox" />
@@ -76,11 +77,11 @@
     <main class="hero-section roles-hero">
         <div class="hero-container">
             <div class="hero-content">
-                <h1 class="headline fade-up delay-1">
+                <h1 class="headline fade-up delay-1" data-en="Twitch<br><span class=&quot;highlight&quot;>Moderation</span>" data-de="Twitch<br><span class=&quot;highlight&quot;>Moderation</span>">
                     Twitch<br>
                     <span class="highlight">Moderation</span>
                 </h1>
-                <p class="subtitle fade-up delay-2">
+                <p class="subtitle fade-up delay-2" data-en="You focus on the content, I focus on the community. Trusted moderation for top Twitch creators." data-de="Du fokussierst dich auf den Content, ich mich auf die Community. Vertrauenswürdige Moderation für Top-Twitch-Creator.">
                     You focus on the content, I focus on the community. Trusted moderation for top Twitch creators.
                 </p>
             </div>
@@ -93,8 +94,8 @@
     <!-- Expertise Section (Reused for Partners) -->
     <section class="expertise-section roles-content">
         <div class="expertise-container">
-            <h2 class="section-title fade-up">Modding / Modded for</h2>
-            <p class="fade-up" style="text-align: center; color: var(--text-secondary); margin-bottom: 40px; margin-top: -30px;">Trusted by 130+ streamers. Here is a selection of verified Twitch channels I currently moderate or have moderated in the past.</p>
+            <h2 class="section-title fade-up" data-en="Modding / Modded for" data-de="Modding / Mod war ich bei">Modding / Modded for</h2>
+            <p class="fade-up" style="text-align: center; color: var(--text-secondary); margin-bottom: 40px; margin-top: -30px;" data-en="Trusted by 130+ streamers. Here is a selection of verified Twitch channels I currently moderate or have moderated in the past." data-de="Über 130 Streamern vertrauen mir. Hier ist eine Auswahl an verifizierten Twitch-Kanälen, die ich derzeit moderiere oder in der Vergangenheit moderiert habe.">Trusted by 130+ streamers. Here is a selection of verified Twitch channels I currently moderate or have moderated in the past.</p>
             <div class="streamers-grid">
 
                 <a href="https://twitch.tv/PlaqueBoyMax" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
@@ -398,6 +399,28 @@
         }
 
         updateAndSortStreamers();
+
+        // Language Toggle Logic
+        const langToggleBtn = document.getElementById('langToggleBtn');
+        let currentLang = localStorage.getItem('tuk_lang') || 'en';
+
+        function updateLanguage(lang) {
+            document.querySelectorAll('[data-en][data-de]').forEach(el => {
+                el.innerHTML = lang === 'de' ? el.getAttribute('data-de') : el.getAttribute('data-en');
+            });
+            langToggleBtn.textContent = lang === 'de' ? 'DE' : 'EN';
+        }
+
+        if (langToggleBtn) {
+            langToggleBtn.addEventListener('click', () => {
+                currentLang = currentLang === 'en' ? 'de' : 'en';
+                localStorage.setItem('tuk_lang', currentLang);
+                updateLanguage(currentLang);
+            });
+        }
+
+        // Initialize language
+        updateLanguage(currentLang);
     </script>
 </body>
 </html>
