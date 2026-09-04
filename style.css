@@ -784,24 +784,7 @@ body {
     }
 }
 
-/* Language Toggle */
-.lang-toggle-btn {
-    background: transparent;
-    border: 1px solid var(--card-border);
-    color: var(--text-primary);
-    font-family: var(--font-primary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 6px 10px;
-    border-radius: 8px;
-    transition: var(--transition);
-    margin-right: 12px;
-}
-.lang-toggle-btn:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-}
+
 
 /* Stats Section */
 .stats-section {
