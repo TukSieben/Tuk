@@ -681,21 +681,18 @@ body {
 }
 
 .streamer-card {
-    position: relative;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px 24px;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
-    gap: 16px;
+    gap: 20px;
+    text-align: left;
     text-decoration: none;
     color: var(--text-primary);
-    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .live-badge {
@@ -735,29 +732,22 @@ body {
 }
 
 .streamer-card:hover {
-    transform: translateY(-8px);
-    border-color: rgba(145, 70, 255, 0.4); /* Twitch purple hint */
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(145, 70, 255, 0.15);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.1);
 }
 
 
 
 .streamer-avatar {
-    width: 88px;
-    height: 88px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     object-fit: cover;
     background: var(--card-border);
-    margin-bottom: 8px;
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.4s ease, border-color 0.4s ease;
+    margin-bottom: 0;
 }
 
-.streamer-card:hover .streamer-avatar {
-    transform: scale(1.05);
-    border-color: rgba(145, 70, 255, 0.4);
-}
+
 
 .streamer-info h3 {
     font-family: var(--font-headline);
@@ -766,7 +756,7 @@ body {
     margin-bottom: 4px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 6px;
 }
 
