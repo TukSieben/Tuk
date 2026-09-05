@@ -229,7 +229,7 @@
                 if (entry.isIntersecting) {
                     const counter = entry.target;
                     const target = +counter.getAttribute('data-target');
-                    const duration = 2000; // ms
+                    const duration = 4500; // ms - increased for a smoother, slower count
                     const step = target / (duration / 16); // 60fps
                     let current = 0;
 
