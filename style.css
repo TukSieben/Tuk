@@ -1,5 +1,5 @@
 :root {
-    --bg-base: #09090b; /* Deep Zinc */
+    --bg-base: #0f0f10; /* Deep Zinc */
     --text-primary: #fafafa;
     --text-secondary: #a1a1aa;
     
@@ -63,6 +63,7 @@ body {
 
 /* Grid Background */
 .grid-bg {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
