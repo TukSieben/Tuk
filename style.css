@@ -86,6 +86,7 @@ body {
 
 
 .nav-container {
+    position: relative;
     width: 100%;
     max-width: 1200px;
     padding: 0 24px;
@@ -109,11 +110,20 @@ body {
 
 .logo-subtitle {
     font-family: 'Caveat', cursive;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 400;
     color: var(--text-secondary);
     letter-spacing: 0.02em;
-    transform: translateY(1px);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+@media (max-width: 850px) {
+    .logo-subtitle {
+        display: none;
+    }
 }
 
 .nav-links {
