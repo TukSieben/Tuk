@@ -32,6 +32,7 @@
 }
 
 body {
+    position: relative;
     background-color: var(--bg-base);
     color: var(--text-primary);
     /* Typography */
@@ -864,7 +865,7 @@ body {
 
 /* Bottom Right Corner GIF */
 .corner-gif {
-    position: fixed;
+    position: absolute;
     bottom: 24px;
     right: 24px;
     width: 150px;
