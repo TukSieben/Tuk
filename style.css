@@ -115,7 +115,7 @@ body {
 
 .logo-wrapper {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     gap: 12px;
 }
 
@@ -435,7 +435,7 @@ body {
 
 .star {
   background-color: #fff;
-  border-radius: 50%;
+  
   position: absolute;
   width: 5px;
   transition: all 0.4s;
@@ -505,7 +505,7 @@ body {
     height: 32px;
     border: 3px solid var(--card-border);
     border-top-color: var(--text-primary);
-    border-radius: 50%;
+    
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
@@ -745,7 +745,7 @@ body {
     width: 6px;
     height: 6px;
     background-color: #ff3b30;
-    border-radius: 50%;
+    
     display: inline-block;
     animation: livePulse 1.5s infinite;
 }
@@ -769,7 +769,7 @@ body {
 .streamer-avatar {
     width: 72px;
     height: 72px;
-    border-radius: 50%;
+    
     object-fit: cover;
     background: var(--card-border);
     margin-bottom: 8px;
@@ -876,4 +876,11 @@ body {
     width: 16px;
     height: 16px;
     object-fit: contain;
+}
+
+.nav-logo-icon {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+    
 }
