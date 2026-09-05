@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Poppins:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&family=VT323&display=swap" rel="stylesheet">
     <link rel="preload" href="logo.png" as="image">
-    <link rel="stylesheet" href="style.css?v=59">
+    <link rel="stylesheet" href="style.css?v=60">
 </head>
 <body class="preload">
     <script>
@@ -104,7 +104,7 @@
     </main>
 
     <!-- Tooling Section -->
-    <section class="tooling-section fade-up delay-1">
+    <section class="tooling-section fade-up delay-1" style="perspective: 1000px;">
         <div class="chatty-banner">
             <div class="chatty-content">
                 <div class="chatty-badge">Moderation Tool</div>
@@ -254,10 +254,10 @@
         });
 
         // 3D Tilt & Glow Effect for Stats
-        const statsContainer = document.querySelector('.stats-container');
-        if (statsContainer) {
-            statsContainer.addEventListener('mousemove', (e) => {
-                const rect = statsContainer.getBoundingClientRect();
+        const chattyBanner = document.querySelector('.chatty-banner');
+        if (chattyBanner) {
+            chattyBanner.addEventListener('mousemove', (e) => {
+                const rect = chattyBanner.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
                 
@@ -268,16 +268,16 @@
                 const rotateX = ((y - centerY) / centerY) * -4;
                 const rotateY = ((x - centerX) / centerX) * 4;
                 
-                statsContainer.style.setProperty('--mouse-x', `${x}px`);
-                statsContainer.style.setProperty('--mouse-y', `${y}px`);
+                chattyBanner.style.setProperty('--mouse-x', `${x}px`);
+                chattyBanner.style.setProperty('--mouse-y', `${y}px`);
                 
-                statsContainer.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                statsContainer.style.transition = 'none'; // Instant follow
+                chattyBanner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                chattyBanner.style.transition = 'none'; // Instant follow
             });
             
-            statsContainer.addEventListener('mouseleave', () => {
-                statsContainer.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                statsContainer.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+            chattyBanner.addEventListener('mouseleave', () => {
+                chattyBanner.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                chattyBanner.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
             });
         }
     </script>
