@@ -515,7 +515,8 @@ body {
 }
 
 .roles-content {
-    padding-top: 10px;
+    padding-top: 0px;
+    margin-top: -60px;
     border-top: none;
 }
 
