@@ -682,9 +682,10 @@ body {
 
 .streamer-card {
     position: relative;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
     padding: 32px 24px;
     display: flex;
     flex-direction: column;
@@ -693,7 +694,8 @@ body {
     gap: 16px;
     text-decoration: none;
     color: var(--text-primary);
-    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 .live-badge {
@@ -733,19 +735,28 @@ body {
 }
 
 .streamer-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--text-secondary);
+    transform: translateY(-8px);
+    border-color: rgba(145, 70, 255, 0.4); /* Twitch purple hint */
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(145, 70, 255, 0.15);
 }
 
 
 
 .streamer-avatar {
-    width: 72px;
-    height: 72px;
-    
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
     object-fit: cover;
     background: var(--card-border);
     margin-bottom: 8px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+}
+
+.streamer-card:hover .streamer-avatar {
+    transform: scale(1.05);
+    border-color: rgba(145, 70, 255, 0.4);
 }
 
 .streamer-info h3 {
