@@ -177,7 +177,7 @@ body {
 
 .roles-hero {
     padding-top: 100px;
-    padding-bottom: 30px;
+    padding-bottom: 0px;
 }
 
 .hero-container {
@@ -515,7 +515,7 @@ body {
 }
 
 .roles-content {
-    padding-top: 40px;
+    padding-top: 10px;
     border-top: none;
 }
 
