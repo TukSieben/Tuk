@@ -867,3 +867,13 @@ body {
         border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 }
+.nav-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+.btn-icon-img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
