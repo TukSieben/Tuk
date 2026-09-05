@@ -14,21 +14,7 @@
     --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.light-mode {
-    --bg-base: #e4e4e7; /* Zinc 200 - Softer, eye-friendly off-white */
-    --text-primary: #09090b; /* Zinc 950 */
-    --text-secondary: #52525b; /* Zinc 600 */
-    
-    --card-bg: rgba(255, 255, 255, 0.6);
-    --card-hover: rgba(255, 255, 255, 0.9);
-    --card-border: rgba(0, 0, 0, 0.1);
-    --card-border-hover: rgba(0, 0, 0, 0.2);
-    
-    --primary: #0ea5e9;
-    --primary-hover: #0284c7;
-    
-    --grid-color: rgba(0, 0, 0, 0.05); /* Darker grid for light mode */
-}
+
 
 * {
     margin: 0;
@@ -78,11 +64,7 @@ body {
     transition: opacity 0.4s ease;
 }
 
-.light-mode .grid-bg {
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
-}
+
 
 /* Navbar */
 .navbar {
@@ -101,9 +83,7 @@ body {
     transition: background 0.4s ease, border-color 0.4s ease;
 }
 
-.light-mode .navbar {
-    background: rgba(244, 244, 245, 0.7);
-}
+
 
 .nav-container {
     width: 100%;
@@ -172,9 +152,7 @@ body {
     background: rgba(255, 255, 255, 0.05);
 }
 
-.light-mode .nav-icon:hover {
-    background: rgba(0, 0, 0, 0.05);
-}
+
 
 /* Hero Section */
 .hero-section {
@@ -222,9 +200,7 @@ body {
     transition: background 0.4s ease, border-color 0.4s ease;
 }
 
-.light-mode .badge {
-    background: rgba(0, 0, 0, 0.03);
-}
+
 
 .headline {
     font-family: var(--font-headline);
@@ -294,19 +270,14 @@ body {
     border: 1px solid var(--card-border);
 }
 
-.light-mode .btn-secondary {
-    background: rgba(0, 0, 0, 0.03);
-}
+
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-.light-mode .btn-secondary:hover {
-    background: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.2);
-}
+
 
 /* Right Visuals */
 .hero-visuals {
@@ -381,15 +352,7 @@ body {
 
 /* Theme Switch */
 /* The switch - the box around the slider */
-.switch {
-  font-size: 11px; /* Smaller size */
-  position: relative;
-  display: inline-block;
-  width: 4em;
-  height: 2.2em;
-  border-radius: 30px;
-  margin-left: 0.5rem; /* Small gap from Discord icon */
-}
+
 
 /* Hide default HTML checkbox */
 .switch input {
@@ -762,10 +725,7 @@ body {
     border-color: var(--text-secondary);
 }
 
-.light-mode .streamer-card:hover {
-    background: var(--card-hover);
-    border-color: var(--card-border-hover);
-}
+
 
 .streamer-avatar {
     width: 72px;

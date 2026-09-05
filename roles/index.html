@@ -12,14 +12,8 @@
     <link rel="preload" href="../logo.png" as="image">
     <link rel="stylesheet" href="../style.css?v=64">
 </head>
-<body class="preload">
-    <script>
-        // Prevent theme flash (FOUC) by applying it before browser paints the body
-        // We use 'tuk_theme' to reset the cache for everyone to dark mode
-        if (localStorage.getItem('tuk_theme') === 'light') {
-            document.body.classList.add('light-mode');
-        }
-    </script>
+<body>
+    
     <!-- Preloader -->
     <div id="preloader">
         <div class="loader-circle"></div>
@@ -51,21 +45,7 @@
                 <a href="https://discord.gg/vnYaYtHwxq" target="_blank" rel="noopener noreferrer" class="nav-icon" aria-label="Discord">
                     <img src="../dc.png" alt="Discord" class="nav-icon-img">
                 </a>
-                <!-- Theme Switch -->
-                <label class="switch">
-                  <input id="themeToggle" type="checkbox" />
-                  <span class="slider">
-                    <div class="star star_1"></div>
-                    <div class="star star_2"></div>
-                    <div class="star star_3"></div>
-                    <svg viewBox="0 0 16 16" class="cloud_1 cloud">
-                      <path
-                        transform="matrix(.77976 0 0 .78395-299.99-418.63)"
-                        d="M394.04 547.41c-3.1408 0-5.8344 2.3789-6.2238 5.5186-2.1334.42831-3.7712 2.3276-3.7712 4.6295 0 2.6186 2.1228 4.7414 4.7414 4.7414h10.457c3.1557 0 5.713-2.5573 5.713-5.713 0-3.0877-2.4552-5.5979-5.5186-5.713-.67965-2.0232-2.6105-3.4635-4.8876-3.4635z"
-                      ></path>
-                    </svg>
-                  </span>
-                </label>
+                
             </div>
         </div>
     </nav>
@@ -260,32 +240,7 @@
             }, 300);
         });
 
-        // Theme Toggle Logic
-        const themeToggle = document.getElementById('themeToggle');
         
-        // Match checkbox state to the theme that was already set at the top of the body
-        if (document.body.classList.contains('light-mode')) {
-            themeToggle.checked = true; // Checked means Day / Light Mode
-        } else {
-            themeToggle.checked = false; // Unchecked means Night / Dark Mode
-        }
-        
-        // Remove preload class after a tiny delay so initial theme application doesn't transition
-        setTimeout(() => {
-            document.body.classList.remove('preload');
-        }, 50);
-
-        themeToggle.addEventListener('change', () => {
-            if (themeToggle.checked) {
-                // Checked means Day / Light Mode
-                document.body.classList.add('light-mode');
-                localStorage.setItem('tuk_theme', 'light');
-            } else {
-                // Unchecked means Night / Dark Mode
-                document.body.classList.remove('light-mode');
-                localStorage.setItem('tuk_theme', 'dark');
-            }
-        });
 
         // Intersection Observer for Scroll Animations
         const observerOptions = {
