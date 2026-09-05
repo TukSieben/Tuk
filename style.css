@@ -866,7 +866,7 @@ body {
 /* Bottom Right Corner GIF */
 .corner-gif {
     position: absolute;
-    bottom: 24px;
+    bottom: 0px;
     right: 24px;
     width: 150px;
     height: auto;
@@ -879,7 +879,7 @@ body {
 @media (max-width: 768px) {
     .corner-gif {
         width: 100px;
-        bottom: 16px;
+        bottom: 0px;
         right: 16px;
     }
 }
