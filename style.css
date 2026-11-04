@@ -73,97 +73,162 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 70px;
-    background: rgba(9, 9, 11, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--card-border);
+    height: 72px;
+    background: rgba(12, 12, 14, 0.78);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     z-index: 100;
     display: flex;
     justify-content: center;
-    transition: background 0.4s ease, border-color 0.4s ease;
 }
-
-
 
 .nav-container {
     position: relative;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1160px;
     padding: 0 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo-wrapper {
-    display: flex;
+.nav-brand {
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 11px;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: opacity 0.2s ease;
 }
 
-.logo {
-    font-family: 'Reenie Beanie', cursive;
-    font-size: 2rem;
-    font-weight: 400;
-    letter-spacing: 0.05em;
+.nav-brand:hover {
+    opacity: 0.9;
 }
 
-.logo-subtitle {
-    font-family: 'Chilanka', cursive;
-    font-size: 1.15rem;
-    font-weight: 400;
+.nav-logo-icon {
+    height: 30px;
+    width: auto;
+    object-fit: contain;
+}
+
+.nav-brand-name {
+    font-family: var(--font-headline);
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.nav-brand-divider {
+    width: 1px;
+    height: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 0 2px;
+}
+
+.nav-brand-tag {
+    font-family: var(--font-primary);
+    font-size: 0.82rem;
+    font-weight: 500;
     color: var(--text-secondary);
-    letter-spacing: 0.02em;
+    letter-spacing: -0.01em;
+}
+
+.nav-center-pills {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%) translateY(3px);
-    white-space: nowrap;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 100px;
 }
 
-@media (max-width: 850px) {
-    .logo-subtitle {
-        display: none;
-    }
+.nav-pill {
+    font-family: var(--font-primary);
+    font-size: 0.84rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 100px;
+    transition: all 0.2s ease;
+}
+
+.nav-pill:hover {
+    color: var(--text-primary);
+}
+
+.nav-pill.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    font-weight: 600;
 }
 
 .nav-links {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     align-items: center;
 }
 
-.nav-text-link {
+.nav-social-btn {
     color: var(--text-secondary);
-    font-size: 0.95rem;
-    font-weight: 500;
-    text-decoration: none;
-    transition: var(--transition);
-    margin-right: 8px; /* space between text and icons */
-}
-
-.nav-text-link:hover {
-    color: #83c223;
-}
-
-.nav-icon {
-    color: var(--text-secondary);
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     width: 36px;
     height: 36px;
-    border-radius: 8px;
+    border-radius: 9px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
 
-.nav-icon:hover {
+.nav-social-btn:hover {
     color: var(--text-primary);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
 }
 
+.nav-social-btn.twitch-btn:hover {
+    color: #a970ff;
+    border-color: rgba(169, 112, 255, 0.35);
+    background: rgba(145, 70, 255, 0.1);
+}
 
+.nav-social-btn.x-btn:hover {
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.nav-social-btn.discord-btn:hover {
+    color: #7289da;
+    border-color: rgba(114, 137, 218, 0.35);
+    background: rgba(88, 101, 242, 0.1);
+}
+
+@media (max-width: 900px) {
+    .nav-brand-divider,
+    .nav-brand-tag {
+        display: none;
+    }
+}
+
+@media (max-width: 520px) {
+    .nav-container {
+        padding: 0 16px;
+    }
+    .nav-pill {
+        padding: 5px 12px;
+        font-size: 0.8rem;
+    }
+}
 
 /* Hero Section */
 .hero-section {
