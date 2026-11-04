@@ -1197,6 +1197,26 @@ body {
     font-weight: 400;
 }
 
+.live-meta {
+    margin-top: 4px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-variant-numeric: tabular-nums;
+}
+
+.live-game {
+    color: #f87171;
+    font-weight: 600;
+}
+
+.live-viewers {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
 .card-right {
     display: flex;
     align-items: center;
