@@ -282,9 +282,10 @@ body {
     font-family: var(--font-headline);
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 700;
-    line-height: 1.05;
+    line-height: 1.18;
+    padding-bottom: 0.08em;
     letter-spacing: -0.05em;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     background: linear-gradient(90deg, #cfe92b 0%, #e6f296 25%, #b6f486 50%, #88d4c3 75%, #4cf0a9 100%);
     -webkit-background-clip: text;
     background-clip: text;
@@ -297,6 +298,7 @@ body {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
+    padding-bottom: 0.08em;
 }
 
 .subtitle {
@@ -905,8 +907,9 @@ body {
     font-size: clamp(2.2rem, 3.8vw, 3.2rem);
     font-weight: 700;
     letter-spacing: -0.04em;
-    line-height: 1.1;
-    margin-bottom: 14px;
+    line-height: 1.22;
+    padding-bottom: 0.1em;
+    margin-bottom: 10px;
     background: linear-gradient(90deg, #cfe92b 0%, #e6f296 25%, #b6f486 50%, #88d4c3 75%, #4cf0a9 100%);
     -webkit-background-clip: text;
     background-clip: text;
