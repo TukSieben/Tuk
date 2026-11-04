@@ -355,6 +355,80 @@ body {
 
 
 
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.hero-badge-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #83c223;
+}
+
+.btn-secondary.copied-effect {
+    background: #83c223;
+    border-color: #83c223;
+    color: #111;
+    transform: scale(0.96);
+}
+
+.hero-trust-row {
+    margin-top: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 0.84rem;
+    transition: color 0.2s ease;
+}
+
+.hero-trust-row:hover {
+    color: var(--text-primary);
+}
+
+.hero-trust-row strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.trust-avatars {
+    display: flex;
+    align-items: center;
+}
+
+.trust-avatars img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--bg-base);
+    margin-left: -8px;
+}
+
+.trust-avatars img:first-child {
+    margin-left: 0;
+}
+
+@media (max-width: 900px) {
+    .hero-trust-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
 /* Right Visuals */
 .hero-visuals {
     position: relative;
