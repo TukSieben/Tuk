@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Chilanka&family=Reenie+Beanie&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=102">
+    <link rel="stylesheet" href="../style.css?v=103">
 </head>
 <body>
     
@@ -87,6 +87,9 @@
                     <span class="live-dot-small"></span>
                     Live Now <span class="tab-count" id="liveTabCount">0</span>
                 </button>
+                <button class="filter-tab" data-filter="su26">
+                    Streamer University '26 <span class="tab-count">5</span>
+                </button>
             </div>
             <div class="roles-search-box">
                 <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
@@ -96,7 +99,7 @@
 
         <!-- Streamers Grid -->
         <div class="streamers-grid" id="streamersGrid">
-            <a href="https://twitch.tv/PlaqueBoyMax" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+            <a href="https://twitch.tv/PlaqueBoyMax" data-su26="true" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
                 <div class="avatar-wrapper">
                     <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cbfd449c-97b5-448c-82bd-f55b12cd4a97-profile_image-300x300.png" alt="PlaqueBoyMax" class="streamer-avatar">
                 </div>
@@ -213,7 +216,7 @@
                 </div>
             </a>
 
-            <a href="https://twitch.tv/ilikehaskell" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+            <a href="https://twitch.tv/ilikehaskell" data-su26="true" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
                 <div class="avatar-wrapper">
                     <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/47926a3e-8f58-48ea-8e3c-a81197906175-profile_image-300x300.png" alt="ilikehaskell" class="streamer-avatar">
                 </div>
@@ -226,7 +229,7 @@
                 </div>
             </a>
 
-            <a href="https://twitch.tv/reemknocks" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+            <a href="https://twitch.tv/reemknocks" data-su26="true" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
                 <div class="avatar-wrapper">
                     <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c0bc29bf-12eb-49c9-85a0-422acb35ea3d-profile_image-300x300.png" alt="reemknocks" class="streamer-avatar">
                 </div>
@@ -239,7 +242,7 @@
                 </div>
             </a>
 
-            <a href="https://twitch.tv/yaboyyywill" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
+            <a href="https://twitch.tv/yaboyyywill" data-su26="true" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
                 <div class="avatar-wrapper">
                     <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/58c15d49-5152-408e-99aa-6d85cfbff149-profile_image-300x300.png" alt="yaboyyywill" class="streamer-avatar">
                 </div>
@@ -252,7 +255,7 @@
                 </div>
             </a>
 
-            <a href="https://twitch.tv/corey2u" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+            <a href="https://twitch.tv/corey2u" data-su26="true" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
                 <div class="avatar-wrapper">
                     <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/77646afc-a034-4ee8-a4a0-9e9f08c66bf6-profile_image-300x300.png" alt="corey2u" class="streamer-avatar">
                 </div>
@@ -423,7 +426,8 @@
                 const name = (card.querySelector('h3')?.textContent || '').trim().toLowerCase();
                 const isLive = card.dataset.live === 'true';
                 const matchesSearch = !query || name.includes(query);
-                const matchesTab = activeFilter === 'all' || (activeFilter === 'live' && isLive);
+                const isSU26 = card.dataset.su26 === 'true';
+                const matchesTab = activeFilter === 'all' || (activeFilter === 'live' && isLive) || (activeFilter === 'su26' && isSU26);
 
                 if (matchesSearch && matchesTab) {
                     card.style.display = 'flex';
