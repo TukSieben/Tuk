@@ -333,12 +333,7 @@ body {
     transform: translateY(-2px);
 }
 
-.btn-primary.copied-effect {
-    background: #83c223;
-    border-color: #83c223;
-    color: #111;
-    transform: scale(0.95);
-}
+
 
 .btn-secondary {
     background: rgba(255, 255, 255, 0.03);
@@ -377,11 +372,82 @@ body {
     background-color: #83c223;
 }
 
-.btn-secondary.copied-effect {
-    background: #83c223;
-    border-color: #83c223;
-    color: #111;
-    transform: scale(0.96);
+.copy-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.copy-btn.copied-effect {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: var(--text-primary);
+}
+
+.copy-label-stack {
+    display: inline-grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.copy-label-stack > span {
+    grid-area: 1 / 1;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), filter 0.22s ease;
+}
+
+.copy-text-default {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+}
+
+.copy-text-done {
+    opacity: 0;
+    transform: translateY(7px);
+    filter: blur(2px);
+    font-weight: 600;
+}
+
+.copy-btn.copied-effect .copy-text-default {
+    opacity: 0;
+    transform: translateY(-7px);
+    filter: blur(2px);
+}
+
+.copy-btn.copied-effect .copy-text-done {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+}
+
+.copy-icon-stack {
+    display: inline-grid;
+    align-items: center;
+    justify-items: center;
+}
+
+.copy-icon-stack > svg {
+    grid-area: 1 / 1;
+    transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.icon-copy {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.icon-check {
+    opacity: 0;
+    transform: scale(0.4);
+}
+
+.copy-btn.copied-effect .icon-copy {
+    opacity: 0;
+    transform: scale(0.4);
+}
+
+.copy-btn.copied-effect .icon-check {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .hero-trust-row {
