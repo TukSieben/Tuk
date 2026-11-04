@@ -378,9 +378,9 @@ body {
 }
 
 .copy-btn.copied-effect {
-    background: #e4e4e7;
-    border-color: #e4e4e7;
-    color: var(--bg-base);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: var(--text-primary);
 }
 
 .copy-label-stack {
@@ -734,7 +734,7 @@ body {
     font-weight: 700;
     margin-bottom: 40px;
     text-align: center;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.03em;
 }
 
 /* Tooling Section */
