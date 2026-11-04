@@ -141,14 +141,29 @@ body {
     transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 2px;
     padding: 4px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.07);
     border-radius: 100px;
 }
 
+.nav-pill-glider {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    background: rgba(255, 255, 255, 0.11);
+    border-radius: 100px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), width 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+
 .nav-pill {
+    position: relative;
+    z-index: 1;
     font-family: var(--font-primary);
     font-size: 0.84rem;
     font-weight: 500;
@@ -156,7 +171,7 @@ body {
     text-decoration: none;
     padding: 6px 16px;
     border-radius: 100px;
-    transition: all 0.2s ease;
+    transition: color 0.25s ease;
 }
 
 .nav-pill:hover {
@@ -164,9 +179,33 @@ body {
 }
 
 .nav-pill.active {
-    background: rgba(255, 255, 255, 0.1);
     color: var(--text-primary);
-    font-weight: 600;
+}
+
+/* Smooth SPA Page Wrapper Transitions */
+.page-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+    transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), filter 0.24s ease;
+}
+
+.page-wrapper.page-leave {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(3px);
+    transition: opacity 0.14s ease, transform 0.14s ease, filter 0.14s ease;
+}
+
+.page-wrapper.page-enter {
+    opacity: 0;
+    transform: translateY(-8px);
+    filter: blur(3px);
+    transition: none;
 }
 
 .nav-links {

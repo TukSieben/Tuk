@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tuk | Roles & Moderation</title>
     <meta name="description" content="Professional Twitch Moderator & Event Coordinator">
-    <link rel="icon" href="../tukL.png" type="image/png">
+    <link rel="icon" href="/tukL.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Chilanka&family=Reenie+Beanie&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=106">
+    <link rel="stylesheet" href="/style.css?v=107">
 </head>
 <body>
     
@@ -22,15 +22,16 @@
     <nav class="navbar">
         <div class="nav-container">
             <a href="/" class="nav-brand">
-                <img src="../tukL.png" alt="Tuk Logo" class="nav-logo-icon">
+                <img src="/tukL.png" alt="Tuk Logo" class="nav-logo-icon">
                 <span class="nav-brand-name">TUK</span>
                 <span class="nav-brand-divider"></span>
                 <span class="nav-brand-tag">Moderator &amp; Event Coordinator</span>
             </a>
 
             <div class="nav-center-pills">
-                <a href="/" class="nav-pill">Home</a>
-                <a href="/roles" class="nav-pill active">Roles</a>
+                <span class="nav-pill-glider"></span>
+                <a href="/" class="nav-pill" data-nav="home">Home</a>
+                <a href="/roles" class="nav-pill active" data-nav="roles">Roles</a>
             </div>
 
             <div class="nav-links">
@@ -47,11 +48,12 @@
         </div>
     </nav>
 
+    <div id="page-wrapper" class="page-wrapper">
     <!-- Main Roles Content -->
     <main class="roles-main">
         <!-- Hero Header -->
         <header class="roles-hero-header fade-up">
-            <img src="../band.gif" alt="Band Animation" class="band-gif-center">
+            <img src="/band.gif" alt="Band Animation" class="band-gif-center">
             <h1 class="roles-hero-title">
                 Modding / Modded for
             </h1>
@@ -362,6 +364,8 @@
         </div>
     </main>
 
+    </div>
+
     <!-- Simple Footer -->
     <footer class="footer">
         <p>Copyright &copy; 2026 tuk7.xyz</p>
@@ -371,87 +375,46 @@
         // Preloader Logic
         const preloader = document.getElementById('preloader');
         let loaderTimeout = setTimeout(() => {
-            preloader.classList.add('show');
+            if (preloader) preloader.classList.add('show');
         }, 150);
 
         window.addEventListener('load', () => {
             clearTimeout(loaderTimeout);
-            preloader.classList.remove('show');
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 300);
+            if (preloader) {
+                preloader.classList.remove('show');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 300);
+            }
         });
 
-        // Intersection Observer for Scroll Animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.08,
-            rootMargin: "0px 0px -30px 0px"
-        });
+        // Sliding Navbar Pill Glider
+        function updatePillGlider(instant = false) {
+            const container = document.querySelector('.nav-center-pills');
+            const glider = document.querySelector('.nav-pill-glider');
+            const activePill = document.querySelector('.nav-pill.active');
+            if (!container || !glider || !activePill) return;
 
-        document.querySelectorAll('.fade-up').forEach(el => {
-            observer.observe(el);
-        });
+            if (instant) {
+                glider.style.transition = 'none';
+            } else {
+                glider.style.transition = 'transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), width 0.36s cubic-bezier(0.22, 1, 0.36, 1)';
+            }
 
-        // Mouse spotlight effect on streamer cards
-        document.querySelectorAll('.streamer-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-            });
-        });
+            glider.style.width = `${activePill.offsetWidth}px`;
+            glider.style.transform = `translateX(${activePill.offsetLeft - 4}px)`;
+            glider.style.opacity = '1';
 
-        // Filtering & Search Logic
-        let activeFilter = 'all';
-        const searchInput = document.getElementById('streamerSearch');
-        const filterTabs = document.querySelectorAll('.filter-tab');
-        const emptyState = document.getElementById('emptyFilterState');
-
-        function applyFilters() {
-            const query = (searchInput?.value || '').trim().toLowerCase();
-            const cards = document.querySelectorAll('.streamer-card');
-            let visibleCount = 0;
-
-            cards.forEach(card => {
-                const name = (card.querySelector('h3')?.textContent || '').trim().toLowerCase();
-                const isLive = card.dataset.live === 'true';
-                const matchesSearch = !query || name.includes(query);
-                const matchesTab = activeFilter === 'all' || (activeFilter === 'live' && isLive);
-
-                if (matchesSearch && matchesTab) {
-                    card.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            if (emptyState) {
-                emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+            if (instant) {
+                requestAnimationFrame(() => {
+                    glider.style.transition = 'transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), width 0.36s cubic-bezier(0.22, 1, 0.36, 1)';
+                });
             }
         }
 
-        filterTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                filterTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                activeFilter = tab.getAttribute('data-filter');
-                applyFilters();
-            });
-        });
+        window.addEventListener('resize', () => updatePillGlider(true));
 
-        if (searchInput) {
-            searchInput.addEventListener('input', applyFilters);
-        }
-
-        // Live Twitch Follower, Avatar, Game & Viewer Count Auto-Updater
+        // Format viewer counts
         function formatViewers(num) {
             if (num >= 1000) {
                 return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
@@ -459,178 +422,395 @@
             return num.toString();
         }
 
-        async function updateAndSortStreamers() {
-            const grid = document.getElementById('streamersGrid');
-            if (!grid) return;
-            const cards = Array.from(grid.querySelectorAll('.streamer-card'));
-            let totalFollowers = 0;
-            let liveCount = 0;
+        // Initialize all interactive elements inside #page-wrapper
+        function initPageFeatures() {
+            // 1. Scroll / Entrance Animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.08,
+                rootMargin: "0px 0px -30px 0px"
+            });
 
-            const fetchPromises = cards.map(async (card) => {
-                const href = card.getAttribute('href');
-                let count = 0;
-                let avatarUrl = '';
-                let isLive = false;
-                let viewers = 0;
-                let game = '';
+            document.querySelectorAll('.fade-up').forEach(el => {
+                observer.observe(el);
+            });
 
-                const numEl = card.querySelector('.follower-num');
-                if (numEl) {
-                    const fallbackCount = parseInt(numEl.textContent.replace(/,/g, ''), 10);
-                    if (!isNaN(fallbackCount)) count = fallbackCount;
-                }
+            // 2. Copy Email Button (Homepage)
+            const copyBtn = document.getElementById('copyEmailBtn');
+            if (copyBtn && !copyBtn.dataset.bound) {
+                copyBtn.dataset.bound = 'true';
+                let copyTimeout;
+                copyBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navigator.clipboard.writeText('tukk@tuta.io').then(() => {
+                        clearTimeout(copyTimeout);
+                        copyBtn.classList.add('copied-effect');
+                        copyTimeout = setTimeout(() => {
+                            copyBtn.classList.remove('copied-effect');
+                        }, 1800);
+                    }).catch(() => {});
+                });
+            }
 
-                const avatarEl = card.querySelector('.streamer-avatar');
-                if (avatarEl) {
-                    avatarUrl = avatarEl.src;
-                }
+            // 3. Chatty 3D Tilt & Glow (Homepage)
+            const chattyBanner = document.querySelector('.chatty-banner');
+            if (chattyBanner && !chattyBanner.dataset.bound) {
+                chattyBanner.dataset.bound = 'true';
+                chattyBanner.addEventListener('mousemove', (e) => {
+                    const rect = chattyBanner.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -4;
+                    const rotateY = ((x - centerX) / centerX) * 4;
+                    chattyBanner.style.setProperty('--mouse-x', `${x}px`);
+                    chattyBanner.style.setProperty('--mouse-y', `${y}px`);
+                    chattyBanner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                    chattyBanner.style.transition = 'none';
+                });
+                chattyBanner.addEventListener('mouseleave', () => {
+                    chattyBanner.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+                    chattyBanner.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
+                });
+            }
 
-                if (href && href.includes('twitch.tv/')) {
-                    const channel = href.split('twitch.tv/')[1].split('/')[0].split('?')[0].toLowerCase();
-                    if (channel) {
-                        const cacheKey = `twitch_v4_${channel}`;
-                        const cached = localStorage.getItem(cacheKey);
-                        let useCache = false;
+            // 4. Roles Page Features (Mouse spotlight, Filter/Search, Live Twitch Updater)
+            const streamersGrid = document.getElementById('streamersGrid');
+            if (streamersGrid && !streamersGrid.dataset.bound) {
+                streamersGrid.dataset.bound = 'true';
 
-                        if (cached) {
-                            try {
-                                const parsed = JSON.parse(cached);
-                                if (Date.now() - parsed.timestamp < 2 * 60 * 1000) {
-                                    count = parsed.followers;
-                                    isLive = Boolean(parsed.isLive);
-                                    viewers = parsed.viewers || 0;
-                                    game = parsed.game || '';
-                                    if (parsed.avatarUrl) avatarUrl = parsed.avatarUrl;
-                                    useCache = true;
-                                }
-                            } catch (e) {}
-                        }
+                document.querySelectorAll('.streamer-card').forEach(card => {
+                    card.addEventListener('mousemove', (e) => {
+                        const rect = card.getBoundingClientRect();
+                        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                    });
+                });
 
-                        if (!useCache) {
-                            try {
-                                const [followRes, avatarRes, viewerRes, gameRes] = await Promise.all([
-                                    fetch(`https://decapi.me/twitch/followcount/${channel}`),
-                                    fetch(`https://decapi.me/twitch/avatar/${channel}`),
-                                    fetch(`https://decapi.me/twitch/viewercount/${channel}`),
-                                    fetch(`https://decapi.me/twitch/game/${channel}`)
-                                ]);
+                let activeFilter = 'all';
+                const searchInput = document.getElementById('streamerSearch');
+                const filterTabs = document.querySelectorAll('.filter-tab');
+                const emptyState = document.getElementById('emptyFilterState');
 
-                                if (followRes.ok) {
-                                    const followText = await followRes.text();
-                                    const fetchedCount = parseInt(followText.trim(), 10);
-                                    if (!isNaN(fetchedCount)) count = fetchedCount;
-                                }
+                function applyFilters() {
+                    const query = (searchInput?.value || '').trim().toLowerCase();
+                    const cards = streamersGrid.querySelectorAll('.streamer-card');
+                    let visibleCount = 0;
 
-                                if (avatarRes.ok) {
-                                    const avatarText = (await avatarRes.text()).trim();
-                                    if (avatarText.startsWith('http')) {
-                                        avatarUrl = avatarText;
-                                    }
-                                }
+                    cards.forEach(card => {
+                        const name = (card.querySelector('h3')?.textContent || '').trim().toLowerCase();
+                        const isLive = card.dataset.live === 'true';
+                        const matchesSearch = !query || name.includes(query);
+                        const matchesTab = activeFilter === 'all' || (activeFilter === 'live' && isLive);
 
-                                if (viewerRes.ok) {
-                                    const viewerText = (await viewerRes.text()).trim();
-                                    const parsedViewers = parseInt(viewerText, 10);
-                                    if (!isNaN(parsedViewers) && !viewerText.toLowerCase().includes('offline')) {
-                                        isLive = true;
-                                        viewers = parsedViewers;
-                                    }
-                                }
-
-                                if (gameRes.ok) {
-                                    const gameText = (await gameRes.text()).trim();
-                                    if (gameText && !gameText.toLowerCase().includes('error')) {
-                                        game = gameText;
-                                    }
-                                }
-
-                                localStorage.setItem(cacheKey, JSON.stringify({
-                                    followers: count,
-                                    avatarUrl,
-                                    isLive,
-                                    viewers,
-                                    game,
-                                    timestamp: Date.now()
-                                }));
-                            } catch (error) {}
-                        }
-
-                        if (numEl && count > 0) {
-                            numEl.textContent = count.toLocaleString('en-US');
-                        }
-
-                        if (avatarEl && avatarUrl) {
-                            avatarEl.src = avatarUrl;
-                        }
-
-                        card.dataset.live = isLive ? 'true' : 'false';
-                        card.classList.toggle('is-live', isLive);
-
-                        const infoEl = card.querySelector('.streamer-info');
-                        const existingMeta = card.querySelector('.live-meta');
-                        const cardRight = card.querySelector('.card-right');
-                        const existingBadge = card.querySelector('.live-pill');
-
-                        if (isLive) {
-                            liveCount++;
-                            if (!existingBadge && cardRight) {
-                                const badge = document.createElement('span');
-                                badge.className = 'live-pill';
-                                badge.innerHTML = '<span class="live-pill-dot"></span>LIVE';
-                                cardRight.prepend(badge);
-                            }
-
-                            const gameLabel = game || 'Live';
-                            const viewerLabel = `${formatViewers(viewers)} viewers`;
-                            if (existingMeta) {
-                                existingMeta.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
-                            } else if (infoEl) {
-                                const metaP = document.createElement('p');
-                                metaP.className = 'live-meta';
-                                metaP.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
-                                infoEl.appendChild(metaP);
-                            }
+                        if (matchesSearch && matchesTab) {
+                            card.style.display = 'flex';
+                            visibleCount++;
                         } else {
-                            if (existingBadge) existingBadge.remove();
-                            if (existingMeta) existingMeta.remove();
+                            card.style.display = 'none';
                         }
+                    });
+
+                    if (emptyState) {
+                        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
                     }
                 }
 
-                totalFollowers += count;
-                card.dataset.followers = count;
-                return card;
-            });
+                filterTabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        filterTabs.forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        activeFilter = tab.getAttribute('data-filter');
+                        applyFilters();
+                    });
+                });
 
-            await Promise.all(fetchPromises);
+                if (searchInput) {
+                    searchInput.addEventListener('input', applyFilters);
+                }
 
-            // Update header metrics
-            const liveCountEl = document.getElementById('liveChannelCount');
-            const liveTabCountEl = document.getElementById('liveTabCount');
-            const totalFollowersEl = document.getElementById('totalTwitchFollowers');
+                // Fetch Live Twitch Data
+                (async function updateAndSortStreamers() {
+                    const cards = Array.from(streamersGrid.querySelectorAll('.streamer-card'));
+                    let totalFollowers = 0;
+                    let liveCount = 0;
 
-            if (liveCountEl) liveCountEl.textContent = liveCount;
-            if (liveTabCountEl) liveTabCountEl.textContent = liveCount;
-            if (totalFollowersEl && totalFollowers > 0) {
-                const millions = (totalFollowers / 1000000).toFixed(1);
-                totalFollowersEl.textContent = `${millions}M+`;
+                    const fetchPromises = cards.map(async (card) => {
+                        const href = card.getAttribute('href');
+                        let count = 0;
+                        let avatarUrl = '';
+                        let isLive = false;
+                        let viewers = 0;
+                        let game = '';
+
+                        const numEl = card.querySelector('.follower-num');
+                        if (numEl) {
+                            const fallbackCount = parseInt(numEl.textContent.replace(/,/g, ''), 10);
+                            if (!isNaN(fallbackCount)) count = fallbackCount;
+                        }
+
+                        const avatarEl = card.querySelector('.streamer-avatar');
+                        if (avatarEl) {
+                            avatarUrl = avatarEl.src;
+                        }
+
+                        if (href && href.includes('twitch.tv/')) {
+                            const channel = href.split('twitch.tv/')[1].split('/')[0].split('?')[0].toLowerCase();
+                            if (channel) {
+                                const cacheKey = `twitch_v4_${channel}`;
+                                const cached = localStorage.getItem(cacheKey);
+                                let useCache = false;
+
+                                if (cached) {
+                                    try {
+                                        const parsed = JSON.parse(cached);
+                                        if (Date.now() - parsed.timestamp < 2 * 60 * 1000) {
+                                            count = parsed.followers;
+                                            isLive = Boolean(parsed.isLive);
+                                            viewers = parsed.viewers || 0;
+                                            game = parsed.game || '';
+                                            if (parsed.avatarUrl) avatarUrl = parsed.avatarUrl;
+                                            useCache = true;
+                                        }
+                                    } catch (e) {}
+                                }
+
+                                if (!useCache) {
+                                    try {
+                                        const [followRes, avatarRes, viewerRes, gameRes] = await Promise.all([
+                                            fetch(`https://decapi.me/twitch/followcount/${channel}`),
+                                            fetch(`https://decapi.me/twitch/avatar/${channel}`),
+                                            fetch(`https://decapi.me/twitch/viewercount/${channel}`),
+                                            fetch(`https://decapi.me/twitch/game/${channel}`)
+                                        ]);
+
+                                        if (followRes.ok) {
+                                            const followText = await followRes.text();
+                                            const fetchedCount = parseInt(followText.trim(), 10);
+                                            if (!isNaN(fetchedCount)) count = fetchedCount;
+                                        }
+
+                                        if (avatarRes.ok) {
+                                            const avatarText = (await avatarRes.text()).trim();
+                                            if (avatarText.startsWith('http')) {
+                                                avatarUrl = avatarText;
+                                            }
+                                        }
+
+                                        if (viewerRes.ok) {
+                                            const viewerText = (await viewerRes.text()).trim();
+                                            const parsedViewers = parseInt(viewerText, 10);
+                                            if (!isNaN(parsedViewers) && !viewerText.toLowerCase().includes('offline')) {
+                                                isLive = true;
+                                                viewers = parsedViewers;
+                                            }
+                                        }
+
+                                        if (gameRes.ok) {
+                                            const gameText = (await gameRes.text()).trim();
+                                            if (gameText && !gameText.toLowerCase().includes('error')) {
+                                                game = gameText;
+                                            }
+                                        }
+
+                                        localStorage.setItem(cacheKey, JSON.stringify({
+                                            followers: count,
+                                            avatarUrl,
+                                            isLive,
+                                            viewers,
+                                            game,
+                                            timestamp: Date.now()
+                                        }));
+                                    } catch (error) {}
+                                }
+
+                                if (numEl && count > 0) {
+                                    numEl.textContent = count.toLocaleString('en-US');
+                                }
+
+                                if (avatarEl && avatarUrl) {
+                                    avatarEl.src = avatarUrl;
+                                }
+
+                                card.dataset.live = isLive ? 'true' : 'false';
+                                card.classList.toggle('is-live', isLive);
+
+                                const infoEl = card.querySelector('.streamer-info');
+                                const existingMeta = card.querySelector('.live-meta');
+                                const cardRight = card.querySelector('.card-right');
+                                const existingBadge = card.querySelector('.live-pill');
+
+                                if (isLive) {
+                                    liveCount++;
+                                    if (!existingBadge && cardRight) {
+                                        const badge = document.createElement('span');
+                                        badge.className = 'live-pill';
+                                        badge.innerHTML = '<span class="live-pill-dot"></span>LIVE';
+                                        cardRight.prepend(badge);
+                                    }
+
+                                    const gameLabel = game || 'Live';
+                                    const viewerLabel = `${formatViewers(viewers)} viewers`;
+                                    if (existingMeta) {
+                                        existingMeta.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
+                                    } else if (infoEl) {
+                                        const metaP = document.createElement('p');
+                                        metaP.className = 'live-meta';
+                                        metaP.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
+                                        infoEl.appendChild(metaP);
+                                    }
+                                } else {
+                                    if (existingBadge) existingBadge.remove();
+                                    if (existingMeta) existingMeta.remove();
+                                }
+                            }
+                        }
+
+                        totalFollowers += count;
+                        card.dataset.followers = count;
+                        return card;
+                    });
+
+                    await Promise.all(fetchPromises);
+
+                    const liveCountEl = document.getElementById('liveChannelCount');
+                    const liveTabCountEl = document.getElementById('liveTabCount');
+                    const totalFollowersEl = document.getElementById('totalTwitchFollowers');
+
+                    if (liveCountEl) liveCountEl.textContent = liveCount;
+                    if (liveTabCountEl) liveTabCountEl.textContent = liveCount;
+                    if (totalFollowersEl && totalFollowers > 0) {
+                        const millions = (totalFollowers / 1000000).toFixed(1);
+                        totalFollowersEl.textContent = `${millions}M+`;
+                    }
+
+                    cards.sort((a, b) => {
+                        return parseInt(b.dataset.followers, 10) - parseInt(a.dataset.followers, 10);
+                    });
+
+                    cards.forEach((card, index) => {
+                        card.className = card.className.replace(/delay-\d+/g, '');
+                        card.classList.add(`delay-${(index % 3) + 1}`);
+                        streamersGrid.appendChild(card);
+                    });
+
+                    applyFilters();
+                })();
             }
-
-            // Sort cards descending by Twitch followers
-            cards.sort((a, b) => {
-                return parseInt(b.dataset.followers, 10) - parseInt(a.dataset.followers, 10);
-            });
-
-            cards.forEach((card, index) => {
-                card.className = card.className.replace(/delay-\d+/g, '');
-                card.classList.add(`delay-${(index % 3) + 1}`);
-                grid.appendChild(card);
-            });
-
-            applyFilters();
         }
 
-        updateAndSortStreamers();
+        // Smooth Page Router (Instant Transition between Home & Roles)
+        const pageCache = {};
+        let isNavigating = false;
+
+        function normalizeRoute(pathname) {
+            return pathname.replace(/\/index\.html$/, '').replace(/\/+$/, '') || '/';
+        }
+
+        async function fetchPageData(route) {
+            if (pageCache[route]) return pageCache[route];
+            const url = route === '/roles' ? '/roles/' : '/';
+            const res = await fetch(url);
+            const html = await res.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const wrapper = doc.getElementById('page-wrapper');
+            const data = {
+                title: doc.title,
+                content: wrapper ? wrapper.innerHTML : ''
+            };
+            pageCache[route] = data;
+            return data;
+        }
+
+        // Cache current page & prefetch the other page immediately
+        const initialRoute = normalizeRoute(window.location.pathname);
+        const currentWrapper = document.getElementById('page-wrapper');
+        if (currentWrapper) {
+            pageCache[initialRoute] = {
+                title: document.title,
+                content: currentWrapper.innerHTML
+            };
+        }
+        fetchPageData(initialRoute === '/roles' ? '/' : '/roles').catch(() => {});
+
+        async function navigateTo(targetPath, pushState = true) {
+            const targetRoute = normalizeRoute(targetPath);
+            const currentRoute = normalizeRoute(window.location.pathname);
+            if (isNavigating || (targetRoute === currentRoute && pushState)) return;
+            isNavigating = true;
+
+            // 1. Slide navbar pill glider immediately
+            document.querySelectorAll('.nav-pill').forEach(pill => {
+                const pillRoute = normalizeRoute(pill.getAttribute('href') || '');
+                pill.classList.toggle('active', pillRoute === targetRoute);
+            });
+            updatePillGlider(false);
+
+            const wrapper = document.getElementById('page-wrapper');
+            if (!wrapper) {
+                window.location.href = targetPath;
+                return;
+            }
+
+            try {
+                // 2. Fade & slide out current page + fetch target concurrently
+                wrapper.classList.add('page-leave');
+                const [pageData] = await Promise.all([
+                    fetchPageData(targetRoute),
+                    new Promise(r => setTimeout(r, 150))
+                ]);
+
+                if (pushState) {
+                    history.pushState({ route: targetRoute }, pageData.title, targetRoute);
+                }
+                document.title = pageData.title;
+                window.scrollTo({ top: 0, behavior: 'instant' });
+
+                // 3. Swap content and trigger smooth entrance
+                wrapper.innerHTML = pageData.content;
+                wrapper.classList.remove('page-leave');
+                wrapper.classList.add('page-enter');
+
+                initPageFeatures();
+
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        wrapper.classList.remove('page-enter');
+                        isNavigating = false;
+                    });
+                });
+            } catch (e) {
+                window.location.href = targetPath;
+            }
+        }
+
+        // Intercept internal clicks to / and /roles
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href]');
+            if (!link) return;
+            if (link.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            const href = link.getAttribute('href');
+            if (href === '/' || href === '/roles' || href === '/roles/') {
+                e.preventDefault();
+                navigateTo(href, true);
+            }
+        });
+
+        window.addEventListener('popstate', () => {
+            navigateTo(window.location.pathname, false);
+        });
+
+        // Boot
+        updatePillGlider(true);
+        document.fonts?.ready?.then(() => updatePillGlider(true));
+        initPageFeatures();
     </script>
 </body>
 </html>
