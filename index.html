@@ -73,7 +73,7 @@
                     </a>
                     <a href="#" id="copyEmailBtn" class="btn btn-secondary copy-btn">
                         <span class="copy-label-stack">
-                            <span class="copy-text-default">tukk@tuta.io</span>
+                            <!--email_off--><span class="copy-text-default">tukk<span>@</span>tuta.io</span><!--/email_off-->
                             <span class="copy-text-done">Copied</span>
                         </span>
                         <span class="copy-icon-stack">
@@ -198,12 +198,13 @@
 
             // 2. Copy Email Button (Homepage)
             const copyBtn = document.getElementById('copyEmailBtn');
+            const defTxt = copyBtn?.querySelector('.copy-text-default'); if (defTxt) defTxt.textContent = 'tukk' + '@' + 'tuta.io';
             if (copyBtn && !copyBtn.dataset.bound) {
                 copyBtn.dataset.bound = 'true';
                 let copyTimeout;
                 copyBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    navigator.clipboard.writeText('tukk@tuta.io').then(() => {
+                    navigator.clipboard.writeText('tukk' + '@' + 'tuta.io').then(() => {
                         clearTimeout(copyTimeout);
                         copyBtn.classList.add('copied-effect');
                         copyTimeout = setTimeout(() => {

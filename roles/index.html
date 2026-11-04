@@ -443,12 +443,13 @@
 
             // 2. Copy Email Button (Homepage)
             const copyBtn = document.getElementById('copyEmailBtn');
+            const defTxt = copyBtn?.querySelector('.copy-text-default'); if (defTxt) defTxt.textContent = 'tukk' + '@' + 'tuta.io';
             if (copyBtn && !copyBtn.dataset.bound) {
                 copyBtn.dataset.bound = 'true';
                 let copyTimeout;
                 copyBtn.addEventListener('click', (e) => {
                     e.preventDefault();
-                    navigator.clipboard.writeText('tukk@tuta.io').then(() => {
+                    navigator.clipboard.writeText('tukk' + '@' + 'tuta.io').then(() => {
                         clearTimeout(copyTimeout);
                         copyBtn.classList.add('copied-effect');
                         copyTimeout = setTimeout(() => {
