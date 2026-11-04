@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Chilanka&family=Reenie+Beanie&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../style.css?v=90">
+    <link rel="stylesheet" href="../style.css?v=91">
 </head>
 <body>
     
@@ -32,7 +32,7 @@
                 </div>
             </div>
             <div class="nav-links">
-                <a href="/roles" class="nav-text-link">Roles</a>
+                <a href="/roles" class="nav-text-link active">Roles</a>
                 <a href="https://twitch.tv/tuk7" target="_blank" rel="noopener noreferrer" class="nav-icon" aria-label="Twitch">
                     <img src="../twitch.png" alt="Twitch" class="nav-icon-img">
                 </a>
@@ -48,191 +48,316 @@
 
     <!-- Main Roles Content -->
     <main class="roles-main">
-        <header class="roles-header fade-up">
-            <h1 class="roles-title">Modding / Modded for</h1>
-            <p class="roles-subtitle">Trusted by 130+ creators. Selected Twitch channels I currently moderate or have moderated.</p>
+        <!-- Hero Header -->
+        <header class="roles-hero-header fade-up">
+            <img src="../band.gif" alt="Band Animation" class="band-gif-center">
+            <h1 class="roles-hero-title">
+                Modding / <span class="highlight">Modded for</span>
+            </h1>
+            <p class="roles-hero-subtitle">
+                Trusted by 130+ streamers. A selection of verified Twitch channels I currently moderate or have moderated in the past.
+            </p>
+
+            <!-- Summary Metrics Pills -->
+            <div class="roles-metrics">
+                <div class="roles-metric-pill">
+                    <span class="metric-val">130+</span>
+                    <span class="metric-lbl">Channels Moderated</span>
+                </div>
+                <div class="roles-metric-divider"></div>
+                <div class="roles-metric-pill">
+                    <span class="metric-val" id="totalTwitchFollowers">13.5M+</span>
+                    <span class="metric-lbl">Twitch Followers</span>
+                </div>
+                <div class="roles-metric-divider"></div>
+                <div class="roles-metric-pill" id="liveCountPill">
+                    <span class="live-dot-indicator"></span>
+                    <span class="metric-val" id="liveChannelCount">0</span>
+                    <span class="metric-lbl">Currently Live</span>
+                </div>
+            </div>
         </header>
 
-        <div class="streamers-grid">
+        <!-- Filter & Search Toolbar -->
+        <div class="roles-toolbar fade-up delay-1">
+            <div class="roles-filter-tabs">
+                <button class="filter-tab active" data-filter="all">All Channels <span class="tab-count" id="allTabCount">20</span></button>
+                <button class="filter-tab" data-filter="live" id="liveFilterBtn">
+                    <span class="live-dot-small"></span>
+                    Live Now <span class="tab-count" id="liveTabCount">0</span>
+                </button>
+            </div>
+            <div class="roles-search-box">
+                <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="streamerSearch" placeholder="Search streamer..." autocomplete="off">
+            </div>
+        </div>
+
+        <!-- Streamers Grid -->
+        <div class="streamers-grid" id="streamersGrid">
             <a href="https://twitch.tv/PlaqueBoyMax" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cbfd449c-97b5-448c-82bd-f55b12cd4a97-profile_image-300x300.png" alt="PlaqueBoyMax" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cbfd449c-97b5-448c-82bd-f55b12cd4a97-profile_image-300x300.png" alt="PlaqueBoyMax" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>PlaqueBoyMax <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">2,875,141 followers</p>
+                    <p class="followers"><span class="follower-num">2,875,141</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
             <a href="https://twitch.tv/Amar" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/a1f93c9d-7fb0-4af8-aba9-86f64f956d55-profile_image-300x300.png" alt="Amar" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/a1f93c9d-7fb0-4af8-aba9-86f64f956d55-profile_image-300x300.png" alt="Amar" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>Amar <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">1,876,573 followers</p>
+                    <p class="followers"><span class="follower-num">1,876,573</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
             <a href="https://twitch.tv/Letshe" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ac84abbb-11dc-47e2-a156-c1b9411264b2-profile_image-300x300.png" alt="Letshe" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ac84abbb-11dc-47e2-a156-c1b9411264b2-profile_image-300x300.png" alt="Letshe" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>Letshe <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">1,820,111 followers</p>
+                    <p class="followers"><span class="follower-num">1,820,111</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/funnymike" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-4">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/a14ac3ab-e622-41f5-ad66-b115e154b58f-profile_image-300x300.png" alt="funnymike" class="streamer-avatar">
+            <a href="https://twitch.tv/funnymike" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/a14ac3ab-e622-41f5-ad66-b115e154b58f-profile_image-300x300.png" alt="funnymike" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>funnymike <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">1,604,997 followers</p>
+                    <p class="followers"><span class="follower-num">1,604,997</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/xRohat" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/dc99030e-69b1-4e11-b381-e1507c991ff0-profile_image-300x300.png" alt="xRohat" class="streamer-avatar">
+            <a href="https://twitch.tv/xRohat" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/dc99030e-69b1-4e11-b381-e1507c991ff0-profile_image-300x300.png" alt="xRohat" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>xRohat <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">1,370,420 followers</p>
+                    <p class="followers"><span class="follower-num">1,370,420</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/noahreyli" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/1a0db90e-6af8-4b5e-b933-6ce0cd1093dc-profile_image-300x300.png" alt="noahreyli" class="streamer-avatar">
+            <a href="https://twitch.tv/noahreyli" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/1a0db90e-6af8-4b5e-b933-6ce0cd1093dc-profile_image-300x300.png" alt="noahreyli" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>noahreyli <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">795,353 followers</p>
+                    <p class="followers"><span class="follower-num">795,353</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/chefstrobel" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cea26e66-4095-4c3e-8467-c4d46fd7aaf6-profile_image-300x300.png" alt="chefstrobel" class="streamer-avatar">
+            <a href="https://twitch.tv/chefstrobel" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/cea26e66-4095-4c3e-8467-c4d46fd7aaf6-profile_image-300x300.png" alt="chefstrobel" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>chefstrobel <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">730,726 followers</p>
+                    <p class="followers"><span class="follower-num">730,726</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/marco_scm" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-4">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/e3670edc-cbb1-4ff2-bf2e-3593b44495f8-profile_image-300x300.png" alt="marco_scm" class="streamer-avatar">
+            <a href="https://twitch.tv/marco_scm" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/e3670edc-cbb1-4ff2-bf2e-3593b44495f8-profile_image-300x300.png" alt="marco_scm" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>marco_scm <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">560,437 followers</p>
+                    <p class="followers"><span class="follower-num">560,437</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/timgioh" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ef50d7aa-f208-48e8-a497-3971073888c6-profile_image-300x300.png" alt="timgioh" class="streamer-avatar">
+            <a href="https://twitch.tv/timgioh" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/ef50d7aa-f208-48e8-a497-3971073888c6-profile_image-300x300.png" alt="timgioh" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>timgioh <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">481,376 followers</p>
+                    <p class="followers"><span class="follower-num">481,376</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/ilikehaskell" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/47926a3e-8f58-48ea-8e3c-a81197906175-profile_image-300x300.png" alt="ilikehaskell" class="streamer-avatar">
+            <a href="https://twitch.tv/ilikehaskell" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/47926a3e-8f58-48ea-8e3c-a81197906175-profile_image-300x300.png" alt="ilikehaskell" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>ilikehaskell <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">461,664 followers</p>
+                    <p class="followers"><span class="follower-num">461,664</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/reemknocks" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c0bc29bf-12eb-49c9-85a0-422acb35ea3d-profile_image-300x300.png" alt="reemknocks" class="streamer-avatar">
+            <a href="https://twitch.tv/reemknocks" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c0bc29bf-12eb-49c9-85a0-422acb35ea3d-profile_image-300x300.png" alt="reemknocks" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>reemknocks <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">427,041 followers</p>
+                    <p class="followers"><span class="follower-num">427,041</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/yaboyyywill" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-4">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/58c15d49-5152-408e-99aa-6d85cfbff149-profile_image-300x300.png" alt="yaboyyywill" class="streamer-avatar">
+            <a href="https://twitch.tv/yaboyyywill" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/58c15d49-5152-408e-99aa-6d85cfbff149-profile_image-300x300.png" alt="yaboyyywill" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>yaboyyywill <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">175,690 followers</p>
+                    <p class="followers"><span class="follower-num">175,690</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
             <a href="https://twitch.tv/corey2u" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/77646afc-a034-4ee8-a4a0-9e9f08c66bf6-profile_image-300x300.png" alt="corey2u" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/77646afc-a034-4ee8-a4a0-9e9f08c66bf6-profile_image-300x300.png" alt="corey2u" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>corey2u <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">148,384 followers</p>
+                    <p class="followers"><span class="follower-num">148,384</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
             <a href="https://twitch.tv/tthereal65" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c9d4df91-9714-406f-b622-6266316d56b2-profile_image-300x300.png" alt="tthereal65" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c9d4df91-9714-406f-b622-6266316d56b2-profile_image-300x300.png" alt="tthereal65" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>tthereal65 <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">61,036 followers</p>
+                    <p class="followers"><span class="follower-num">61,036</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
             <a href="https://twitch.tv/LENA" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/9f603e20-6186-4112-a797-a38ec7165c49-profile_image-300x300.png" alt="LENA" class="streamer-avatar">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/9f603e20-6186-4112-a797-a38ec7165c49-profile_image-300x300.png" alt="LENA" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>LENA <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">40,141 followers</p>
+                    <p class="followers"><span class="follower-num">40,141</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/julistria" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-4">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/416a09b8-1334-434b-b9d0-d8f65e6e86ac-profile_image-300x300.png" alt="julistria" class="streamer-avatar">
+            <a href="https://twitch.tv/julistria" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/416a09b8-1334-434b-b9d0-d8f65e6e86ac-profile_image-300x300.png" alt="julistria" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>julistria <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">37,705 followers</p>
+                    <p class="followers"><span class="follower-num">37,705</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/Lele" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/054eb80b-1fcb-4c16-b85b-7f63ebd01d85-profile_image-300x300.png" alt="Lele" class="streamer-avatar">
+            <a href="https://twitch.tv/Lele" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/054eb80b-1fcb-4c16-b85b-7f63ebd01d85-profile_image-300x300.png" alt="Lele" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>Lele <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">26,342 followers</p>
+                    <p class="followers"><span class="follower-num">26,342</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/risukuni" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c09194f8-1695-4f45-b8f0-9fc388f23e5e-profile_image-300x300.png" alt="risukuni" class="streamer-avatar">
+            <a href="https://twitch.tv/risukuni" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/c09194f8-1695-4f45-b8f0-9fc388f23e5e-profile_image-300x300.png" alt="risukuni" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>risukuni <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">24,047 followers</p>
+                    <p class="followers"><span class="follower-num">24,047</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/Regy" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-3">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7a27cdb6-0974-4703-975a-1d6d7952b007-profile_image-300x300.png" alt="Regy" class="streamer-avatar">
+            <a href="https://twitch.tv/Regy" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-1">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/7a27cdb6-0974-4703-975a-1d6d7952b007-profile_image-300x300.png" alt="Regy" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>Regy <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">14,392 followers</p>
+                    <p class="followers"><span class="follower-num">14,392</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
 
-            <a href="https://twitch.tv/Kanyuji" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-4">
-                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/d8573d63-4cad-4c4f-894a-0b44a5bc4cde-profile_image-300x300.png" alt="Kanyuji" class="streamer-avatar">
+            <a href="https://twitch.tv/Kanyuji" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-2">
+                <div class="avatar-wrapper">
+                    <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/d8573d63-4cad-4c4f-894a-0b44a5bc4cde-profile_image-300x300.png" alt="Kanyuji" class="streamer-avatar">
+                </div>
                 <div class="streamer-info">
                     <h3>Kanyuji <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">11,642 followers</p>
+                    <p class="followers"><span class="follower-num">11,642</span> <span class="follower-label">followers</span></p>
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
             </a>
+        </div>
+
+        <div id="emptyFilterState" class="empty-filter-state" style="display: none;">
+            <p>No matching channels found.</p>
         </div>
     </main>
 
@@ -273,20 +398,75 @@
             observer.observe(el);
         });
 
-        // Live Twitch Follower & Avatar Auto-Updater
+        // Mouse spotlight effect on streamer cards
+        document.querySelectorAll('.streamer-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+            });
+        });
+
+        // Filtering & Search Logic
+        let activeFilter = 'all';
+        const searchInput = document.getElementById('streamerSearch');
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const emptyState = document.getElementById('emptyFilterState');
+
+        function applyFilters() {
+            const query = (searchInput?.value || '').trim().toLowerCase();
+            const cards = document.querySelectorAll('.streamer-card');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const name = (card.querySelector('h3')?.textContent || '').trim().toLowerCase();
+                const isLive = card.dataset.live === 'true';
+                const matchesSearch = !query || name.includes(query);
+                const matchesTab = activeFilter === 'all' || (activeFilter === 'live' && isLive);
+
+                if (matchesSearch && matchesTab) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (emptyState) {
+                emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                filterTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeFilter = tab.getAttribute('data-filter');
+                applyFilters();
+            });
+        });
+
+        if (searchInput) {
+            searchInput.addEventListener('input', applyFilters);
+        }
+
+        // Live Twitch Follower, Avatar & Uptime Auto-Updater
         async function updateAndSortStreamers() {
-            const grid = document.querySelector('.streamers-grid');
+            const grid = document.getElementById('streamersGrid');
             if (!grid) return;
             const cards = Array.from(grid.querySelectorAll('.streamer-card'));
+            let totalFollowers = 0;
+            let liveCount = 0;
 
             const fetchPromises = cards.map(async (card) => {
                 const href = card.getAttribute('href');
                 let count = 0;
                 let avatarUrl = '';
+                let isLive = false;
 
-                const followerEl = card.querySelector('.followers');
-                if (followerEl) {
-                    const fallbackCount = parseInt(followerEl.textContent.replace(/,/g, ''), 10);
+                const numEl = card.querySelector('.follower-num');
+                if (numEl) {
+                    const fallbackCount = parseInt(numEl.textContent.replace(/,/g, ''), 10);
                     if (!isNaN(fallbackCount)) count = fallbackCount;
                 }
 
@@ -298,15 +478,16 @@
                 if (href && href.includes('twitch.tv/')) {
                     const channel = href.split('twitch.tv/')[1].split('/')[0].split('?')[0].toLowerCase();
                     if (channel) {
-                        const cacheKey = `twitch_live_${channel}`;
+                        const cacheKey = `twitch_v3_${channel}`;
                         const cached = localStorage.getItem(cacheKey);
                         let useCache = false;
 
                         if (cached) {
                             try {
                                 const parsed = JSON.parse(cached);
-                                if (Date.now() - parsed.timestamp < 5 * 60 * 1000) {
+                                if (Date.now() - parsed.timestamp < 3 * 60 * 1000) {
                                     count = parsed.followers;
+                                    isLive = Boolean(parsed.isLive);
                                     if (parsed.avatarUrl) avatarUrl = parsed.avatarUrl;
                                     useCache = true;
                                 }
@@ -315,9 +496,10 @@
 
                         if (!useCache) {
                             try {
-                                const [followRes, avatarRes] = await Promise.all([
+                                const [followRes, avatarRes, uptimeRes] = await Promise.all([
                                     fetch(`https://decapi.me/twitch/followcount/${channel}`),
-                                    fetch(`https://decapi.me/twitch/avatar/${channel}`)
+                                    fetch(`https://decapi.me/twitch/avatar/${channel}`),
+                                    fetch(`https://decapi.me/twitch/uptime/${channel}`)
                                 ]);
 
                                 if (followRes.ok) {
@@ -333,39 +515,78 @@
                                     }
                                 }
 
+                                if (uptimeRes.ok) {
+                                    const uptimeText = (await uptimeRes.text()).trim().toLowerCase();
+                                    isLive = !uptimeText.includes('offline') && !uptimeText.includes('error') && uptimeText.length > 0;
+                                }
+
                                 localStorage.setItem(cacheKey, JSON.stringify({
                                     followers: count,
                                     avatarUrl,
+                                    isLive,
                                     timestamp: Date.now()
                                 }));
                             } catch (error) {}
                         }
 
-                        if (followerEl && count > 0) {
-                            followerEl.textContent = count.toLocaleString('en-US') + ' followers';
+                        if (numEl && count > 0) {
+                            numEl.textContent = count.toLocaleString('en-US');
                         }
 
                         if (avatarEl && avatarUrl) {
                             avatarEl.src = avatarUrl;
                         }
+
+                        card.dataset.live = isLive ? 'true' : 'false';
+                        card.classList.toggle('is-live', isLive);
+
+                        const cardRight = card.querySelector('.card-right');
+                        const existingBadge = card.querySelector('.live-pill');
+                        if (isLive) {
+                            liveCount++;
+                            if (!existingBadge && cardRight) {
+                                const badge = document.createElement('span');
+                                badge.className = 'live-pill';
+                                badge.innerHTML = '<span class="live-pill-dot"></span>LIVE';
+                                cardRight.prepend(badge);
+                            }
+                        } else if (existingBadge) {
+                            existingBadge.remove();
+                        }
                     }
                 }
 
+                totalFollowers += count;
                 card.dataset.followers = count;
                 return card;
             });
 
             await Promise.all(fetchPromises);
 
+            // Update header metrics
+            const liveCountEl = document.getElementById('liveChannelCount');
+            const liveTabCountEl = document.getElementById('liveTabCount');
+            const totalFollowersEl = document.getElementById('totalTwitchFollowers');
+
+            if (liveCountEl) liveCountEl.textContent = liveCount;
+            if (liveTabCountEl) liveTabCountEl.textContent = liveCount;
+            if (totalFollowersEl && totalFollowers > 0) {
+                const millions = (totalFollowers / 1000000).toFixed(1);
+                totalFollowersEl.textContent = `${millions}M+`;
+            }
+
+            // Sort cards descending by Twitch followers
             cards.sort((a, b) => {
                 return parseInt(b.dataset.followers, 10) - parseInt(a.dataset.followers, 10);
             });
 
             cards.forEach((card, index) => {
                 card.className = card.className.replace(/delay-\d+/g, '');
-                card.classList.add(`delay-${(index % 4) + 1}`);
+                card.classList.add(`delay-${(index % 3) + 1}`);
                 grid.appendChild(card);
             });
+
+            applyFilters();
         }
 
         updateAndSortStreamers();
