@@ -907,7 +907,10 @@ body {
     letter-spacing: -0.04em;
     line-height: 1.1;
     margin-bottom: 14px;
-    color: var(--text-primary);
+    background: linear-gradient(90deg, #cfe92b 0%, #e6f296 25%, #b6f486 50%, #88d4c3 75%, #4cf0a9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .roles-hero-subtitle {
