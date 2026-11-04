@@ -665,119 +665,130 @@ body {
 }
 
 /* Roles Page Styles */
-.roles-page {
-    padding-top: 2rem;
-    padding-bottom: 4rem;
+.roles-main {
+    flex: 1;
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 120px 24px 80px;
+}
+
+.roles-header {
+    margin-bottom: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.roles-title {
+    font-family: var(--font-headline);
+    font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+}
+
+.roles-subtitle {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .streamers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 5%;
 }
 
 .streamer-card {
+    position: relative;
     background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 20px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
+    gap: 14px;
     text-align: left;
     text-decoration: none;
     color: var(--text-primary);
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
-
-.live-badge {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    background: rgba(235, 9, 9, 0.12);
-    border: 1px solid rgba(235, 9, 9, 0.3);
-    color: #ff3b30;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 4px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    letter-spacing: 0.5px;
-    pointer-events: none;
-    z-index: 2;
-    box-shadow: 0 0 10px rgba(235, 9, 9, 0.05);
-}
-
-.live-dot {
-    width: 6px;
-    height: 6px;
-    background-color: #ff3b30;
-    
-    display: inline-block;
-    animation: livePulse 1.5s infinite;
-}
-
-@keyframes livePulse {
-    0% { transform: scale(0.9); opacity: 0.6; }
-    50% { transform: scale(1.2); opacity: 1; }
-    100% { transform: scale(0.9); opacity: 0.6; }
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .streamer-card:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.045);
+    border-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
 }
-
-
 
 .streamer-avatar {
-    width: 64px;
-    height: 64px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     object-fit: cover;
-    background: var(--card-border);
-    margin-bottom: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    flex-shrink: 0;
 }
 
-
+.streamer-info {
+    flex: 1;
+    min-width: 0;
+}
 
 .streamer-info h3 {
     font-family: var(--font-headline);
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+    margin-bottom: 2px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    gap: 6px;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .verified-badge {
-    width: 18px;
-    height: 18px;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
     user-select: none;
 }
 
 .streamer-info .followers {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
 }
 
-@media (max-width: 768px) {
-    .services-grid, .streamers-grid {
+.streamer-arrow {
+    color: var(--text-secondary);
+    opacity: 0.25;
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.streamer-card:hover .streamer-arrow {
+    opacity: 0.8;
+    color: var(--text-primary);
+    transform: translate(2px, -2px);
+}
+
+@media (max-width: 640px) {
+    .roles-main {
+        padding: 100px 16px 60px;
+    }
+    .streamers-grid {
         grid-template-columns: 1fr;
     }
 }
-
-
 
 /* Stats Section */
 .stats-section {
