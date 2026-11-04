@@ -283,7 +283,7 @@ body {
     font-size: clamp(2.5rem, 4vw, 4rem);
     font-weight: 700;
     line-height: 1.05;
-    letter-spacing: -0.05em;
+    letter-spacing: -0.03em;
     margin-bottom: 20px;
 }
 
@@ -378,9 +378,9 @@ body {
 }
 
 .copy-btn.copied-effect {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.28);
-    color: var(--text-primary);
+    background: #e4e4e7;
+    border-color: #e4e4e7;
+    color: var(--bg-base);
 }
 
 .copy-label-stack {
