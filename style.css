@@ -285,11 +285,16 @@ body {
     line-height: 1.05;
     letter-spacing: -0.05em;
     margin-bottom: 20px;
+    background: linear-gradient(90deg, #cfe92b 0%, #e6f296 25%, #b6f486 50%, #88d4c3 75%, #4cf0a9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .highlight {
-    background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+    background: linear-gradient(90deg, #cfe92b 0%, #e6f296 25%, #b6f486 50%, #88d4c3 75%, #4cf0a9 100%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
