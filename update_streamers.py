@@ -1037,7 +1037,8 @@ if start_idx != -1 and end_idx != -1:
 content = re.sub(r'id="allTabCount">\d+<', f'id="allTabCount">{len(streamers)}<', content)
 total_foll = sum(item[1] for item in streamers)
 content = re.sub(r'id="totalTwitchFollowers">[^<]+<', f'id="totalTwitchFollowers">{total_foll / 1_000_000:.1f}M+<', content)
-content = re.sub(r'Trusted by \d+\+ streamers', f'Trusted by {len(streamers)}+ streamers', content)
+content = re.sub(r'<span class="metric-val">\\d+\\+</span>\\s*<span class="metric-lbl">Channels Moderated</span>', '<span class="metric-val">150+</span>\\n                    <span class="metric-lbl">Channels Moderated</span>', content)
+content = re.sub(r'Trusted by \d+\+ streamers', f'Trusted by 150+ streamers', content)
 
 with open('roles/index.html', 'w', encoding='utf-8') as f:
     f.write(content)
