@@ -1,48 +1,636 @@
 import re
+import json
 
+# Format: (name, followers, avatar, is_partner)
 streamers = [
-    ("PlaqueBoyMax", 2875141, "https://static-cdn.jtvnw.net/jtv_user_pictures/cbfd449c-97b5-448c-82bd-f55b12cd4a97-profile_image-300x300.png"),
-    ("Amar", 1876573, "https://static-cdn.jtvnw.net/jtv_user_pictures/a1f93c9d-7fb0-4af8-aba9-86f64f956d55-profile_image-300x300.png"),
-    ("Letshe", 1820111, "https://static-cdn.jtvnw.net/jtv_user_pictures/ac84abbb-11dc-47e2-a156-c1b9411264b2-profile_image-300x300.png"),
-    ("funnymike", 1604997, "https://static-cdn.jtvnw.net/jtv_user_pictures/a14ac3ab-e622-41f5-ad66-b115e154b58f-profile_image-300x300.png"),
-    ("xRohat", 1370420, "https://static-cdn.jtvnw.net/jtv_user_pictures/dc99030e-69b1-4e11-b381-e1507c991ff0-profile_image-300x300.png"),
-    ("noahreyli", 795353, "https://static-cdn.jtvnw.net/jtv_user_pictures/1a0db90e-6af8-4b5e-b933-6ce0cd1093dc-profile_image-300x300.png"),
-    ("chefstrobel", 730726, "https://static-cdn.jtvnw.net/jtv_user_pictures/cea26e66-4095-4c3e-8467-c4d46fd7aaf6-profile_image-300x300.png"),
-    ("marco_scm", 560437, "https://static-cdn.jtvnw.net/jtv_user_pictures/e3670edc-cbb1-4ff2-bf2e-3593b44495f8-profile_image-300x300.png"),
-    ("timgioh", 481376, "https://static-cdn.jtvnw.net/jtv_user_pictures/ef50d7aa-f208-48e8-a497-3971073888c6-profile_image-300x300.png"),
-    ("ilikehaskell", 461664, "https://static-cdn.jtvnw.net/jtv_user_pictures/47926a3e-8f58-48ea-8e3c-a81197906175-profile_image-300x300.png"),
-    ("reemknocks", 427041, "https://static-cdn.jtvnw.net/jtv_user_pictures/c0bc29bf-12eb-49c9-85a0-422acb35ea3d-profile_image-300x300.png"),
-    ("yaboyyywill", 175690, "https://static-cdn.jtvnw.net/jtv_user_pictures/58c15d49-5152-408e-99aa-6d85cfbff149-profile_image-300x300.png"),
-    ("corey2u", 148384, "https://static-cdn.jtvnw.net/jtv_user_pictures/77646afc-a034-4ee8-a4a0-9e9f08c66bf6-profile_image-300x300.png"),
-    ("tthereal65", 61036, "https://static-cdn.jtvnw.net/jtv_user_pictures/c9d4df91-9714-406f-b622-6266316d56b2-profile_image-300x300.png"),
-    ("LENA", 40141, "https://static-cdn.jtvnw.net/jtv_user_pictures/9f603e20-6186-4112-a797-a38ec7165c49-profile_image-300x300.png"),
-    ("julistria", 37705, "https://static-cdn.jtvnw.net/jtv_user_pictures/416a09b8-1334-434b-b9d0-d8f65e6e86ac-profile_image-300x300.png"),
-    ("Lele", 26342, "https://static-cdn.jtvnw.net/jtv_user_pictures/054eb80b-1fcb-4c16-b85b-7f63ebd01d85-profile_image-300x300.png"),
-    ("risukuni", 24047, "https://static-cdn.jtvnw.net/jtv_user_pictures/c09194f8-1695-4f45-b8f0-9fc388f23e5e-profile_image-300x300.png"),
-    ("Regy", 14392, "https://static-cdn.jtvnw.net/jtv_user_pictures/7a27cdb6-0974-4703-975a-1d6d7952b007-profile_image-300x300.png"),
-    ("Kanyuji", 11642, "https://static-cdn.jtvnw.net/jtv_user_pictures/d8573d63-4cad-4c4f-894a-0b44a5bc4cde-profile_image-300x300.png")
+    [
+        "PlaqueBoyMax",
+        2878113,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/cbfd449c-97b5-448c-82bd-f55b12cd4a97-profile_image-300x300.png",
+        true
+    ],
+    [
+        "Amar",
+        1876263,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/a1f93c9d-7fb0-4af8-aba9-86f64f956d55-profile_image-300x300.png",
+        true
+    ],
+    [
+        "Letshe",
+        1819977,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/ac84abbb-11dc-47e2-a156-c1b9411264b2-profile_image-300x300.png",
+        true
+    ],
+    [
+        "funnymike",
+        1604825,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/a14ac3ab-e622-41f5-ad66-b115e154b58f-profile_image-300x300.png",
+        true
+    ],
+    [
+        "xRohat",
+        1447759,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/dc99030e-69b1-4e11-b381-e1507c991ff0-profile_image-300x300.png",
+        true
+    ],
+    [
+        "ItsZorvex",
+        1015003,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/6ae61eaa-e27c-4d99-b171-3532637a2d1a-profile_image-300x300.png",
+        false
+    ],
+    [
+        "noahreyli",
+        795521,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/1a0db90e-6af8-4b5e-b933-6ce0cd1093dc-profile_image-300x300.png",
+        true
+    ],
+    [
+        "chefstrobel",
+        730516,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/cea26e66-4095-4c3e-8467-c4d46fd7aaf6-profile_image-300x300.png",
+        true
+    ],
+    [
+        "marco_scm",
+        564150,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/e3670edc-cbb1-4ff2-bf2e-3593b44495f8-profile_image-300x300.png",
+        true
+    ],
+    [
+        "Timgioh",
+        487987,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/ef50d7aa-f208-48e8-a497-3971073888c6-profile_image-300x300.png",
+        true
+    ],
+    [
+        "ilikehaskell",
+        461363,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/47926a3e-8f58-48ea-8e3c-a81197906175-profile_image-300x300.png",
+        true
+    ],
+    [
+        "reemknocks",
+        428799,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/c0bc29bf-12eb-49c9-85a0-422acb35ea3d-profile_image-300x300.png",
+        true
+    ],
+    [
+        "yaboyyywill",
+        176675,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/58c15d49-5152-408e-99aa-6d85cfbff149-profile_image-300x300.png",
+        true
+    ],
+    [
+        "corey2u",
+        148453,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/77646afc-a034-4ee8-a4a0-9e9f08c66bf6-profile_image-300x300.png",
+        true
+    ],
+    [
+        "tthereal65",
+        63721,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/c9d4df91-9714-406f-b622-6266316d56b2-profile_image-300x300.png",
+        true
+    ],
+    [
+        "xRohat_TV",
+        56486,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/869900e7-95ae-4320-ade6-905cad663b28-profile_image-300x300.png",
+        true
+    ],
+    [
+        "tru_dorian",
+        48660,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/48be5bd6-2d42-4a19-86be-7f2a9726432f-profile_image-300x300.png",
+        false
+    ],
+    [
+        "LENA",
+        40153,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/9f603e20-6186-4112-a797-a38ec7165c49-profile_image-300x300.png",
+        true
+    ],
+    [
+        "julistria",
+        37834,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/416a09b8-1334-434b-b9d0-d8f65e6e86ac-profile_image-300x300.png",
+        true
+    ],
+    [
+        "MinusND",
+        29276,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/cdad1542-851e-4183-982a-89e19f16f0c2-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Lele",
+        26253,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/054eb80b-1fcb-4c16-b85b-7f63ebd01d85-profile_image-300x300.png",
+        true
+    ],
+    [
+        "jakarri",
+        25275,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2c319cbb-fe98-45ea-a4e8-2d7ec41ed519-profile_image-300x300.png",
+        true
+    ],
+    [
+        "risukuni",
+        24816,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/c09194f8-1695-4f45-b8f0-9fc388f23e5e-profile_image-300x300.png",
+        true
+    ],
+    [
+        "8HVDES",
+        24696,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/42553954-bfc5-4272-a4e1-5f7fed39e284-profile_image-150x150.jpeg",
+        false
+    ],
+    [
+        "Zockerinjulia",
+        20442,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5a22fc27-88d8-4f77-9115-9d8ed4a1cf22-profile_image-300x300.png",
+        false
+    ],
+    [
+        "MausDLR",
+        17073,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/3e6d2f19-9a1f-4dd8-83ae-7ffa05dff263-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Regy",
+        14386,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/7a27cdb6-0974-4703-975a-1d6d7952b007-profile_image-300x300.png",
+        true
+    ],
+    [
+        "lroh",
+        13498,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b9f7ed24-3bab-4e62-ab39-4928be82242a-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Kanyuji",
+        11660,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/d8573d63-4cad-4c4f-894a-0b44a5bc4cde-profile_image-300x300.png",
+        true
+    ],
+    [
+        "BadgeBase",
+        10963,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/fd633d78-c671-4dcb-8bac-f7d951e9a4ac-profile_image-300x300.png",
+        false
+    ],
+    [
+        "PAPAGR33N",
+        10233,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/ed0f8d67-c844-4954-b5c4-e20e02ec765e-profile_image-300x300.png",
+        false
+    ],
+    [
+        "pard0nval",
+        9655,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/e3cf93aa-af0e-4f72-ab61-cc158b124983-profile_image-300x300.png",
+        false
+    ],
+    [
+        "MelFlacooo",
+        8395,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/ae20376f-be50-450e-93d4-efb949e0a1fd-profile_image-300x300.png",
+        true
+    ],
+    [
+        "Kletztenbrot",
+        8190,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5a8b4bd3-81d8-4cc6-91b0-3f08ac5356a4-profile_image-150x150.jpeg",
+        false
+    ],
+    [
+        "Tackling",
+        6496,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/e54653c5-aa03-460e-a2dd-816d3ac33289-profile_image-300x300.png",
+        false
+    ],
+    [
+        "ananassosse",
+        5580,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5cba5615-3abc-45bd-8554-0933045c975d-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Fookstee",
+        5538,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b060186d-6367-4188-9375-e627a67b69be-profile_image-300x300.png",
+        false
+    ],
+    [
+        "oh0y",
+        5282,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b33f186e-2a4d-41b2-9bf1-6f3a1b014a2e-profile_image-300x300.png",
+        false
+    ],
+    [
+        "axxins",
+        4677,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/0e87548c-023e-460f-af8c-51ada53f2284-profile_image-300x300.png",
+        false
+    ],
+    [
+        "reasrt",
+        4151,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/7c63145d-f4f5-4775-9cd7-f95397f9d973-profile_image-300x300.png",
+        false
+    ],
+    [
+        "maaareq",
+        3985,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/18729d54-f88c-4766-a743-3edf4893022a-profile_image-300x300.png",
+        false
+    ],
+    [
+        "dasbondgirl",
+        3506,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/216f18ee-0efe-4e39-aa13-a7d990b22e29-profile_image-300x300.png",
+        false
+    ],
+    [
+        "gumbo_421",
+        3501,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/c88b1f93-b6be-403c-9d0c-52df1a1fae1e-profile_image-300x300.png",
+        false
+    ],
+    [
+        "GEKK",
+        3096,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/74abf4cd-09ab-467e-8679-04c3bb61266e-profile_image-300x300.png",
+        true
+    ],
+    [
+        "j4noso",
+        2686,
+        "https://static-cdn.jtvnw.net/user-default-pictures-uv/75305d54-c7cc-40d1-bb9c-91fbe85943c7-profile_image-300x300.png",
+        false
+    ],
+    [
+        "gzbe",
+        2643,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/57feba07-e162-4faf-90ec-1a39ad4b1f4b-profile_image-300x300.png",
+        false
+    ],
+    [
+        "3ElD",
+        2257,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2ce9ab7e-85ee-4990-8f9f-59f6888b80f3-profile_image-300x300.png",
+        false
+    ],
+    [
+        "tow_fps",
+        2223,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/828e3978-b450-4850-8795-ce0bf3974920-profile_image-300x300.png",
+        false
+    ],
+    [
+        "SnipyL",
+        2190,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/a02f3822-27ce-4f0a-ab46-056347656db4-profile_image-300x300.png",
+        false
+    ],
+    [
+        "viocles",
+        1925,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/11e6b1b9-c99b-4483-b307-b1bfb9206cda-profile_image-300x300.png",
+        false
+    ],
+    [
+        "ep1cLIVE",
+        1515,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2d1117b2-6764-4549-bdd0-90321ab32bdf-profile_image-300x300.png",
+        false
+    ],
+    [
+        "LeonTBZ",
+        1494,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/613f5e3d-abcc-4eb8-b1ac-378355936bc1-profile_image-300x300.png",
+        false
+    ],
+    [
+        "LenaaDE",
+        1283,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/559c8bda-4a48-4363-a656-8dde8da73b0c-profile_image-150x150.jpeg",
+        false
+    ],
+    [
+        "Kiiiqu",
+        1157,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2526729b-e4be-4aa0-b63c-59eab8511b62-profile_image-300x300.png",
+        false
+    ],
+    [
+        "greeNoel",
+        1143,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/6a0a484b-e9a8-41ed-a3e7-2a6189e867a5-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Janfant",
+        1066,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/0aa122c6-1231-4a93-bd9c-7738534a0997-profile_image-300x300.png",
+        false
+    ],
+    [
+        "jeansophiee",
+        1008,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5c5772df-0a9e-4ea7-abcd-343620ca55f0-profile_image-300x300.png",
+        false
+    ],
+    [
+        "GokhanN52",
+        1007,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2c4ba487-3543-4334-a463-01213b2a6f18-profile_image-300x300.png",
+        false
+    ],
+    [
+        "DarknightLP702",
+        890,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/f4c43ea3-b352-4aa5-b4ca-c3e0c16720dd-profile_image-300x300.png",
+        false
+    ],
+    [
+        "JulistriaTV",
+        819,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/7fd573a8-6db1-49f4-9d76-5df344f26a2e-profile_image-300x300.png",
+        false
+    ],
+    [
+        "HardcoreGamingProfiHD",
+        775,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/aab782da-c872-4f78-be48-a3a1b1698c68-profile_image-300x300.png",
+        false
+    ],
+    [
+        "spofoh",
+        724,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/cafc491b-cd43-4b91-9515-4c56c97de1d9-profile_image-300x300.png",
+        false
+    ],
+    [
+        "ItsBr0dyy",
+        712,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b3eebdb4-b10a-404a-9b51-154ee4473642-profile_image-300x300.png",
+        false
+    ],
+    [
+        "wiihxhx",
+        602,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/06bc5821-a850-40fc-a834-6b430057317e-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Knurie",
+        522,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/4cb3a5f2-f709-4f74-b510-c84dba766a3d-profile_image-300x300.png",
+        false
+    ],
+    [
+        "SicKcs2",
+        485,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/6785d673-8cff-4e9b-b861-86349de40c55-profile_image-300x300.png",
+        false
+    ],
+    [
+        "KEYS404",
+        444,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/0656e1e6-7706-46b9-aa49-041f7ea27ebe-profile_image-300x300.png",
+        false
+    ],
+    [
+        "DerMichi_",
+        434,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/2866ca03-b406-433f-a99c-bd7e5de16aaa-profile_image-300x300.png",
+        false
+    ],
+    [
+        "liamcouturee",
+        422,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5b986983-7dc1-40fd-ba66-b05643db2845-profile_image-300x300.png",
+        false
+    ],
+    [
+        "ohfrfr",
+        376,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/fdd5b215-5d9b-48a7-b706-04acf9d7aacd-profile_image-300x300.png",
+        false
+    ],
+    [
+        "pibbIes",
+        362,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/24e836cc-b337-4024-92bd-73a830d5eb12-profile_image-300x300.png",
+        false
+    ],
+    [
+        "sGxbriel",
+        360,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/82c0d561-765c-46ef-ac9c-5c3e470c3a3c-profile_image-300x300.png",
+        false
+    ],
+    [
+        "JebPapaya",
+        338,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/9ed3d9a5-0272-4347-a90c-929fc2f6fdf4-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Nifler_",
+        338,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b7b10c42-80b7-4556-b02e-1f6a8bd4ea8f-profile_image-300x300.png",
+        false
+    ],
+    [
+        "MissMeloTV",
+        314,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/22b78310-ae70-4740-8ae3-577333da9d58-profile_image-300x300.png",
+        false
+    ],
+    [
+        "MEM3",
+        269,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/abfca273-8dde-4e65-b3ed-c09af1ed5de0-profile_image-300x300.png",
+        false
+    ],
+    [
+        "KiraTypes",
+        254,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/9ec04671-6c5b-4266-9dd6-b398fca63489-profile_image-300x300.png",
+        false
+    ],
+    [
+        "nikollkkaa",
+        238,
+        "https://static-cdn.jtvnw.net/user-default-pictures-uv/998f01ae-def8-11e9-b95c-784f43822e80-profile_image-300x300.png",
+        false
+    ],
+    [
+        "EMRESUCUKT0AST",
+        236,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/161d5058-e60b-453e-8940-d242eeaff582-profile_image-300x300.png",
+        false
+    ],
+    [
+        "Alexmoderat",
+        220,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/21617490-ace8-4421-98f9-deb8b53290ff-profile_image-300x300.png",
+        false
+    ],
+    [
+        "BlackLiooonTV",
+        208,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/f8c0696a-74a3-473c-8168-0442f74c69fa-profile_image-300x300.png",
+        false
+    ],
+    [
+        "KTMC",
+        203,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/e4f85cd1-e629-4545-ab6f-79d793922170-profile_image-300x300.png",
+        false
+    ],
+    [
+        "0pogix",
+        180,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/17270db8-507d-49eb-bc5c-1f42e775b52f-profile_image-150x150.jpeg",
+        false
+    ],
+    [
+        "wincentt",
+        165,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/5ed6403c-e92f-4466-bbbc-24187c7c437a-profile_image-300x300.png",
+        false
+    ],
+    [
+        "JvmpVII",
+        161,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/c187582f-78ce-4f07-9ffd-2ca3479ff51a-profile_image-300x300.png",
+        false
+    ],
+    [
+        "MEPPLGOTDRIP",
+        160,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/61bcbcf2-3a2a-43ff-986a-6cb2fcd0e691-profile_image-300x300.png",
+        false
+    ],
+    [
+        "cimv",
+        148,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/31cd214d-936d-4639-aaea-36657afd7d61-profile_image-300x300.png",
+        false
+    ],
+    [
+        "grimmmommy",
+        146,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/14e589cf-41bb-4b4c-a79f-cdd8e90c8cf2-profile_image-300x300.png",
+        false
+    ],
+    [
+        "SANTllI",
+        139,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/0b72e680-7f2f-40e7-8e4e-2465541ea937-profile_image-300x300.png",
+        false
+    ],
+    [
+        "jstnxl",
+        130,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/cae6f55e-b804-424d-9224-130170049ad9-profile_image-300x300.png",
+        false
+    ],
+    [
+        "ZA8UZA",
+        127,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/51f5b0cb-e5a3-4689-b6fc-98798f827431-profile_image-300x300.png",
+        false
+    ],
+    [
+        "S8PREMEE",
+        122,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/fa30189b-87fe-4b5c-82ea-cb5b3316af2c-profile_image-300x300.png",
+        false
+    ],
+    [
+        "pumimitv",
+        111,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/b38aeb9e-1657-4aa0-8b18-e102f767aa80-profile_image-300x300.png",
+        false
+    ],
+    [
+        "pingi",
+        107,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/59ff61d5-2489-435b-a0f5-c85a37a3eac1-profile_image-300x300.png",
+        false
+    ],
+    [
+        "10er_auf_kombi",
+        105,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/ad4657b3-44d3-4c83-9c8f-2cb33424e8ab-profile_image-300x300.png",
+        false
+    ],
+    [
+        "heeeIu",
+        105,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/f942a0b5-6cb2-47fb-a2f1-9ffacd6f74c0-profile_image-300x300.png",
+        false
+    ],
+    [
+        "kebaaye",
+        101,
+        "https://static-cdn.jtvnw.net/jtv_user_pictures/dad75737-d239-4201-9a78-2b236013f2b3-profile_image-300x300.png",
+        false
+    ]
 ]
 
-grid_html = '\n'
-for i, (name, followers, avatar) in enumerate(streamers):
-    delay = (i % 4) + 1
-    grid_html += f'''            <a href="https://twitch.tv/{name}" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-{delay}">
-                <img src="{avatar}" alt="{name}" class="streamer-avatar">
-                <div class="streamer-info">
-                    <h3>{name} <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge"></h3>
-                    <p class="followers">{followers:,} followers</p>
+badge_html = ' <img src="https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/2" alt="Verified" class="verified-badge">'
+
+cards = []
+for i, item in enumerate(streamers):
+    name = item[0]
+    followers = item[1]
+    avatar = item[2]
+    is_partner = item[3]
+    delay = (i % 3) + 1
+    badge = badge_html if is_partner else ''
+    card = f'''            <a href="https://twitch.tv/{name}" target="_blank" rel="noopener noreferrer" class="streamer-card fade-up delay-{delay}">
+                <div class="avatar-wrapper">
+                    <img src="{avatar}" alt="{name}" class="streamer-avatar">
                 </div>
-                <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-            </a>\n\n'''
+                <div class="streamer-info">
+                    <h3>{name}{badge}</h3>
+                    <p class="followers"><span class="follower-num">{followers:,}</span> <span class="follower-label">followers</span></p>
+                </div>
+                <div class="card-right">
+                    <svg class="streamer-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
+                </div>
+            </a>'''
+    cards.append(card)
+
+grid_html = "\n\n".join(cards)
 
 with open('roles/index.html', 'r', encoding='utf-8') as f:
     content = f.read()
 
-pattern = re.compile(r'<div class="streamers-grid">.*?</div>\s*</main>', re.DOTALL)
-new_grid = f'<div class="streamers-grid">{grid_html}        </div>\n    </main>'
-content = pattern.sub(new_grid, content)
+start_marker = '<div class="streamers-grid" id="streamersGrid">'
+end_marker = '<div id="emptyFilterState"'
+
+start_idx = content.find(start_marker)
+end_idx = content.find(end_marker)
+
+if start_idx != -1 and end_idx != -1:
+    closing_div_idx = content.rfind('</div>', start_idx, end_idx)
+    content = content[:start_idx + len(start_marker)] + "\n" + grid_html + "\n        " + content[closing_div_idx:]
+
+content = re.sub(r'id="allTabCount">\d+<', f'id="allTabCount">{len(streamers)}<', content)
+total_foll = sum(item[1] for item in streamers)
+content = re.sub(r'id="totalTwitchFollowers">[^<]+<', f'id="totalTwitchFollowers">{total_foll / 1_000_000:.1f}M+<', content)
 
 with open('roles/index.html', 'w', encoding='utf-8') as f:
     f.write(content)
 
-print("Roles page updated.")
+print("Roles page updated via update_streamers.py.")
