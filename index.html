@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Inter:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Chilanka&family=Reenie+Beanie&family=Space+Grotesk:wght@500;700&family=VT323&display=swap" rel="stylesheet">
     <link rel="preload" href="/logo.gif" as="image">
-    <link rel="stylesheet" href="/style.css?v=108">
+    <link rel="stylesheet" href="/style.css?v=109">
 </head>
 <body>
     
@@ -292,170 +292,109 @@
                     searchInput.addEventListener('input', applyFilters);
                 }
 
-                // Fetch Live Twitch Data
+                                // Fetch Live Twitch Data using fast Twitch GQL batching
                 (async function updateAndSortStreamers() {
                     const cards = Array.from(streamersGrid.querySelectorAll('.streamer-card'));
-                    let totalFollowers = 0;
-                    let liveCount = 0;
+                    if (cards.length === 0) return;
 
-                    const fetchPromises = cards.map(async (card) => {
-                        const href = card.getAttribute('href');
-                        let count = 0;
-                        let avatarUrl = '';
-                        let isLive = false;
-                        let viewers = 0;
-                        let game = '';
-
-                        const numEl = card.querySelector('.follower-num');
-                        if (numEl) {
-                            const fallbackCount = parseInt(numEl.textContent.replace(/,/g, ''), 10);
-                            if (!isNaN(fallbackCount)) count = fallbackCount;
-                        }
-
-                        const avatarEl = card.querySelector('.streamer-avatar');
-                        if (avatarEl) {
-                            avatarUrl = avatarEl.src;
-                        }
-
-                        if (href && href.includes('twitch.tv/')) {
-                            const channel = href.split('twitch.tv/')[1].split('/')[0].split('?')[0].toLowerCase();
-                            if (channel) {
-                                const cacheKey = `twitch_v4_${channel}`;
-                                const cached = localStorage.getItem(cacheKey);
-                                let useCache = false;
-
-                                if (cached) {
-                                    try {
-                                        const parsed = JSON.parse(cached);
-                                        if (Date.now() - parsed.timestamp < 2 * 60 * 1000) {
-                                            count = parsed.followers;
-                                            isLive = Boolean(parsed.isLive);
-                                            viewers = parsed.viewers || 0;
-                                            game = parsed.game || '';
-                                            if (parsed.avatarUrl) avatarUrl = parsed.avatarUrl;
-                                            useCache = true;
-                                        }
-                                    } catch (e) {}
-                                }
-
-                                if (!useCache) {
-                                    try {
-                                        const [followRes, avatarRes, viewerRes, gameRes] = await Promise.all([
-                                            fetch(`https://decapi.me/twitch/followcount/${channel}`),
-                                            fetch(`https://decapi.me/twitch/avatar/${channel}`),
-                                            fetch(`https://decapi.me/twitch/viewercount/${channel}`),
-                                            fetch(`https://decapi.me/twitch/game/${channel}`)
-                                        ]);
-
-                                        if (followRes.ok) {
-                                            const followText = await followRes.text();
-                                            const fetchedCount = parseInt(followText.trim(), 10);
-                                            if (!isNaN(fetchedCount)) count = fetchedCount;
-                                        }
-
-                                        if (avatarRes.ok) {
-                                            const avatarText = (await avatarRes.text()).trim();
-                                            if (avatarText.startsWith('http')) {
-                                                avatarUrl = avatarText;
-                                            }
-                                        }
-
-                                        if (viewerRes.ok) {
-                                            const viewerText = (await viewerRes.text()).trim();
-                                            const parsedViewers = parseInt(viewerText, 10);
-                                            if (!isNaN(parsedViewers) && !viewerText.toLowerCase().includes('offline')) {
-                                                isLive = true;
-                                                viewers = parsedViewers;
-                                            }
-                                        }
-
-                                        if (gameRes.ok) {
-                                            const gameText = (await gameRes.text()).trim();
-                                            if (gameText && !gameText.toLowerCase().includes('error')) {
-                                                game = gameText;
-                                            }
-                                        }
-
-                                        localStorage.setItem(cacheKey, JSON.stringify({
-                                            followers: count,
-                                            avatarUrl,
-                                            isLive,
-                                            viewers,
-                                            game,
-                                            timestamp: Date.now()
-                                        }));
-                                    } catch (error) {}
-                                }
-
-                                if (numEl && count > 0) {
-                                    numEl.textContent = count.toLocaleString('en-US');
-                                }
-
-                                if (avatarEl && avatarUrl) {
-                                    avatarEl.src = avatarUrl;
-                                }
-
-                                card.dataset.live = isLive ? 'true' : 'false';
-                                card.classList.toggle('is-live', isLive);
-
-                                const infoEl = card.querySelector('.streamer-info');
-                                const existingMeta = card.querySelector('.live-meta');
-                                const cardRight = card.querySelector('.card-right');
-                                const existingBadge = card.querySelector('.live-pill');
-
-                                if (isLive) {
-                                    liveCount++;
-                                    if (!existingBadge && cardRight) {
-                                        const badge = document.createElement('span');
-                                        badge.className = 'live-pill';
-                                        badge.innerHTML = '<span class="live-pill-dot"></span>LIVE';
-                                        cardRight.prepend(badge);
-                                    }
-
-                                    const gameLabel = game || 'Live';
-                                    const viewerLabel = `${formatViewers(viewers)} viewers`;
-                                    if (existingMeta) {
-                                        existingMeta.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
-                                    } else if (infoEl) {
-                                        const metaP = document.createElement('p');
-                                        metaP.className = 'live-meta';
-                                        metaP.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
-                                        infoEl.appendChild(metaP);
-                                    }
-                                } else {
-                                    if (existingBadge) existingBadge.remove();
-                                    if (existingMeta) existingMeta.remove();
-                                }
+                    const channelMap = new Map();
+                    cards.forEach(card => {
+                        const href = card.getAttribute('href') || '';
+                        if (href.includes('twitch.tv/')) {
+                            const login = href.split('twitch.tv/')[1].split('/')[0].split('?')[0].toLowerCase().trim();
+                            if (login) {
+                                channelMap.set(login, card);
                             }
                         }
-
-                        totalFollowers += count;
-                        card.dataset.followers = count;
-                        return card;
                     });
 
-                    await Promise.all(fetchPromises);
+                    const logins = Array.from(channelMap.keys());
+                    const liveDataMap = new Map();
+
+                    const chunkSize = 80;
+                    const chunkPromises = [];
+                    for (let i = 0; i < logins.length; i += chunkSize) {
+                        const chunk = logins.slice(i, i + chunkSize);
+                        const body = JSON.stringify([{
+                            operationName: 'GetLiveStreams',
+                            query: 'query GetLiveStreams($logins: [String!]) { users(logins: $logins) { id login stream { id viewersCount game { name } title } } }',
+                            variables: { logins: chunk }
+                        }]);
+
+                        chunkPromises.push(
+                            fetch('https://gql.twitch.tv/gql', {
+                                method: 'POST',
+                                headers: {
+                                    'Client-ID': 'kimne78kx3ncx6brgo4mv6wki5h1ko',
+                                    'Content-Type': 'application/json'
+                                },
+                                body: body
+                            })
+                            .then(res => res.ok ? res.json() : null)
+                            .then(data => {
+                                if (Array.isArray(data) && data[0]?.data?.users) {
+                                    data[0].data.users.forEach(u => {
+                                        if (u && u.login && u.stream) {
+                                            liveDataMap.set(u.login.toLowerCase(), {
+                                                isLive: true,
+                                                viewers: u.stream.viewersCount || 0,
+                                                game: u.stream.game?.name || '',
+                                                title: u.stream.title || ''
+                                            });
+                                        }
+                                    });
+                                }
+                            })
+                            .catch(() => {})
+                        );
+                    }
+
+                    await Promise.all(chunkPromises);
+
+                    let liveCount = 0;
+                    cards.forEach(card => {
+                        const href = card.getAttribute('href') || '';
+                        const channel = (href.includes('twitch.tv/') ? href.split('twitch.tv/')[1].split('/')[0].split('?')[0] : '').toLowerCase().trim();
+                        const liveInfo = liveDataMap.get(channel);
+                        const isLive = Boolean(liveInfo && liveInfo.isLive);
+
+                        card.dataset.live = isLive ? 'true' : 'false';
+                        card.classList.toggle('is-live', isLive);
+
+                        const infoEl = card.querySelector('.streamer-info');
+                        const cardRight = card.querySelector('.card-right');
+                        let existingBadge = card.querySelector('.live-pill');
+                        let existingMeta = card.querySelector('.live-meta');
+
+                        if (isLive) {
+                            liveCount++;
+                            if (!existingBadge && cardRight) {
+                                const badge = document.createElement('span');
+                                badge.className = 'live-pill';
+                                badge.innerHTML = '<span class="live-pill-dot"></span>LIVE';
+                                cardRight.prepend(badge);
+                            }
+
+                            const gameLabel = liveInfo.game || 'Live';
+                            const viewerLabel = `${formatViewers(liveInfo.viewers)} viewers`;
+                            if (existingMeta) {
+                                existingMeta.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
+                            } else if (infoEl) {
+                                const metaP = document.createElement('p');
+                                metaP.className = 'live-meta';
+                                metaP.innerHTML = `<span class="live-game">${gameLabel}</span> &middot; <span class="live-viewers">${viewerLabel}</span>`;
+                                infoEl.appendChild(metaP);
+                            }
+                        } else {
+                            if (existingBadge) existingBadge.remove();
+                            if (existingMeta) existingMeta.remove();
+                        }
+                    });
 
                     const liveCountEl = document.getElementById('liveChannelCount');
                     const liveTabCountEl = document.getElementById('liveTabCount');
-                    const totalFollowersEl = document.getElementById('totalTwitchFollowers');
-
                     if (liveCountEl) liveCountEl.textContent = liveCount;
                     if (liveTabCountEl) liveTabCountEl.textContent = liveCount;
-                    if (totalFollowersEl && totalFollowers > 0) {
-                        const millions = (totalFollowers / 1000000).toFixed(1);
-                        totalFollowersEl.textContent = `${millions}M+`;
-                    }
-
-                    cards.sort((a, b) => {
-                        return parseInt(b.dataset.followers, 10) - parseInt(a.dataset.followers, 10);
-                    });
-
-                    cards.forEach((card, index) => {
-                        card.className = card.className.replace(/delay-\d+/g, '');
-                        card.classList.add(`delay-${(index % 3) + 1}`);
-                        streamersGrid.appendChild(card);
-                    });
 
                     applyFilters();
                 })();
